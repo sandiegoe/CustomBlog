@@ -28,7 +28,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	${requestScope.messageInfo} <br/>
     	 用户名: <input type="text" name="userName" value="${cookie.userName.value}"/><br/>
     	 密码: <input type="password" name="logonPassword" value="${cookie.logonPassword.value}"/><br/>
-    	 记住密码:<input type="checkbox" name="remember" checked="checkec"/>
+    	 7天免密登录:<input type="checkbox" name="remember" checked="checkec"/>
     	 <input type="submit" value="登录"/>
     </form>
     
