@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+    "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.i18n.reload" value="true" />
+	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
+	<constant name="struts.configuration.xml.reload" value="true" />
+
+	
+	<package name="root" namespace="/user" extends="struts-default">
+	
+		<action name="menu_*" class="menuAction" method="{1}">
+			<result name="home">/WEB-INF/jsp/index.jsp</result>
+			<result name="signInPage">/WEB-INF/jsp/signInPage.jsp</result>
+			<result name="registerPage">/WEB-INF/jsp/registerPage.jsp</result>
+			<result name="photo">/WEB-INF/jsp/photo.jsp</result>
+			<result name="blog">/WEB-INF/jsp/blog.jsp</result>
+			<result name="message">/WEB-INF/jsp/message.jsp</result>
+			<allowed-methods>home, signInPage, registerPage, photo, blog, message</allowed-methods>
+		</action>
+		
+		<action name="user_*" class="userAction" method="{1}">
+			<result name="signIn" type="redirectAction">
+				<param name="actionName">menu_home.action</param>
+				<param name="namespace">/user</param>
+			</result>
+			<result name="error">/WEB-INF/jsp/signInPage.jsp</result>
+			<result name="register" type="redirectAction">
+				<param name="actionName">menu_home.action</param>
+				<param name="namespace">/user</param>
+			</result>
+			<result name="signOut" type="redirectAction">
+				<param name="actionName">menu_home.action</param>
+				<param name="namespace">/user</param>
+			</result>
+			
+			<allowed-methods>signIn, register, signOut</allowed-methods>
+		</action>
+
+	</package>
+
+	
+</struts>
