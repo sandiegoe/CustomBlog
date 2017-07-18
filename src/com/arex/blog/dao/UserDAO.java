@@ -4,5 +4,5 @@ import com.arex.blog.model.User;
 
 public interface UserDAO extends CommonDAO<User>{
 
-	public abstract User searchUserByUserName(String userName);
+	public void changePassword(String loginPassword, String userId);
 }

@@ -67,15 +67,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 
                   <c:if test="${not empty sessionScope.loginUser}">
                     	  当前登录用户为:${sessionScope.loginUser.userName}
-                    	<a href="${pageContext.request.contextPath}/user/user_signOut.action">signOut</a>
+                    	<a href="${pageContext.request.contextPath}/user/User_signOut.action">signOut</a>
+                    	<a href="${pageContext.request.contextPath}/user/Menu_changePasswordPage.action">修改密码</a>
                     </c:if> 
                    
                     
-                    <a href="${pageContext.request.contextPath}/user/menu_signInPage.action">Sign</a>
-                    <a href="${pageContext.request.contextPath}/user/menu_registerPage.action">register</a>
-                    <a href="${pageContext.request.contextPath}/user/menu_photo.action">photo</a>
-                    <a href="${pageContext.request.contextPath}/user/menu_blog.action">blog</a>
-                    <a href="${pageContext.request.contextPath}/user/menu_message.action">message</a>
+                    <a href="${pageContext.request.contextPath}/user/Menu_signInPage.action">Sign</a>
+                    <a href="${pageContext.request.contextPath}/user/Menu_registerPage.action">register</a>
+                    <a href="${pageContext.request.contextPath}/user/Menu_photo.action">photo</a>
+                    <a href="${pageContext.request.contextPath}/user/Menu_blog.action">blog</a>
+                    <a href="${pageContext.request.contextPath}/user/Menu_message.action">message</a>
                     
                     
                     

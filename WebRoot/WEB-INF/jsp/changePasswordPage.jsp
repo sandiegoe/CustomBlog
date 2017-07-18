@@ -1,5 +1,4 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -10,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>My JSP 'signInPage.jsp' starting page</title>
+    <title>My JSP 'changePasswordPage.jsp' starting page</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -24,19 +23,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-    <form action="${pageContext.request.contextPath}/user/User_signIn.action" method="post" onsubmit="return check(this)">
+    <form action="${pageContext.request.contextPath}/user/User_changePassword.action" method="post">
     	${requestScope.messageInfo} <br/>
-    	 用户名: <input type="text" name="userName" value="${cookie.userName.value}"/><br/>
-    	 密码: <input type="password" name="logonPassword" value="${cookie.logonPassword.value}"/><br/>
-    	 记住密码:<input type="checkbox" name="remember" checked="checkec"/>
-    	 <input type="submit" value="登录"/>
+    	<input type="hidden" name="userId" value="${sessionScope.loginUser.userId}"/>
+    	原密码: <input type="password" name="olderPassword"/><br/>
+    	新密码: <input type="password" name="logonPassword"/><br/>
+    	重复密码: <input type="password" name="confimPassword"/><br/>
+    	<input type="submit" value="修改"/>
     </form>
-    
-    <script type="text/javacript">
-		function check(obj) {
-			
-		}
-	</script>
-    
   </body>
 </html>

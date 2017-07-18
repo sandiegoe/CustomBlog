@@ -7,7 +7,7 @@ public class UserDTO {
 	private String userId;
 	private String userName;
 	private String userNickName;
-	private String logonPassword;
+	private String logonPassword;              //修改密码时：logonPassword代表新密码
 	private int sex; // 0 boy 1 girl
 	private Date birthdate;
 	private String address;
@@ -17,7 +17,9 @@ public class UserDTO {
 	private Date lastLogonDate;
 	private Date craeteDate;
 
-	private String confimPassword;
+	private String confimPassword;           //修改密码时：confimPassword代表重复密码
+	
+	private String olderPassword;            //修改密码时：olderPassword代表原密码
 	
 	private String remember;
 
@@ -136,6 +138,14 @@ public class UserDTO {
 
 	public void setRemember(String remember) {
 		this.remember = remember;
+	}
+
+	public String getOlderPassword() {
+		return olderPassword;
+	}
+
+	public void setOlderPassword(String olderPassword) {
+		this.olderPassword = olderPassword;
 	}
 
 }

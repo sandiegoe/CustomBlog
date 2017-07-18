@@ -20,7 +20,6 @@ public class UserAction extends CommonAction<UserDTO> {
 	
 	public String signIn() {
 		
-		
 		String userName = super.getModel().getUserName();
 		String logonPassword = super.getModel().getLogonPassword();
 		UserDTO userDTO = userService.searchUserByUserName(super.getModel());
@@ -80,5 +79,44 @@ public class UserAction extends CommonAction<UserDTO> {
 		}
 		
 		return "signOut";
+	}
+		
+	public String changePassword() {
+		UserDTO userDTO = super.getModel();
+		//检查密码
+		if(userDTO==null || userDTO.getOlderPassword()==null || "".equals(userDTO.getOlderPassword())) {
+			request.setAttribute("messageInfo", "原密码不能为空.");
+			return "changePasswordError";
+		}
+		if (userDTO.getLogonPassword()==null || "".equals(userDTO.getLogonPassword())) {
+			request.setAttribute("messageInfo", "新密码不能为空.");
+			return "changePasswordError";
+		}
+		if (userDTO.getConfimPassword()==null || "".equals(userDTO.getConfimPassword())) {
+			request.setAttribute("messageInfo", "重复密码不能为空.");
+			return "changePasswordError";
+		}
+		if (!userDTO.getLogonPassword().equals(userDTO.getConfimPassword())) {
+			request.setAttribute("messageInfo", "两次输入密码不一致");
+			return "changePasswordError";
+		}
+		
+		//获取当前用户的密码
+		UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
+		if (userDTO == null) {
+			request.setAttribute("messageInfo", "请登录....");
+			return "changePasswordError";
+		}
+		loginUser = userService.searchUserByUserName(loginUser);
+		session.setAttribute("loginUser", loginUser);
+		if (!userDTO.getOlderPassword().equals(loginUser.getLogonPassword())) {
+			request.setAttribute("messageInfo", "原密码输入错误.");
+			return "changePasswordError";
+		}
+		
+		//更新密码
+		userService.changePassword(userDTO);
+		
+		return "changePassword";
 	}
 }

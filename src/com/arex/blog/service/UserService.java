@@ -7,5 +7,6 @@ public interface UserService {
 	
 	public abstract UserDTO searchUserByUserName(UserDTO userDTO);
 	public void saveUserDTO(UserDTO userDTO);
+	public void changePassword(UserDTO userDTO);
 
 }

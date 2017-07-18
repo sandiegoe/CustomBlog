@@ -23,7 +23,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-    <form action="${pageContext.request.contextPath}/user/user_register.action" method="post">
+    <form action="${pageContext.request.contextPath}/user/User_register.action" method="post">
     	用户名:<input type="text" name="userName"/><br/>
     	密码: <input type="password" name="logonPassword"/><br/>
     	重复密码: <input type="password" name="confimPassword"/><br/>

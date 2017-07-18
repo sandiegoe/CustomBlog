@@ -87,6 +87,12 @@ public class UserServiceImpl implements UserService {
 		user.setLogonPassword(userDTO.getLogonPassword());
 		return user;
 	}
+
+	@Override
+	public void changePassword(UserDTO userDTO) {
+		userDAO.changePassword(userDTO.getLogonPassword(), userDTO.getUserId());
+	
+	}
 	
 
 }
