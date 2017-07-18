@@ -45,4 +45,8 @@ public class MenuAction extends CommonAction<MenuDTO> {
 	public String changePasswordPage() {
 		return "changePasswordPage";
 	}
+	
+	public String personalPage() {
+		return "personalPage";
+	}
 }

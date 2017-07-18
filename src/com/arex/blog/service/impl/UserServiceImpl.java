@@ -35,7 +35,11 @@ public class UserServiceImpl implements UserService {
 		List<User> userList = userDAO.findCollectionByConditionNoPage(hqlWhere, objects, orderby);
 		List<UserDTO> userDTOList = this.convertElecUserPO2VO(userList);
 		
+		
+		
 		if (userDTOList.size() >= 1) {
+			// 设置新的lastLogonDate时间
+			userDAO.setNewLastLogonDate(userDTOList.get(0).getUserId(), new Date());
 			return userDTOList.get(0);
 		} else {
 			return null;
@@ -59,6 +63,7 @@ public class UserServiceImpl implements UserService {
 			userDTO.setTelphone(userList.get(i).getTelphone());
 			userDTO.setUserId(userList.get(i).getUserId());
 			userDTO.setUserName(userList.get(i).getUserName());
+			userDTO.setUserNickName(userList.get(i).getUserNickName());
 			userDTOList.add(userDTO);
 		}
 		

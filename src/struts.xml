@@ -22,7 +22,8 @@
 			<result name="blog">/WEB-INF/jsp/blog.jsp</result>
 			<result name="message">/WEB-INF/jsp/message.jsp</result>
 			<result name="changePasswordPage">/WEB-INF/jsp/changePasswordPage.jsp</result>
-			<allowed-methods>home, signInPage, registerPage, photo, blog, message, changePasswordPage</allowed-methods>
+			<result name="personalPage">/WEB-INF/jsp/personalPage.jsp</result>
+			<allowed-methods>home, signInPage, registerPage, photo, blog, message, changePasswordPage, personalPage</allowed-methods>
 		</action>
 		
 		<action name="User_*" class="userAction" method="{1}">

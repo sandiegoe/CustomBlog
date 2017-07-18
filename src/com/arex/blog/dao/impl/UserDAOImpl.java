@@ -1,5 +1,7 @@
 package com.arex.blog.dao.impl;
 
+import java.util.Date;
+
 import javax.annotation.Resource;
 
 import org.hibernate.HibernateException;
@@ -26,6 +28,22 @@ public class UserDAOImpl extends CommonDAOImpl<User> implements UserDAO {
 			public String doInHibernate(Session session) throws HibernateException {
 				session.createQuery("update User user set user.logonPassword=:logonPassword where user.userId=:userId")
 					.setParameter("logonPassword", logonPassword)
+					.setParameter("userId", userId)
+					.executeUpdate();
+				return null;
+			}
+		});
+	}
+
+
+	@Override
+	public void setNewLastLogonDate(final String userId, final Date lastLogonDate) {
+		hibernateTemplate.execute(new HibernateCallback<String>() {
+
+			@Override
+			public String doInHibernate(Session session) throws HibernateException {
+				session.createQuery("update User user set user.lastLogonDate=:lastLogonDate where user.userId=:userId")
+					.setParameter("lastLogonDate", lastLogonDate)
 					.setParameter("userId", userId)
 					.executeUpdate();
 				return null;
