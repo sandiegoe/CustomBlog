@@ -121,6 +121,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         ${blogDTO.blogContentText}
                     </p>
                     <a href="${pageContext.request.contextPath}/user/Blog_detailPage.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg ">Read More <i class="fa fa-angle-right"></i></a>
+                    <a href="${pageContext.request.contextPath}/user/Blog_detailPage.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg ">删 除 <i class="fa fa-angle-right"></i></a>
+                    <a href="${pageContext.request.contextPath}/user/Blog_detailPage.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg ">编 辑 <i class="fa fa-angle-right"></i></a>
                 </div>
              </c:forEach> 
                 

@@ -30,6 +30,9 @@ public class MenuAction extends CommonAction<MenuDTO> {
 
 	public String home() {
 		
+		List<BlogDTO> blogDTOList = blogService.searchAllBlog();
+		request.setAttribute("blogDTOList", blogDTOList);
+		
 		return "home";
 	}
 	
