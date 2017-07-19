@@ -23,7 +23,8 @@
 			<result name="message">/WEB-INF/jsp/message.jsp</result>
 			<result name="changePasswordPage">/WEB-INF/jsp/changePasswordPage.jsp</result>
 			<result name="personalPage">/WEB-INF/jsp/personalPage.jsp</result>
-			<allowed-methods>home, signInPage, registerPage, photo, blog, message, changePasswordPage, personalPage</allowed-methods>
+			<result name="blogAddPage">/WEB-INF/jsp/blogAddPage.jsp</result>
+			<allowed-methods>home, signInPage, registerPage, photo, blog, message, changePasswordPage, personalPage, blogAddPage</allowed-methods>
 		</action>
 		
 		<action name="User_*" class="userAction" method="{1}">
@@ -47,7 +48,23 @@
 			<result name="changePasswordError">/WEB-INF/jsp/changePasswordPage.jsp</result>
 			<allowed-methods>signIn, register, signOut, changePassword</allowed-methods>
 		</action>
+		
+		<action name="Blog_*" class="blogAction" method="{1}">
+			<result name="add" type="redirectAction">
+				<param name="actionName">Menu_blog.action</param>
+				<param name="namespace">/user</param>
+			</result>
+			<result name="signInPage" type="redirectAction">
+				<param name="actionName">Menu_signInPage.action</param>
+				<param name="namespace">/user</param>
+			</result>
+			<allowed-methods>add</allowed-methods>
+		</action>
 
+		<action name="File_*" class="fileAction" method="{1}">
+			<result name="uploadPhoto">/WEB-INF/jsp/blog.jsp</result>
+			<allowed-methods>uploadPhoto</allowed-methods>
+		</action>
 	</package>
 
 	

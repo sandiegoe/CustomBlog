@@ -34,17 +34,17 @@ public class CommonDAOImpl<T> implements CommonDAO<T> {
 	}
 
 	@Override
-	public T findById(Serializable id) {
+	public T searchById(Serializable id) {
 		Class clazz = GenericUtils.getActualClass(this.getClass());
 		return (T) hibernateTemplate.get(clazz, id);
 	}
 
 	@Override
-	public List<T> findByIds(Serializable[] ids) {
+	public List<T> searchByIds(Serializable[] ids) {
 		List<T> lists = new ArrayList<T>();
 		for (int i = 0; i < ids.length; ++i) {
 			Serializable id = ids[i];
-			lists.add(this.findById(id));
+			lists.add(this.searchById(id));
 		}
 		return lists;
 	}
@@ -83,7 +83,7 @@ public class CommonDAOImpl<T> implements CommonDAO<T> {
 	}
 
 	@Override
-	public List<T> findCollectionByConditionNoPage(String hqlWhere,
+	public List<T> searchCollectionByConditionNoPage(String hqlWhere,
 			final Object[] objects, LinkedHashMap<String, String> orderby) {
 
 		Class clazz = GenericUtils.getActualClass(this.getClass());
