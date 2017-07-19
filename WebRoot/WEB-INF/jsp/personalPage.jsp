@@ -35,6 +35,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     联系电话：${sessionScope.loginUser.contactTel }<br/>
     邮箱：${sessionScope.loginUser.email }<br/>
     手机号：${sessionScope.loginUser.telphone }<br/>
-    上次登录时间：${sessionScope.loginUser.lastLogonDate }<br/>
+    上次登录时间：${requestScope.lastLoginDate}<br/>
   </body>
 </html>

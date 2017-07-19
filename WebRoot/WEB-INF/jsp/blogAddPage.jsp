@@ -32,7 +32,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		</script>
   		<input type="hidden" name="blogContentText" id="blogContentText"/>
   		<input type="hidden" name="userId" value="${sessionScope.loginUser.userId}"/>
-  		<input type="submit" value="提交" id="submit" onClick="getText();"/>
+  		<input type="submit" value="提交" id="sb" onclick="return getText();"/>
   		</form>
   		
   	
@@ -43,12 +43,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   			var blogContentText = document.getElementById("blogContentText");
   			blogContentText.value = "124";
   			alert('asdfasdf');
-  			var test = CKEDITOR.replace('blogContent');
-  	 		alert(test.getData());
+  		
   			
-  			 var stemTxt=CKEDITOR.instances.CKEditor1.document.getBody().getText(); //取得纯文本       
-
-  			 	alert(stemTxt);
+  			
+  			 return false;
   		}
   		
   	</script>

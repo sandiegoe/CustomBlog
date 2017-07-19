@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.arex.blog.dto.LoginDTO;
 import com.arex.blog.dto.UserDTO;
+import com.arex.blog.service.LoginService;
 import com.arex.blog.service.UserService;
 
 @Component(value="userAction")
@@ -19,6 +21,8 @@ public class UserAction extends CommonAction<UserDTO> {
 
 	@Resource(name="userServiceImpl")
 	private UserService userService;
+	@Resource(name="loginServiceImpl")
+	private LoginService loginService;
 	
 	public String signIn() {
 		
@@ -44,9 +48,18 @@ public class UserAction extends CommonAction<UserDTO> {
 		//将userDTO保存到session中
 		session.setAttribute("loginUser", userDTO);
 		
+		//lastLogonDate不用了
+		//用Login表记录用户登录情况
 		//更新上次登录时间
 		// 设置新的lastLogonDate时间
-		userService.setNewLastLogonDate(super.getModel());
+		//userService.setNewLastLogonDate(super.getModel());
+		
+		//添加一条用户登录记录
+		LoginDTO loginDTO = new LoginDTO();
+		loginDTO.setLoginDate(new Date());
+		loginDTO.setUserId(userDTO.getUserId());
+		loginDTO.setLoginIp(request.getRemoteAddr());
+		loginService.addLoginRecord(loginDTO);
 			
 		//记住密码部分逻辑
 		//生成用户名cookie和密码cookie
