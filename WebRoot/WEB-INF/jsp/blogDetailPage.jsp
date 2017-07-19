@@ -64,7 +64,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     
                     
                     
-                <a href="${pageContext.request.contextPath}/user/Menu_blogAddPage.action">编写博客</a>
+                
                   <c:if test="${not empty sessionScope.loginUser}">
                     	  Hi : ${sessionScope.loginUser.userName}
                     	<a href="${pageContext.request.contextPath}/user/User_signOut.action">signOut</a>
@@ -103,74 +103,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
         <div class="row">
 
+
             <div class="col-md-8 ">
             
             
-            
-            
-            
-            
-            
-            <c:forEach items="${requestScope.blogDTOList}" var="blogDTO">
-           
-            	
                 <div class="blog-post">
-                    <h2>${blogDTO.blogTitle}</h2>
-                    <h4>Posted by <a href="#">${sessionScope.loginUser.userName}</a> on ${blogDTO.blogCreateDate} </h4>
-                    <p>
-                        ${blogDTO.blogContentText}
-                    </p>
-                    <a href="${pageContext.request.contextPath}/user/Blog_detailPage.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg ">Read More <i class="fa fa-angle-right"></i></a>
-                </div>
-             </c:forEach> 
-                
-                
-                
-                
-                
-                
-                
-                <div class="blog-post">
-                    <h2>Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.</h2>
-                    <h4>Posted by <a href="#">admin</a> on 24th January 2015 </h4>
+                    <h2>${requestScope.blogDTO.blogTitle}</h2>
+                    <h4>Posted by <a href="#">${sessionScope.loginUser.userName}</a> on on ${blogDTO.blogCreateDate} </h4>
                     <p>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
 Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
+						${requestScope.blogDTO.blogContent}
                     </p>
-                    <a href="#" class="btn btn-default btn-lg ">Read More <i class="fa fa-angle-right"></i></a>
                 </div>
-                <div class="blog-post">
-                    <h2>Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.</h2>
-                    <h4>Posted by <a href="#">admin</a> on 24th January 2015 </h4>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-                    </p>
-                    <a href="#" class="btn btn-default btn-lg ">Read More <i class="fa fa-angle-right"></i></a>
-                </div>
+                
 
                 <br />
-                <nav>
-                    <ul class="pagination">
-                        <li>
-                            <a href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li>
-                            <a href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+               
             </div>
             <div class="col-md-1"></div>
             <div class="col-md-3" style="padding-top: 30px;">
@@ -218,7 +168,3 @@ Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
 
 </body>
 </html>
-
-  	
-  		<a href="${pageContext.request.contextPath}/user/Menu_blogAddPage.action">编写博客</a>
-

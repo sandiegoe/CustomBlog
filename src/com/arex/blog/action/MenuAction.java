@@ -1,6 +1,7 @@
 package com.arex.blog.action;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -8,8 +9,10 @@ import javax.servlet.http.HttpSession;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.arex.blog.dto.BlogDTO;
 import com.arex.blog.dto.MenuDTO;
 import com.arex.blog.dto.UserDTO;
+import com.arex.blog.service.BlogService;
 import com.arex.blog.service.LoginService;
 import com.arex.blog.service.UserService;
 
@@ -21,6 +24,8 @@ public class MenuAction extends CommonAction<MenuDTO> {
 	private UserService userService;
 	@Resource(name="loginServiceImpl")
 	private LoginService loginService;
+	@Resource(name="blogServiceImpl")
+	private BlogService blogService;
 	
 
 	public String home() {
@@ -40,7 +45,13 @@ public class MenuAction extends CommonAction<MenuDTO> {
 		return "photo";
 	}
 	
+	//查询所有用户的博客
+	//跳转到博客主页面
 	public String blog() {
+		
+		List<BlogDTO> blogDTOList = blogService.searchAllBlog();
+		request.setAttribute("blogDTOList", blogDTOList);
+		
 		return "blog";
 	}
 	

@@ -53,4 +53,12 @@ public class BlogServiceImplTest {
 		BlogDTO blogDTO = blogService.searchBlogByBlogId(blogId);
 		System.out.println(blogDTO.getBlogTitle() + "    " + blogDTO.getBlogContent() + "    "+ blogDTO.getUserId());
 	}
+	
+	@Test
+	public void testSearchAllBlog() {
+		List<BlogDTO> userDTOList = blogService.searchAllBlog();
+		for (BlogDTO blogDTO : userDTOList) {
+			System.out.println(blogDTO.getBlogTitle() + "    " + blogDTO.getBlogContent() + "    "+ blogDTO.getUserId());
+		}
+	}
 }

@@ -39,14 +39,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<script type="text/javascript">
   	
   		function getText() {
-  			
+  			//获取隐藏域的元素
   			var blogContentText = document.getElementById("blogContentText");
-  			blogContentText.value = "124";
-  			alert('asdfasdf');
-  		
+  			//获取html内容
+  			var data = CKEDITOR.instances.blogContent.getData();
+  			//获取纯文本内容
+  			var stemTxt=CKEDITOR.instances.blogContent.document.getBody().getText();
+  			//设置到隐藏域blogContentText中，提交
+  			blogContentText.value = stemTxt;
   			
-  			
-  			 return false;
+  			 return true;
   		}
   		
   	</script>

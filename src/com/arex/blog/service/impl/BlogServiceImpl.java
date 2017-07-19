@@ -137,5 +137,22 @@ public class BlogServiceImpl implements BlogService {
 		}
 	}
 
+	@Override
+	public List<BlogDTO> searchAllBlog() {
+		
+		String hqlWhere = " where 1=1 ";
+		List<String> paramList = new ArrayList<String>();
+	
+		Object[] objects = null;
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("o.blogCreateDate", "desc");
+
+		
+		List<Blog> blogList = blogDAO.searchCollectionByConditionNoPage(hqlWhere, objects, orderby);
+		List<BlogDTO> blogDTOList = this.convertBlogPO2VO(blogList);
+		
+		return blogDTOList;
+	}
+
 
 }
