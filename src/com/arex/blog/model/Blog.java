@@ -1,5 +1,6 @@
 package com.arex.blog.model;
 
+import java.sql.Blob;
 import java.util.Date;
 
 import javax.persistence.Basic;
@@ -22,7 +23,7 @@ public class Blog {
 	private String blogId;
 	private String kindId;
 	private String blogTitle;
-	private String blogContent;
+	private Blob blogContent;
 	private String blogDescription;
 	private Date blogCreateDate;
 	private Date lastModifieDate;
@@ -30,7 +31,7 @@ public class Blog {
 	private int blogCommentCounts;
 	private String userId;
 
-	private String blogContentText;
+	private Blob blogContentText;
 
 	public Blog() {
 		super();
@@ -66,11 +67,11 @@ public class Blog {
 	@Lob
 	@Basic(fetch = FetchType.EAGER)
 	@Column(name = "blogContent", columnDefinition = "BLOB")
-	public String getBlogContent() {
+	public Blob getBlogContent() {
 		return blogContent;
 	}
 
-	public void setBlogContent(String blogContent) {
+	public void setBlogContent(Blob blogContent) {
 		this.blogContent = blogContent;
 	}
 
@@ -119,11 +120,11 @@ public class Blog {
 	@Lob
 	@Basic(fetch = FetchType.EAGER)
 	@Column(name = "blogContentText", columnDefinition = "BLOB")
-	public String getBlogContentText() {
+	public Blob getBlogContentText() {
 		return blogContentText;
 	}
 
-	public void setBlogContentText(String blogContentText) {
+	public void setBlogContentText(Blob blogContentText) {
 		this.blogContentText = blogContentText;
 	}
 
