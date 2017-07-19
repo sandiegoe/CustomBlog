@@ -1,5 +1,7 @@
 package com.arex.blog.action;
 
+import java.util.Date;
+
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -41,6 +43,10 @@ public class UserAction extends CommonAction<UserDTO> {
 	
 		//将userDTO保存到session中
 		session.setAttribute("loginUser", userDTO);
+		
+		//更新上次登录时间
+		// 设置新的lastLogonDate时间
+		userService.setNewLastLogonDate(super.getModel());
 			
 		//记住密码部分逻辑
 		//生成用户名cookie和密码cookie

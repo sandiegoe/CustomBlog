@@ -22,29 +22,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public UserDTO searchUserByUserName(UserDTO userDTO) {
+		UserDTO searchUserDTO = this.searchUserByUserName(userDTO.getUserName());
 		
-		String hqlWhere = " where 1=1 ";
-		List<String> paramsList = new ArrayList<String>();
-		if (userDTO!=null && userDTO.getUserName()!=null && !userDTO.getUserName().equals("")) {
-			hqlWhere += "and o.userName like ? ";
-			paramsList.add(userDTO.getUserName() + "%");
-		}
-		Object[] objects = paramsList.toArray();
-		LinkedHashMap<String, String> orderby = null;
-
-		List<User> userList = userDAO.findCollectionByConditionNoPage(hqlWhere, objects, orderby);
-		List<UserDTO> userDTOList = this.convertElecUserPO2VO(userList);
-		
-		
-		
-		if (userDTOList.size() >= 1) {
-			// 设置新的lastLogonDate时间
-			userDAO.setNewLastLogonDate(userDTOList.get(0).getUserId(), new Date());
-			return userDTOList.get(0);
-		} else {
-			return null;
-		}
-		
+		return searchUserDTO;
 	
 	}
 
@@ -98,6 +78,30 @@ public class UserServiceImpl implements UserService {
 		userDAO.changePassword(userDTO.getLogonPassword(), userDTO.getUserId());
 	
 	}
-	
 
+	@Override
+	public UserDTO searchUserByUserName(String userName) {
+		String hqlWhere = " where 1=1 ";
+		List<String> paramsList = new ArrayList<String>();
+		if (userName!=null && !"".equals(userName)) {
+			hqlWhere += "and o.userName like ? ";
+			paramsList.add(userName + "%");
+		}
+		Object[] objects = paramsList.toArray();
+		LinkedHashMap<String, String> orderby = null;
+
+		List<User> userList = userDAO.searchCollectionByConditionNoPage(hqlWhere, objects, orderby);
+		List<UserDTO> userDTOList = this.convertElecUserPO2VO(userList);
+		
+		if (userDTOList.size() >= 1) {
+			return userDTOList.get(0);
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public void setNewLastLogonDate(UserDTO userDTO) {
+		userDAO.setNewLastLogonDate(userDTO.getUserId(), new Date());
+	}
 }

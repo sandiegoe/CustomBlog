@@ -50,5 +50,4 @@ public class UserDAOImpl extends CommonDAOImpl<User> implements UserDAO {
 			}
 		});
 	}
-
 }

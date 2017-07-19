@@ -13,6 +13,9 @@ public class BlogDTO {
 	private Date lastModifieDate;
 	private int blogReadCounts;
 	private int blogCommentCounts;
+	private String userId;
+	
+	private String blogContentText;
 
 	public BlogDTO() {
 		super();
@@ -89,6 +92,22 @@ public class BlogDTO {
 
 	public void setBlogCommentCounts(int blogCommentCounts) {
 		this.blogCommentCounts = blogCommentCounts;
+	}
+
+	public String getBlogContentText() {
+		return blogContentText;
+	}
+
+	public void setBlogContentText(String blogContentText) {
+		this.blogContentText = blogContentText;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 }

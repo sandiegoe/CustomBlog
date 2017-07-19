@@ -50,9 +50,21 @@
 		</action>
 		
 		<action name="Blog_*" class="blogAction" method="{1}">
-			
+			<result name="add" type="redirectAction">
+				<param name="actionName">Menu_blog.action</param>
+				<param name="namespace">/user</param>
+			</result>
+			<result name="signInPage" type="redirectAction">
+				<param name="actionName">Menu_signInPage.action</param>
+				<param name="namespace">/user</param>
+			</result>
+			<allowed-methods>add</allowed-methods>
 		</action>
 
+		<action name="File_*" class="fileAction" method="{1}">
+			<result name="uploadPhoto">/WEB-INF/jsp/blog.jsp</result>
+			<allowed-methods>uploadPhoto</allowed-methods>
+		</action>
 	</package>
 
 	

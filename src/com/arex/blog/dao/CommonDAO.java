@@ -11,18 +11,18 @@ public interface CommonDAO<T> {
 	
 	public void saveCollection(Collection<T> collection);
 	
-	public T findById(Serializable id);
+	public T searchById(Serializable id);
 	
-	public List<T> findByIds(Serializable[] ids);
+	public List<T> searchByIds(Serializable[] ids);
 	
 	public void deleteById(Serializable id);
 	
 	public void update(T t);
 	
-	public List<T> findCollectionByConditionNoPage(String hqlWhere, Object[] objects, LinkedHashMap<String, String> orderby);
+	public List<T> searchCollectionByConditionNoPage(String hqlWhere, Object[] objects, LinkedHashMap<String, String> orderby);
 	
 	public void deleteByCollection(Collection<T> collection);
 	
-//	public List<T> findCollectionByConditionWithPage(String hqlWhere,
+//	public List<T> searchCollectionByConditionWithPage(String hqlWhere,
 //			final Object[] objects, LinkedHashMap<String, String> orderby, PageInfo pageInfo);
 }
