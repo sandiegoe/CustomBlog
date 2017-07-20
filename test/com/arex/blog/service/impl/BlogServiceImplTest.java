@@ -61,4 +61,13 @@ public class BlogServiceImplTest {
 			System.out.println(blogDTO.getBlogTitle() + "    " + blogDTO.getBlogContent() + "    "+ blogDTO.getUserId());
 		}
 	}
+	
+	@Test
+	public void testDeleteBlogByBlogId() {
+		String blogId = "ff8081815d5b9d42015d5ba118e50004";
+		BlogDTO blogDTO = new BlogDTO();
+		blogDTO.setBlogId(blogId);
+		
+		blogService.deleteBlogByBlogId(blogDTO);
+	}
 }

@@ -1,0 +1,249 @@
+项目名称 ：Blog
+
+
+采用技术：
+myeclipse2014,  mysql, struts, spring, hibernate, tomcat
+ckeditor，bootstrap
+
+实现功能:
+
+
+登陆注册
+     更改密码
+个人中心 (personal)
+日志编写修改删除
+照片管理
+留言板功能
+
+Action部分   example : Menu_signIn  
+MenuAction负责页面中的公共链接跳转
+
+	Menu_home.action  主页面
+		通过在web.xml中设置welcome-file，用户在输入http://localhost:8080/Blog时访问WebRoot目录下的index.jsp
+			<welcome-file-list>
+				<welcome-file>index.jsp</welcome-file>
+			</welcome-file-list>
+		index.jsp中 forward 到 Menu_home.action, 查询所有博客，设置到requst中，"blogDTOList" : blogDTOList
+		最后跳转到/WEB-INF/jsp/index.jsp页面
+    Menu_signInPage.action （可选）用户登陆页面
+    Menu_registerPage.action  用户注册页面
+    Menu_photo.action  用户图片页面
+    Menu_blog.action 用户博客主页面
+    	判断当前用户是否登录
+    		如果已经登录则查询当前用户的所有博客
+    		如果没有登录则查询所有博客
+    	将查询到的List<BlogDTO>设置到request中去, "blogDTOList" : blogDTOList
+    Menu_message.action 用户留言板页面
+    Menu_changePasswordPage.action  更改用户密码页面
+    Menu_personalPage.action 个人中心页面
+        个人信息从session中获取
+        其它信息，待添加
+    Menu_blogAddPage.action  博客添加页面
+    	判断当期用户是否登录
+    		如果没有登录，则跳转到signInPage，提示用户登录
+			如果已经登录，则跳转到blogAddPage.jsp
+	Menu_blogDetailPage.action  博客详情页面
+		获取列表页面传递的blogId
+		判断blogId是否存在
+			如果不存在则设置messageInfo为 当前Blog不存在
+		通过blogId调用blogService层查询BlogDTO
+		判断BlogDTO是否存在
+			如果不存在，则设置messageInfo为 当前Blog不存在
+		将获取到的blogDTO设置到request中去，跳转到blogDetailPage.jsp中
+	Menu_blogEditPage.action  博客编辑页面
+		获取列表页面传递的blogId
+		判断blogId是否为空
+			如果指定的blogId不存在，设置messageIfo为 当前Blog不存在 跳转到列表页面
+		调用blogService查询指定blogId, 判断获取到的blogDTO是否为空
+			如果blogDTO为空，则设置messageInfo 为 当前Blog不存在
+		将获取到的blogDTO设置到request中去，跳转到blogEditPage.jsp中
+		
+			
+UserAction   （类似于我的）
+
+    User_signIn.action  用户登陆
+        调用UserService的searchUserByUserName(String userName);
+        返回值为当前用户名的User, 检查返回User中的password，如果和表单提交的密码一致，则登陆成功, 跳转到主页index.jsp(并将返回的User添加到    Session中)
+        如果返回的User为null, 设置messageInfo为: 当前的用户名不存在，登陆失败，跳转主页index.jsp
+        如果返回User不为null, User中的密码和表单提交的密码不一致，设置messageInfo: 密码不正确， 登陆失败，跳转到index.jsp
+    User_register.action   用户注册，通过表单传递UserDTO，持久化到数据库中去
+    User_changePassword:  从changePasswordPage.jsp传递的UserDTO中携带原密码，新密码和重复密码项
+        验证原密码是否为空，如果为空设置messageInfo：原密码不能为空
+        验证新密码和重复密码是否一致（对密码的要求性检查：包含数字，小写字母，大写字母，特殊字符，产能），不一致，设置messageInfo：新密码和重复密码输入不一致
+        从session中获取当前用户，从数据库中重新查询该用户，验证原密码是否一致  如果不一致,设置messageInfo: 原密码输入错误。如果一致，则修改用户的密码
+        对应UserDTO中，修改密码时：logonPassword代表新密码， confimPassword代表重复密码， olderPassword代表原密码
+	User_signOut.action  用户退出页面
+		检查session中loginUser是否为空
+			如果不为空，则移除session中的loginUser
+        最后跳转到Menu_home.action
+
+ BlogAction 负责日志的发布，修改，删除等等
+
+    Blog_add.action  添加博客
+    	blogAddPage.jsp通过input隐藏域提交一个usrId，检查提交的userId是否为空
+    		如果为空，则设置messageInfo为请重新登录， 然后跳转到signInPage.jsp
+    		如果不为空，调用blogService层将BlogDTO保存到数据库中去
+    Blog_edit.action
+    	获取从blogEditPage.jsp中添加的blogDTO对象，获取blogDTO中的bloId
+    	判断blogId是否为空
+    		如果为空，则重新跳转到Blog的编辑页面
+    	调用blogService层的searchBlogByBlogId查询blogDTO，判断blogDTO是否为空
+    		如果blogDTO为空，则设置messageInfo 当前博客不存在，跳转到博客列表页面(Menu_blog.action)
+    	调用Service层updateBlog, 将blogTitle， blogContent， blogContentText.. 持久化到数据库中
+    	编辑完成，跳转到用户博客列表页面（Menu_blog.action）
+    Blog_delete.action
+    	获取blog.jsp传递过来的blogId
+    	对blogId进行判断
+    		如果为空，则设置messageInfo 为 删除的博客不存在
+    	调用blogService层deleteBlog(BlogDTO) 删除blog
+    		service层中，通过调用userDAO.deleteById(id);完成删除
+    	跳转到博客列表页面(Menu_blog.action)
+    	
+
+
+PhotoAction 部分实现上传图片, 删除图片，下载图片等等
+
+    Photo_list.action
+    Photo_addPage.action
+    Photo_add.action
+    Photo_editPage.action
+    Photo_delete.action 
+    Photo_download.action
+
+
+MessageAction 负责留言管理
+
+    Message_list.action
+    Message_addPage.action
+    Message_add.action
+    Message_editPage.action
+    Message_delete.action
+
+
+CommonAction  公共的Action，定义公有的属性和方法，其它所有Action直接从ComonAction继承
+	继承ActionSupport，实现ServletRequestAware, ServletResponseAware, ModelDriven<T>接口
+	构造方法中通过反射，new出一个运行时子类泛型的类型的对象(DTO) model
+	设置request. response, session, application
+	实现getMode方法，返回相应的一个DTO对象
+
+FileAction 
+	File_uploadPhoto.action ckeditor中上传一张图片
+
+
+
+
+
+Service
+MenuService   
+
+
+UserService
+
+    User searchUserByUserName(String username)  
+        username为登陆用户名
+        返回值为当前用户名的User, 检查返回User中的password，如果和表单提交的密码一致，则登陆成功, 跳转到主页index.jsp(并将返回的User添加到Session中)
+        如果返回的User为null, 设置messageInfo为: 当前的用户名不存在，登陆失败，跳转主页index.jsp
+        如果返回User不为null, User中的密码和表单提交的密码不一致，设置messageInfo: 密码不正确， 登陆失败，跳转到index.jsp
+    void addUser(UserDTO userDTO);
+        user为添加的用户
+        返回值为空
+	void changePassword(UserDTO userDTO)
+		调用userDAO层chagePassword，更新密码
+		userDTO中包含要更新的新密码
+	void setNewLastLogonDate(UserDTO userDTO)  @Deprecated
+		设置当前用户的上一次登录时间
+		userDTO中包含要更新的用户Id
+		过时不使用，上一次登录时间通过查询登录情况统计表获取上一次的登录时间
+	public UserDTO searchUserByUserId(UserDTO userDTO);
+		查询指定userId的用户名
+		UserDTO中携带着要查询的userId参数
+		返回的是查询的后的UserDTO
+		获取userDTO中的userId，调用searchUserByUserId(String userId)
+	public UserDTO searchUserByUserId(String userId);
+		查询指定userId的用户名
+		userId为要查找到的用户Id
+		返回的是查询的后的UserDTO
+
+BlogService
+
+    List<BlogDTO> searchAllBlogByUserName(String userName);
+    	查询指定userName的所有博客
+        userName为待查找的用户名
+        返回值为当前用户的所有BlogDTO
+        通过调用userService层查询userName对应的userId，然后调用searchAllBlogByUserId
+    List<BlogDTO> searchAllBlogByUserId(String userId);
+    	查找指定userId的所有博客
+    	userId为待查找用户的userId
+    	返回值为指定userId的所有的博客
+    	通过调用DAO层searchCollectionByConditionNoPage，按照发表时间降序排列，得到所有博客
+    List<BlogDTO> searchAllBlog();
+    	查找所有博客，并按照博客的发表时间降序排列
+    BlogDTO searchBlogByBlogId(String blogId);
+    	查找指定blogId的blogDTO
+        blogId 为Blog的Id
+        返回值为搜索的BlogDTO
+    public void saveBlog(BlogDTO blogDTO);
+    	保存一个博客blogDTO
+       	blogDTO为待添加的blogDTO对象
+		首先将VO blogDTO对象转换为PO blog对象
+		调用DAO层将blog对象持久化到数据库中去
+		
+		在VO blogDTO 和 PO blog对象相互转化时，要对PO中的blogContent和blogContentText特殊处理， 它们两个都是Blob类型
+		如果直接转换为String会出现页面显示中文乱码
+	public void updateBlog(BlogDTO blogDTO)
+		更新博客
+		将blogDTO中的blogTitle， blogContent， blogContentText.. 持久化到数据库中
+    	编辑完成，跳转到用户博客列表页面（Menu_blog.action）
+    public void deleteBlogByBlogId(String blogId);
+    	删除指定blogId的博客
+    	blogId为博客的Id
+	
+LoginService  用户登录情况管理的Service
+	public void addLoginRecord(LoginDTO loginDTO);
+		增加一条登录记录
+		loginDTO为登录的详细信息
+		将 VO loginDTO 转换为 PO login 
+		判断login是否为空
+			如果不为空，调用loginDAO保存一个login
+	public List<LoginDTo> searchLoginByUserId(String userId);
+		通过userId查找登录记录列表
+		userId为要查找登录用户的Id
+		返回的是指定用户的所有登录情况
+	public List<LoginDTo> searchLoginByUserName(String userName);
+		通过userName查找登录记录列表
+		userName为要查找登录用户姓名
+		返回的是指定用户的所有登录情况
+		查找指定userName对应的userId， 判断是否为空
+			如果为空，return null
+		调用searchLoginByUserId，传入userId，查询所有登录情况
+	public Date searchLastLoginDateByUserId(String userId);
+		调用searchLoginByUserId查询所有登录情况，并按照登录时间loginDate降序排列， loginDateList
+		判断loginDateList是否为空
+			如果不为空，且长度为1, 则直接返回第一条记录的登录时间  如果当前用户第一次登录，则上次登录时间即为本次登录时间
+			如果不为空，其长度大于1， 则返回第二条记录的登录时间[取出第二条记录，即为上一次的登录时间     本次登录，会立即添加一条记录，所以取上次登录时间，为第二条记录]
+		
+	public Date searchLastLoginDateByUserName(String userName);
+		取出指定userName的userId， 判断useId
+		调用searchLastLoginDateByUserId获取登录时间
+		
+PhotoService
+
+messageService
+
+dao
+查search
+删delete
+增add
+改update
+
+login
+register
+forgetPassword
+
+
+userAction_toList           
+userAction_add
+userAction_addPage            userAction_toList
+userAction_delete
+userAction_update
+userAction_updatePage       userAction_toList

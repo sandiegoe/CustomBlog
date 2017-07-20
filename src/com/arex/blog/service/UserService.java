@@ -10,4 +10,6 @@ public interface UserService {
 	public void changePassword(UserDTO userDTO);
 	public UserDTO searchUserByUserName(String userName);
 	public abstract void setNewLastLogonDate(UserDTO userDTO);
+	public UserDTO searchUserByUserId(UserDTO userDTO);
+	public UserDTO searchUserByUserId(String userId);
 }

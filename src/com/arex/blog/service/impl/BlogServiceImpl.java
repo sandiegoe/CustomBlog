@@ -14,6 +14,7 @@ import javax.annotation.Resource;
 import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
 
+import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Component;
 
 import com.arex.blog.dao.BlogDAO;
@@ -124,6 +125,7 @@ public class BlogServiceImpl implements BlogService {
 			blog.setBlogTitle(blogDTO.getBlogTitle());
 			blog.setLastModifieDate(new Date());
 			blog.setUserId(blogDTO.getUserId());
+			blog.setBlogId(blogDTO.getBlogId());
 			// TODO 博客分类
 			blog.setKindId("1");
 		}
@@ -190,6 +192,8 @@ public class BlogServiceImpl implements BlogService {
 			blogDTO.setKindId(blog.getKindId());
 			blogDTO.setLastModifieDate(blog.getLastModifieDate());
 			blogDTO.setUserId(blog.getUserId());
+			//设置blogDTO中的用户名
+			blogDTO.setUserName(userService.searchUserByUserId(blog.getUserId()).getUserName());
 			blogDTOList.add(blogDTO);
 		}
 		return blogDTOList;
@@ -226,5 +230,41 @@ public class BlogServiceImpl implements BlogService {
 		}
 		
 		return blob;
+	}
+
+	@Override
+	public void updateBlog(BlogDTO blogDTO) {
+		//用于将 用于将 VO blogDTO 对象转化为 PO blog对象，只转换部分需要用于更新的属性
+		//blogContent， blogContentText， blogContentTitle, lastModifieDate, blogId(用于指定待删除的blogId)
+		//TODO  ERROR  因为要部分更新属性
+	    //Blog blog = convertBlogVO2PO(blogDTO);
+		Blog blog = convertBlogVO2POForUpdate(blogDTO);
+
+		blogDAO.updateBlog(blog);
+	}
+	
+	//convertBlogVO2POForUpdate  用于将 VO blogDTO 对象转化为 PO blog对象，只转换部分需要用于更新的属性
+	//blogContent， blogContentText， blogContentTitle, lastModifieDate, blogId(用于指定待删除的blogId)
+	public Blog convertBlogVO2POForUpdate(BlogDTO bloDTO) {
+		Blog blog = null;
+
+		if (blogDAO != null) {
+			blog = new Blog();
+			blog.setBlogContent(getBlobFromString(bloDTO.getBlogContent()));
+			blog.setBlogContentText(getBlobFromString(bloDTO.getBlogContentText()));
+			blog.setBlogTitle(bloDTO.getBlogTitle());
+			blog.setLastModifieDate(new Date());
+			blog.setBlogId(bloDTO.getBlogId());
+			// TODO 博客分类
+			blog.setKindId("1");
+		}
+
+		return blog;
+	}
+
+	@Override
+	public void deleteBlogByBlogId(BlogDTO blogDTO) {
+		//删除指定blogId的博客
+		blogDAO.deleteById(blogDTO.getBlogId());
 	}
 }

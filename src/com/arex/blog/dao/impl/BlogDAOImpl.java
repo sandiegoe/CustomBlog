@@ -1,7 +1,5 @@
 package com.arex.blog.dao.impl;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.hibernate.HibernateException;
@@ -18,6 +16,7 @@ public class BlogDAOImpl extends CommonDAOImpl<Blog> implements BlogDAO {
 
 	@Resource(name="hibernateTemplate")
 	private HibernateTemplate hibernateTemplate;
+
 
 	/*@Override
 	public List<Blog> searchAllBlog() {
@@ -36,5 +35,20 @@ public class BlogDAOImpl extends CommonDAOImpl<Blog> implements BlogDAO {
 		return null;
 	}*/
 	
-	
+	@Override
+	public void updateBlog(final Blog blog) {
+		
+		hibernateTemplate.execute(new HibernateCallback<Object>() {
+			@Override
+			public Object doInHibernate(Session session) throws HibernateException {
+				session.createQuery("update Blog blog set blog.blogContent=:blogContent, blog.blogContentText=:blogContentText, blog.blogTitle=:blogTitle where blog.blogId=:blogId")
+					.setParameter("blogContent", blog.getBlogContent())
+					.setParameter("blogContentText", blog.getBlogContentText())
+					.setParameter("blogTitle", blog.getBlogTitle())
+					.setParameter("blogId", blog.getBlogId())
+					.executeUpdate();
+				return null;
+			}
+		});
+	}
 }

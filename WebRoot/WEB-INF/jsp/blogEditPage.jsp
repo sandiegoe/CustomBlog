@@ -22,6 +22,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link href="${pageContext.request.contextPath}/css/font-awesome.css" rel="stylesheet" />
     <!-- CUSTOM STYLE CSS -->
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" />
+    <script src="${pageContext.request.contextPath}/ckeditor/ckeditor.js"></script>
 </head>
 <body>
 <br/>
@@ -103,43 +104,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
         <div class="row">
 
-
-            <div class="col-md-8 ">
-            
-            
-                <div class="blog-post">
-                    <h2>${requestScope.blogDTO.blogTitle}</h2>
-                    <h4>Posted by <a href="#">${sessionScope.loginUser.userName}</a> on on ${blogDTO.blogCreateDate} </h4>
-                    <p>
-						${requestScope.blogDTO.blogContent}
-                    </p>
-                </div>
+            <div class="col-md-12 ">
+              
+          <form action="${pageContext.request.contextPath}/user/Blog_edit.action" method="post">
+          <input type="hidden" name="blogId" value="${requestScope.blogDTO.blogId}"/>
+    	文章标题: <input type="text" name="blogTitle" value="${requestScope.blogDTO.blogTitle}" style="width:742px;"/><br/>
+  		文章内容:<textarea name="blogContent" id="blogContent" rows="50">${requestScope.blogDTO.blogContent}</textarea>
+  		<script type="text/javascript">
+  			CKEDITOR.replace('blogContent', {"filebrowserUploadUrl" : "${pageContext.request.contextPath}/user/File_uploadPhoto.action", height:"500px", width:"800px"});
+  		</script>
+  		<input type="hidden" name="blogContentText" id="blogContentText"/>
+  		<input type="hidden" name="userId" value="${sessionScope.loginUser.userId}"/>
+  		<input type="submit" value="提交" id="sb" onclick="return getText();"/>
+  		</form>
                 
-
-                <br />
-               
             </div>
-            <div class="col-md-1"></div>
-            <div class="col-md-3" style="padding-top: 30px;">
-				<div class="row">
-                <ul class="list-group">
-                    <li class="list-group-item"><strong>CATEGORIES</strong></li>
-                    <li class="list-group-item">Dapibus ac facilisis in</li>
-                    <li class="list-group-item">Morbi leo risus</li>
-                    <li class="list-group-item">Porta ac consectetur ac</li>
-                    <li class="list-group-item">Vestibulum at eros</li>
-                    <li class="list-group-item">Dapibus ac facilisis in</li>
-                    <li class="list-group-item">Morbi leo risus</li>
-                    <li class="list-group-item">Porta ac consectetur ac</li>
-                    <li class="list-group-item">Vestibulum at eros</li>
-                </ul>
-				</div>
-				<div class="row">
-				<h3>Advertising</h3>
-				
-
-				</div>
-            </div>
+           
 
         </div>
 
@@ -162,6 +142,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script src="${pageContext.request.contextPath}/js/jquery-1.11.1.js"></script>
     <!-- BOOTSTRAP SCRIPTS -->
     <script src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
-
+    <script type="text/javascript">
+  	
+  		function getText() {
+  			//获取隐藏域的元素
+  			var blogContentText = document.getElementById("blogContentText");
+  			//获取html内容
+  			var data = CKEDITOR.instances.blogContent.getData();
+  			//获取纯文本内容
+  			var stemTxt=CKEDITOR.instances.blogContent.document.getBody().getText();
+  			//设置到隐藏域blogContentText中，提交
+  			blogContentText.value = stemTxt;
+  			
+  			 return true;
+  		}
+  	</script>
 </body>
 </html>
+

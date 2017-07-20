@@ -52,28 +52,21 @@ public class CommonDAOImpl<T> implements CommonDAO<T> {
 	@Override
 	public void deleteById(Serializable id) {
 		Class clazz = GenericUtils.getActualClass(this.getClass());
-		String simpleName = clazz.getSimpleName();  //User
-		String rename = simpleName.substring(0, 1).toLowerCase()
-				+ simpleName.substring(1);   //user
-		String strTemp = simpleName.substring(simpleName.indexOf("Elec") + 4);
-		String strID = new StringBuilder()
-				.append(Character.toLowerCase(strTemp.charAt(0)))
-				.append(strTemp.substring(1)).append("ID").toString();
+		String simpleName = clazz.getSimpleName();  //Blog
+		String rename = simpleName.substring(0, 1).toLowerCase() + simpleName.substring(1);   //blog
+		String strID = new StringBuilder().append(rename).append("Id").toString();
 
-		System.out.println(simpleName);
-		System.out.println(rename);
-		System.out.println(strTemp);
-		System.out.println(strID);
-		System.out.println("delete from " + simpleName + " " + rename
-				+ " where " + rename + "." + strID + " =: " + strID);
+//		System.out.println(simpleName);
+//		System.out.println(rename);
+//		System.out.println(strID);
+		//delete from Blog blog where blog.blogId =: blogId
+//		System.out.println("delete from " + simpleName + " " + rename
+//				+ " where " + rename + "." + strID + " =: " + strID);
 
-		hibernateTemplate
-				.getSessionFactory()
-				.getCurrentSession()
-				.createQuery(
-						"delete from " + simpleName + " " + rename + "  where "
-								+ rename + "." + strID + " =:" + strID)
-				.setParameter(strID, id).executeUpdate();
+		hibernateTemplate.getSessionFactory().getCurrentSession().createQuery(
+			"delete from " + simpleName + " " + rename + "  where " + rename + "." + strID + " =:" + strID)
+			.setParameter(strID, id)
+			.executeUpdate();
 
 	}
 

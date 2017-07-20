@@ -11,6 +11,7 @@ import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Component;
 
 import com.arex.blog.dao.UserDAO;
+import com.arex.blog.model.Blog;
 import com.arex.blog.model.User;
 
 @Component("userDAOImpl")
@@ -36,6 +37,7 @@ public class UserDAOImpl extends CommonDAOImpl<User> implements UserDAO {
 	}
 
 
+	@Deprecated
 	@Override
 	public void setNewLastLogonDate(final String userId, final Date lastLogonDate) {
 		hibernateTemplate.execute(new HibernateCallback<String>() {
@@ -50,4 +52,6 @@ public class UserDAOImpl extends CommonDAOImpl<User> implements UserDAO {
 			}
 		});
 	}
+
+	
 }

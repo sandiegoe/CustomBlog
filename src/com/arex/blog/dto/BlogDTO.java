@@ -16,6 +16,8 @@ public class BlogDTO {
 	private String userId;
 	
 	private String blogContentText;
+	
+	private String userName;
 
 	public BlogDTO() {
 		super();
@@ -120,6 +122,14 @@ public class BlogDTO {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 }
