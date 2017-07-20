@@ -36,6 +36,7 @@ public class UserDAOImpl extends CommonDAOImpl<User> implements UserDAO {
 	}
 
 
+	@Deprecated
 	@Override
 	public void setNewLastLogonDate(final String userId, final Date lastLogonDate) {
 		hibernateTemplate.execute(new HibernateCallback<String>() {

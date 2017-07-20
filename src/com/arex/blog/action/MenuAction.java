@@ -16,96 +16,143 @@ import com.arex.blog.service.BlogService;
 import com.arex.blog.service.LoginService;
 import com.arex.blog.service.UserService;
 
-@Component(value="menuAction")
-@Scope(value="prototype")
+@Component(value = "menuAction")
+@Scope(value = "prototype")
 public class MenuAction extends CommonAction<MenuDTO> {
 
-	@Resource(name="userServiceImpl")
+	@Resource(name = "userServiceImpl")
 	private UserService userService;
-	@Resource(name="loginServiceImpl")
+	@Resource(name = "loginServiceImpl")
 	private LoginService loginService;
-	@Resource(name="blogServiceImpl")
+	@Resource(name = "blogServiceImpl")
 	private BlogService blogService;
-	
 
 	public String home() {
-		
+
 		List<BlogDTO> blogDTOList = blogService.searchAllBlog();
 		request.setAttribute("blogDTOList", blogDTOList);
-		
+
 		return "home";
 	}
-	
+
 	public String signInPage() {
 		return "signInPage";
 	}
-	
+
 	public String registerPage() {
 		return "registerPage";
 	}
-	
+
 	public String photo() {
 		return "photo";
 	}
-	
-	//查询所有用户的博客
-	//跳转到博客主页面
+
+	// 查询所有用户的博客
+	// 跳转到博客主页面
 	public String blog() {
-		
+
 		List<BlogDTO> blogDTOList = blogService.searchAllBlog();
 		request.setAttribute("blogDTOList", blogDTOList);
-		
+
 		return "blog";
 	}
-	
+
 	public String message() {
 		return "message";
 	}
-	
+
 	public String changePasswordPage() {
-		
+
 		return "changePasswordPage";
 	}
-	
-	//个人中心
-	//添加上次登录时间
+
+	// 个人中心
+	// 添加上次登录时间
 	public String personalPage() {
 
-		//判断用户是否已经登录
+		// 判断用户是否已经登录
 		boolean isLogin = checkUserIsAlreadyLogin(session);
 		if (!isLogin) {
-			//没有登录，跳转到signInPage.jsp
+			// 没有登录，跳转到signInPage.jsp
 			return "signInPage";
-		} 
+		}
 		UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
-		Date lastLoginDate = loginService.searchLastLoginDateByUserId(loginUser.getUserId());
+		Date lastLoginDate = loginService.searchLastLoginDateByUserId(loginUser
+				.getUserId());
 		request.setAttribute("lastLoginDate", lastLoginDate);
 		return "personalPage";
 	}
-	
+
 	/*
-	 * 跳转到添加博客页面
-	 * 需要判断是否登录，如果没有登录，则跳转到用户登录页面，让用户选择登录，如果已经登录，则直接跳转到博客添加页面
+	 * 跳转到添加博客页面 需要判断是否登录，如果没有登录，则跳转到用户登录页面，让用户选择登录，如果已经登录，则直接跳转到博客添加页面
 	 */
 	public String blogAddPage() {
-		//判断用户是否已经登录
+		// 判断用户是否已经登录
 		boolean isLogin = checkUserIsAlreadyLogin(session);
-		
+
 		if (!isLogin) {
-			//没有登录，跳转到signInPage.jsp
+			// 没有登录，跳转到signInPage.jsp
 			return "signInPage";
-		} 
-		
+		}
+
 		return "blogAddPage";
 	}
-	
+
 	public static boolean checkUserIsAlreadyLogin(HttpSession session) {
-		
+
 		UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
 		if (loginUser == null) {
 			return false;
 		} else {
 			return true;
 		}
+	}
+
+	public String blogEditPage() {
+
+		// 获取列表页面传递的blogId
+		String blogId = super.getModel().getBlogId();
+
+		// 调用blogService查询指定blogId
+		// 如果指定的blogId不存在，跳转到列表页面
+		if (blogId == null || "".equals(blogId)) {
+			request.setAttribute("messageInfo", "当前Blog不存在");
+			return "toBlog";
+		}
+		BlogDTO blogDTO = blogService.searchBlogByBlogId(blogId);
+		// 判断查询的blog是否存在
+		if (blogDTO == null) {
+			request.setAttribute("messageInfo", "当前Blog不存在");
+			return "toBlog";
+		}
+
+		// 设置到request中"blogDTO" : blogDTO
+		request.setAttribute("blogDTO", blogDTO);
+
+		return "blogEditPage";
+	}
+	
+	public String blogDetailPage() {
+		
+		//获取列表页面传递的blogId
+		String blogId = super.getModel().getBlogId();
+		
+		//调用blogService查询指定blogId
+		//如果指定的blogId不存在，跳转到列表页面
+		if (blogId==null || "".equals(blogId)) {
+			request.setAttribute("messageInfo", "当前Blog不存在");
+			return "toBlog";
+		}
+		BlogDTO blogDTO = blogService.searchBlogByBlogId(blogId);
+		//判断查询的blog是否存在
+		if (blogDTO == null) {
+			request.setAttribute("messageInfo", "当前Blog不存在");
+			return "toBlog";
+		}
+		
+		//设置到request中"blogDTO" : blogDTO
+		request.setAttribute("blogDTO", blogDTO);
+		
+		return "blogDetailPage";
 	}
 }

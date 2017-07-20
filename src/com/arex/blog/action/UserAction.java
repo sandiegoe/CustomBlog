@@ -95,6 +95,7 @@ public class UserAction extends CommonAction<UserDTO> {
 		UserDTO userDTO = (UserDTO) session.getAttribute("loginUser");
 		if (userDTO != null) {
 			session.removeAttribute("loginUser");
+			session.invalidate();
 		}
 		
 		return "signOut";

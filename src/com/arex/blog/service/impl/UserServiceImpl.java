@@ -25,10 +25,44 @@ public class UserServiceImpl implements UserService {
 		UserDTO searchUserDTO = this.searchUserByUserName(userDTO.getUserName());
 		
 		return searchUserDTO;
+	}
 	
+	@Override
+	public UserDTO searchUserByUserId(UserDTO userDTO) {
+		
+		UserDTO searchUserDTO = this.searchUserByUserId(userDTO.getUserId());
+		return searchUserDTO;
+	}
+	
+	@Override
+	public UserDTO searchUserByUserId(String userId) {
+		User user = userDAO.searchById(userId);
+		UserDTO userDTO = this.convertUserPO2VO(user);
+		return userDTO;
 	}
 
-	private List<UserDTO> convertElecUserPO2VO(List<User> userList) { 
+	private UserDTO convertUserPO2VO(User user) {
+		
+		UserDTO userDTO = null;
+		if (user != null) {
+			userDTO = new UserDTO();
+			userDTO.setAddress(user.getAddress());
+			userDTO.setBirthdate(user.getBirthdate());
+			userDTO.setContactTel(user.getContactTel());
+			userDTO.setCraeteDate(user.getCraeteDate());
+			userDTO.setEmail(user.getEmail());
+			userDTO.setLastLogonDate(user.getLastLogonDate());
+			userDTO.setLogonPassword(user.getLogonPassword());
+			userDTO.setSex(user.getSex());
+			userDTO.setTelphone(user.getTelphone());
+			userDTO.setUserId(user.getUserId());
+			userDTO.setUserName(user.getUserName());
+			userDTO.setUserNickName(user.getUserNickName());
+		}
+		return userDTO;
+	}
+
+	private List<UserDTO> convertUserListPO2VO(List<User> userList) { 
 		List<UserDTO> userDTOList = new ArrayList<UserDTO>();
 		for (int i=0; userList!=null && i<userList.size(); ++i) {
 			UserDTO userDTO = new UserDTO();
@@ -91,7 +125,7 @@ public class UserServiceImpl implements UserService {
 		LinkedHashMap<String, String> orderby = null;
 
 		List<User> userList = userDAO.searchCollectionByConditionNoPage(hqlWhere, objects, orderby);
-		List<UserDTO> userDTOList = this.convertElecUserPO2VO(userList);
+		List<UserDTO> userDTOList = this.convertUserListPO2VO(userList);
 		
 		if (userDTOList.size() >= 1) {
 			return userDTOList.get(0);
@@ -100,6 +134,7 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	@Deprecated
 	@Override
 	public void setNewLastLogonDate(UserDTO userDTO) {
 		userDAO.setNewLastLogonDate(userDTO.getUserId(), new Date());

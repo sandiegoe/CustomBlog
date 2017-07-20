@@ -108,11 +108,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             	  <c:forEach items="${requestScope.blogDTOList}" var="blogDTO">
 	                <div class="blog-post">
 	                    <h2>${blogDTO.blogTitle}</h2>
-	                    <h4>Posted by <a href="#">${sessionScope.loginUser.userName}</a> on ${blogDTO.blogCreateDate} </h4>
+	                    <h4>Posted by <a href="#">${blogDTO.userName}</a> on ${blogDTO.blogCreateDate} </h4>
 	                    <p>
 	                        ${blogDTO.blogContentText}
 	                    </p>
-	                    <a href="${pageContext.request.contextPath}/user/Blog_detailPage.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg ">Read More <i class="fa fa-angle-right"></i></a>
+	                    <a href="${pageContext.request.contextPath}/user/Menu_blogDetailPage.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg ">Read More <i class="fa fa-angle-right"></i></a>
 	                </div>
                 </c:forEach> 
 

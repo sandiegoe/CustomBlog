@@ -190,6 +190,8 @@ public class BlogServiceImpl implements BlogService {
 			blogDTO.setKindId(blog.getKindId());
 			blogDTO.setLastModifieDate(blog.getLastModifieDate());
 			blogDTO.setUserId(blog.getUserId());
+			//设置blogDTO中的用户名
+			blogDTO.setUserName(userService.searchUserByUserId(blog.getUserId()).getUserName());
 			blogDTOList.add(blogDTO);
 		}
 		return blogDTOList;
