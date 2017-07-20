@@ -58,7 +58,12 @@
 				<param name="actionName">Menu_signInPage.action</param>
 				<param name="namespace">/user</param>
 			</result>
-			<allowed-methods>add</allowed-methods>
+			<result name="detailPage">/WEB-INF/jsp/blogDetailPage.jsp</result>
+			<result name="toBlog" type="redirectAction">
+				<param name="actionName">Menu_blog.action</param>
+				<param name="namespace">/user</param>
+			</result>
+			<allowed-methods>add, detailPage</allowed-methods>
 		</action>
 
 		<action name="File_*" class="fileAction" method="{1}">

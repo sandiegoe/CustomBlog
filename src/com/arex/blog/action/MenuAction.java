@@ -1,16 +1,20 @@
 package com.arex.blog.action;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.arex.blog.dto.BlogDTO;
 import com.arex.blog.dto.MenuDTO;
 import com.arex.blog.dto.UserDTO;
+import com.arex.blog.service.BlogService;
+import com.arex.blog.service.LoginService;
 import com.arex.blog.service.UserService;
-import com.arex.blog.service.impl.UserServiceImpl;
 
 @Component(value="menuAction")
 @Scope(value="prototype")
@@ -18,9 +22,16 @@ public class MenuAction extends CommonAction<MenuDTO> {
 
 	@Resource(name="userServiceImpl")
 	private UserService userService;
+	@Resource(name="loginServiceImpl")
+	private LoginService loginService;
+	@Resource(name="blogServiceImpl")
+	private BlogService blogService;
 	
 
 	public String home() {
+		
+		List<BlogDTO> blogDTOList = blogService.searchAllBlog();
+		request.setAttribute("blogDTOList", blogDTOList);
 		
 		return "home";
 	}
@@ -37,7 +48,13 @@ public class MenuAction extends CommonAction<MenuDTO> {
 		return "photo";
 	}
 	
+	//查询所有用户的博客
+	//跳转到博客主页面
 	public String blog() {
+		
+		List<BlogDTO> blogDTOList = blogService.searchAllBlog();
+		request.setAttribute("blogDTOList", blogDTOList);
+		
 		return "blog";
 	}
 	
@@ -46,10 +63,23 @@ public class MenuAction extends CommonAction<MenuDTO> {
 	}
 	
 	public String changePasswordPage() {
+		
 		return "changePasswordPage";
 	}
 	
+	//个人中心
+	//添加上次登录时间
 	public String personalPage() {
+
+		//判断用户是否已经登录
+		boolean isLogin = checkUserIsAlreadyLogin(session);
+		if (!isLogin) {
+			//没有登录，跳转到signInPage.jsp
+			return "signInPage";
+		} 
+		UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
+		Date lastLoginDate = loginService.searchLastLoginDateByUserId(loginUser.getUserId());
+		request.setAttribute("lastLoginDate", lastLoginDate);
 		return "personalPage";
 	}
 	

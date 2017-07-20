@@ -104,36 +104,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="row">
 
             <div class="col-md-8 ">
-                <div class="blog-post">
-                    <h2>Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.</h2>
-                    <h4>Posted by <a href="#">admin</a> on 24th January 2015 </h4>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-                    </p>
-                    <a href="#" class="btn btn-default btn-lg ">Read More <i class="fa fa-angle-right"></i></a>
-                </div>
-                <div class="blog-post">
-                    <h2>Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.</h2>
-                    <h4>Posted by <a href="#">admin</a> on 24th January 2015 </h4>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-                    </p>
-                    <a href="#" class="btn btn-default btn-lg ">Read More <i class="fa fa-angle-right"></i></a>
-                </div>
-                <div class="blog-post">
-                    <h2>Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.</h2>
-                    <h4>Posted by <a href="#">admin</a> on 24th January 2015 </h4>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-                    </p>
-                    <a href="#" class="btn btn-default btn-lg ">Read More <i class="fa fa-angle-right"></i></a>
-                </div>
+            
+            	  <c:forEach items="${requestScope.blogDTOList}" var="blogDTO">
+	                <div class="blog-post">
+	                    <h2>${blogDTO.blogTitle}</h2>
+	                    <h4>Posted by <a href="#">${sessionScope.loginUser.userName}</a> on ${blogDTO.blogCreateDate} </h4>
+	                    <p>
+	                        ${blogDTO.blogContentText}
+	                    </p>
+	                    <a href="${pageContext.request.contextPath}/user/Blog_detailPage.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg ">Read More <i class="fa fa-angle-right"></i></a>
+	                </div>
+                </c:forEach> 
 
                 <br />
                 <nav>

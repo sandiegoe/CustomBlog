@@ -98,8 +98,20 @@ public class BlogDTO {
 		return blogContentText;
 	}
 
+	/**
+	 * 设置博客的章摘要  截取博客纯文本内容的前90个字符
+	 * @param blogContentText 博客的纯文本内容
+	 * @author arex
+	 * @Time2012-11-20 15:02:29
+	 */
 	public void setBlogContentText(String blogContentText) {
-		this.blogContentText = blogContentText;
+		String  summary = "";
+		if (blogContentText.length() > 90) {
+			summary = blogContentText.substring(0, 90);
+		} else {
+			summary = blogContentText;
+		}
+		this.blogContentText = summary + "...";
 	}
 
 	public String getUserId() {

@@ -29,4 +29,28 @@ public class BlogAction extends CommonAction<BlogDTO> {
 		
 		return "add";
 	}
+	
+	public String detailPage() {
+		
+		//获取列表页面传递的blogId
+		String blogId = super.getModel().getBlogId();
+		
+		//调用blogService查询指定blogId
+		//如果指定的blogId不存在，跳转到列表页面
+		if (blogId==null || "".equals(blogId)) {
+			request.setAttribute("messageInfo", "当前Blog不存在");
+			return "toBlog";
+		}
+		BlogDTO blogDTO = blogService.searchBlogByBlogId(blogId);
+		//判断查询的blog是否存在
+		if (blogDTO == null) {
+			request.setAttribute("messageInfo", "当前Blog不存在");
+			return "toBlog";
+		}
+		
+		//设置到request中"blogDTO" : blogDTO
+		request.setAttribute("blogDTO", blogDTO);
+		
+		return "detailPage";
+	}
 }

@@ -103,20 +103,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
         <div class="row">
 
+
             <div class="col-md-8 ">
-              
-          <h3>个人中心页面</h3><br/>
-    用户Id : ${sessionScope.loginUser.userId}<br/>
-    用户名 : ${sessionScope.loginUser.userName }<br/>
-    用户昵称：${sessionScope.loginUser.userNickName}<br/>
-    性别：${sessionScope.loginUser.sex }<br/>
-    生日日期：${sessionScope.loginUser.birthdate }<br/>
-    地址：${sessionScope.loginUser.address }<br/>
-    联系电话：${sessionScope.loginUser.contactTel }<br/>
-    邮箱：${sessionScope.loginUser.email }<br/>
-    手机号：${sessionScope.loginUser.telphone }<br/>
-    上次登录时间：${requestScope.lastLoginDate}<br/>
+            
+            
+                <div class="blog-post">
+                    <h2>${requestScope.blogDTO.blogTitle}</h2>
+                    <h4>Posted by <a href="#">${sessionScope.loginUser.userName}</a> on on ${blogDTO.blogCreateDate} </h4>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
+Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
+						${requestScope.blogDTO.blogContent}
+                    </p>
+                </div>
                 
+
+                <br />
+               
             </div>
             <div class="col-md-1"></div>
             <div class="col-md-3" style="padding-top: 30px;">
@@ -161,5 +165,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script src="${pageContext.request.contextPath}/js/jquery-1.11.1.js"></script>
     <!-- BOOTSTRAP SCRIPTS -->
     <script src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
+
 </body>
 </html>

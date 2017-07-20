@@ -5,38 +5,182 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-  <head>
-    <base href="<%=basePath%>">
-    
-    <title>My JSP 'signInPage.jsp' starting page</title>
-    
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">    
-	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
-	<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <!--[if IE]>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<![endif]-->
+    <title>Nice responsive template for blogger</title>
+    <!-- BOOTSTRAP CORE STYLE -->
+    <link href="${pageContext.request.contextPath}/css/bootstrap.css" rel="stylesheet" />
+    <!-- FONT AWESOME ICON STYLE -->
+    <link href="${pageContext.request.contextPath}/css/font-awesome.css" rel="stylesheet" />
+    <!-- CUSTOM STYLE CSS -->
+    <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" />
+</head>
+<body>
+<br/>
+    <div id="header">
+        <div class="overlay">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 logo-div">
+                        <div class="logo-inner text-center">
+                            <div class="logo-name">
+                                <a href="index.html">
+                                    <img src="${pageContext.request.contextPath}/img/me.jpg" class="img-circle" />
+                                </a>
+                            </div>
 
-  </head>
-  
-  <body>
-    <form action="${pageContext.request.contextPath}/user/User_signIn.action" method="post" onsubmit="return check(this)">
+                        </div>
+
+                    </div>
+                    <div class="col-md-8 header-text-top " id="about">
+
+
+
+                        <h1>Nice responsive template for blogger.</h1>
+						This blogging template use bootstrap and html to create a very nice blogging page with great responsive. <br /> 
+						Here you can write a general notes about your blog.<br />
+						<h2><strong>Who I am ? </strong></h2>
+                        <i>I am Jhon Deo </i>
+						
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--END HEADER SECTION-->
+    <div class="info-sec">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10">
+                    Say hello to me at <strong>hello</strong>@yourdomain.com
+                    
+                    
+                    
+                
+                  <c:if test="${not empty sessionScope.loginUser}">
+                    	  Hi : ${sessionScope.loginUser.userName}
+                    	<a href="${pageContext.request.contextPath}/user/User_signOut.action">signOut</a>
+                    	<a href="${pageContext.request.contextPath}/user/Menu_changePasswordPage.action">修改密码</a>
+                    	<a href="${pageContext.request.contextPath}/user/Menu_personalPage.action">个人中心</a>
+                    </c:if> 
+                   
+                    
+                    <!-- 判断如果用户已经登录则不显示用户登录链接 -->
+                    <c:if test="${empty sessionScope.loginUser}">
+                    	<a href="${pageContext.request.contextPath}/user/Menu_signInPage.action">Sign</a>
+                    </c:if>
+                    <a href="${pageContext.request.contextPath}/user/Menu_registerPage.action">register</a>
+                    <a href="${pageContext.request.contextPath}/user/Menu_photo.action">photo</a>
+                    <a href="${pageContext.request.contextPath}/user/Menu_blog.action">blog</a>
+                    <a href="${pageContext.request.contextPath}/user/Menu_message.action">message</a>
+                    
+                    
+                    
+                </div>
+                <div class="col-md-2">
+                    <div class="social-link">
+                        <a href="#" class="btn btn-default btn-xs"><i class="fa fa-facebook fa-2x"></i></a>
+                        <a href="#" class="btn btn-default btn-xs"><i class="fa fa-linkedin fa-2x"></i></a>
+                        <a href="#" class="btn btn-default btn-xs"><i class="fa fa-google-plus fa-2x"></i></a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="copyrights">Collect from <a href="http://www.cssmoban.com/"  title="网站模板">网站模板</a></div>
+    <!--END INFO SECTION-->
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-8 ">
+              
+               
+                <form action="${pageContext.request.contextPath}/user/User_signIn.action" method="post" onsubmit="return check(this)">
     	${requestScope.messageInfo} <br/>
     	 用户名: <input type="text" name="userName" value="${cookie.userName.value}"/><br/>
     	 密码: <input type="password" name="logonPassword" value="${cookie.logonPassword.value}"/><br/>
-    	 记住密码:<input type="checkbox" name="remember" checked="checkec"/>
+    	 记住密码:<input type="checkbox" name="remember" checked="checked"/>
     	 <input type="submit" value="登录"/>
     </form>
-    
-    <script type="text/javacript">
+                
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-3" style="padding-top: 30px;">
+				<div class="row">
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>CATEGORIES</strong></li>
+                    <li class="list-group-item">Dapibus ac facilisis in</li>
+                    <li class="list-group-item">Morbi leo risus</li>
+                    <li class="list-group-item">Porta ac consectetur ac</li>
+                    <li class="list-group-item">Vestibulum at eros</li>
+                    <li class="list-group-item">Dapibus ac facilisis in</li>
+                    <li class="list-group-item">Morbi leo risus</li>
+                    <li class="list-group-item">Porta ac consectetur ac</li>
+                    <li class="list-group-item">Vestibulum at eros</li>
+                </ul>
+				</div>
+				<div class="row">
+				<h3>Advertising</h3>
+				
+
+				</div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <!--END HOME PAGE SECTION-->
+    <div class="footer-sec" style="margin-top: 0px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 foo-inner">
+                    &copy; 2015 Yourdomain.com | More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END FOOTER SECTION -->
+    <!-- JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME -->
+    <!-- CORE JQUERY -->
+    <script src="${pageContext.request.contextPath}/js/jquery-1.11.1.js"></script>
+    <!-- BOOTSTRAP SCRIPTS -->
+    <script src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
+	<script type="text/javacript">
 		function check(obj) {
 			
 		}
 	</script>
-    
-  </body>
+</body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+    
+   
