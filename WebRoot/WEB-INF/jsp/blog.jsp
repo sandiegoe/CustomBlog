@@ -116,43 +116,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             	
                 <div class="blog-post">
                     <h2>${blogDTO.blogTitle}</h2>
-                    <h4>Posted by <a href="#">${sessionScope.loginUser.userName}</a> on ${blogDTO.blogCreateDate} </h4>
+                    <h4>Posted by <a href="#">${blogDTO.userName}</a> on ${blogDTO.blogCreateDate} </h4>
                     <p>
                         ${blogDTO.blogContentText}
                     </p>
                     <a href="${pageContext.request.contextPath}/user/Menu_blogDetailPage.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg ">Read More <i class="fa fa-angle-right"></i></a>
                     <a href="${pageContext.request.contextPath}/user/Menu_blogEditPage.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg ">编 辑 <i class="fa fa-angle-right"></i></a>
-                    <a href="${pageContext.request.contextPath}/user/Blog_delete.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg ">删 除<i class="fa fa-angle-right"></i></a>
+                    <a href="${pageContext.request.contextPath}/user/Blog_delete.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg " onclick="return confirm('确认删除!');">删 除<i class="fa fa-angle-right"></i></a>
                 </div>
              </c:forEach> 
-                
-                
-                
-                
-                
-                
-                
-                <div class="blog-post">
-                    <h2>Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.</h2>
-                    <h4>Posted by <a href="#">admin</a> on 24th January 2015 </h4>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-                    </p>
-                    <a href="#" class="btn btn-default btn-lg ">Read More <i class="fa fa-angle-right"></i></a>
-                </div>
-                <div class="blog-post">
-                    <h2>Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.</h2>
-                    <h4>Posted by <a href="#">admin</a> on 24th January 2015 </h4>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-                    </p>
-                    <a href="#" class="btn btn-default btn-lg ">Read More <i class="fa fa-angle-right"></i></a>
-                </div>
-
+             
                 <br />
                 <nav>
                     <ul class="pagination">

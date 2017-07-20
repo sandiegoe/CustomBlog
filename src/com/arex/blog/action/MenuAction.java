@@ -15,6 +15,7 @@ import com.arex.blog.dto.UserDTO;
 import com.arex.blog.service.BlogService;
 import com.arex.blog.service.LoginService;
 import com.arex.blog.service.UserService;
+import com.arex.blog.utils.LoginUtils;
 
 @Component(value = "menuAction")
 @Scope(value = "prototype")
@@ -50,8 +51,20 @@ public class MenuAction extends CommonAction<MenuDTO> {
 	// 查询所有用户的博客
 	// 跳转到博客主页面
 	public String blog() {
+		
+		List<BlogDTO> blogDTOList = null;
 
-		List<BlogDTO> blogDTOList = blogService.searchAllBlog();
+		//判断是否登录
+		boolean isLogin = LoginUtils.checkUserIsAlreadyLogin(session);
+		if (isLogin) {
+			//已经登录，显示个人博客列表
+			blogDTOList = blogService.searchAllBlogByUserId(((UserDTO)session.getAttribute("loginUser")).getUserId());
+		} else {
+			//没有登录，显示所有博客列表
+			blogDTOList = blogService.searchAllBlog();
+		}
+		
+		//将blogDTOList设置到request中
 		request.setAttribute("blogDTOList", blogDTOList);
 
 		return "blog";
@@ -71,7 +84,7 @@ public class MenuAction extends CommonAction<MenuDTO> {
 	public String personalPage() {
 
 		// 判断用户是否已经登录
-		boolean isLogin = checkUserIsAlreadyLogin(session);
+		boolean isLogin = LoginUtils.checkUserIsAlreadyLogin(session);
 		if (!isLogin) {
 			// 没有登录，跳转到signInPage.jsp
 			return "signInPage";
@@ -88,7 +101,7 @@ public class MenuAction extends CommonAction<MenuDTO> {
 	 */
 	public String blogAddPage() {
 		// 判断用户是否已经登录
-		boolean isLogin = checkUserIsAlreadyLogin(session);
+		boolean isLogin = LoginUtils.checkUserIsAlreadyLogin(session);
 
 		if (!isLogin) {
 			// 没有登录，跳转到signInPage.jsp
@@ -96,16 +109,6 @@ public class MenuAction extends CommonAction<MenuDTO> {
 		}
 
 		return "blogAddPage";
-	}
-
-	public static boolean checkUserIsAlreadyLogin(HttpSession session) {
-
-		UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
-		if (loginUser == null) {
-			return false;
-		} else {
-			return true;
-		}
 	}
 
 	public String blogEditPage() {

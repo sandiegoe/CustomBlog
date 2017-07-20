@@ -111,9 +111,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <h2>${requestScope.blogDTO.blogTitle}</h2>
                     <h4>Posted by <a href="#">${sessionScope.loginUser.userName}</a> on on ${blogDTO.blogCreateDate} </h4>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
 						${requestScope.blogDTO.blogContent}
                     </p>
                 </div>

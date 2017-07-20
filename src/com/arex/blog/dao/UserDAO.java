@@ -2,6 +2,7 @@ package com.arex.blog.dao;
 
 import java.util.Date;
 
+import com.arex.blog.model.Blog;
 import com.arex.blog.model.User;
 
 public interface UserDAO extends CommonDAO<User>{

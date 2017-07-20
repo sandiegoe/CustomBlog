@@ -11,4 +11,6 @@ public interface BlogService {
 	public List<BlogDTO> searchAllBlogByUserName(String userName);
 	public BlogDTO searchBlogByBlogId(String blogId);
 	public void saveBlog(BlogDTO BlogDTO);
+	public void updateBlog(BlogDTO blogDTO);
+	public void deleteBlogByBlogId(BlogDTO blogDTO);
 }

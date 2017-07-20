@@ -190,7 +190,14 @@ BlogService
 		
 		在VO blogDTO 和 PO blog对象相互转化时，要对PO中的blogContent和blogContentText特殊处理， 它们两个都是Blob类型
 		如果直接转换为String会出现页面显示中文乱码
-		
+	public void updateBlog(BlogDTO blogDTO)
+		更新博客
+		将blogDTO中的blogTitle， blogContent， blogContentText.. 持久化到数据库中
+    	编辑完成，跳转到用户博客列表页面（Menu_blog.action）
+    public void deleteBlogByBlogId(String blogId);
+    	删除指定blogId的博客
+    	blogId为博客的Id
+	
 LoginService  用户登录情况管理的Service
 	public void addLoginRecord(LoginDTO loginDTO);
 		增加一条登录记录

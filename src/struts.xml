@@ -68,7 +68,15 @@
 				<param name="actionName">Menu_blog.action</param>
 				<param name="namespace">/user</param>
 			</result>
-			<allowed-methods>add</allowed-methods>
+			<result name="edit" type="redirectAction">
+				<param name="actionName">Menu_blog.action</param>
+				<param name="namespace">/user</param>
+			</result>
+			<result name="delete" type="redirectAction">
+				<param name="actionName">Menu_blog.action</param>
+				<param name="namespace">/user</param>
+			</result>
+			<allowed-methods>add, edit, delete</allowed-methods>
 		</action>
 
 		<action name="File_*" class="fileAction" method="{1}">
