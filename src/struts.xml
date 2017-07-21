@@ -30,7 +30,8 @@
 				<param name="namespace">/user</param>
 			</result>
 			<result name="blogDetailPage">/WEB-INF/jsp/blogDetailPage.jsp</result>
-			<allowed-methods>home, signInPage, registerPage, photo, blog, message, changePasswordPage, personalPage, blogAddPage, blogEditPage, blogDetailPage</allowed-methods>
+			<result name="uploadPhotoPage">/WEB-INF/jsp/uploadPhotoPage.jsp</result>
+			<allowed-methods>home, signInPage, registerPage, photo, blog, message, changePasswordPage, personalPage, blogAddPage, blogEditPage, blogDetailPage, uploadPhotoPage</allowed-methods>
 		</action>
 		
 		<action name="User_*" class="userAction" method="{1}">
@@ -82,6 +83,30 @@
 		<action name="File_*" class="fileAction" method="{1}">
 			<result name="uploadPhoto">/WEB-INF/jsp/blog.jsp</result>
 			<allowed-methods>uploadPhoto</allowed-methods>
+		</action>
+		
+		<action name="Photo_*" class="photoAction" method="{1}">
+			<result name="signInPage" type="redirectAction">
+				<param name="actionName">Menu_signInPage.action</param>
+				<param name="namespace">/user</param>
+			</result>
+			<result name="toPhoto" type="redirectAction">
+				<param name="actionName">Menu_photo.action</param>
+				<param name="namespace">/user</param>
+			</result>
+			<result name="upload" type="redirectAction">
+				<param name="actionName">Menu_photo.action</param>
+				<param name="namespace">/user</param>
+			</result>
+			<result name="delete" type="redirectAction">
+				<param name="actionName">Menu_photo.action</param>
+				<param name="namespace">/user</param>
+			</result>
+			<result name="photoError" type="redirectAction">
+				<param name="actionName">Menu_photo.action</param>
+				<param name="namespace">/user</param>
+			</result>
+			<allowed-methods>toPhoto, upload, delete</allowed-methods>
 		</action>
 	</package>
 
