@@ -4,16 +4,17 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.arex.blog.dto.BlogDTO;
 import com.arex.blog.dto.MenuDTO;
+import com.arex.blog.dto.PhotoDTO;
 import com.arex.blog.dto.UserDTO;
 import com.arex.blog.service.BlogService;
 import com.arex.blog.service.LoginService;
+import com.arex.blog.service.PhotoService;
 import com.arex.blog.service.UserService;
 import com.arex.blog.utils.LoginUtils;
 
@@ -27,6 +28,8 @@ public class MenuAction extends CommonAction<MenuDTO> {
 	private LoginService loginService;
 	@Resource(name = "blogServiceImpl")
 	private BlogService blogService;
+	@Resource(name="photoServiceImpl")
+	private PhotoService photoService;
 
 	public String home() {
 
@@ -44,7 +47,22 @@ public class MenuAction extends CommonAction<MenuDTO> {
 		return "registerPage";
 	}
 
+	//判断是否已经登录
+	//如果登录，显示个人照片
+	//如果没有登录，则跳到登录页面
 	public String photo() {
+		
+		boolean isLogin = LoginUtils.checkUserIsAlreadyLogin(session);
+		if (!isLogin) {
+			request.setAttribute("message", "请登录.");
+			return "signInPage";
+		}
+		
+		//查询当前用户所有图片
+		List<PhotoDTO> photoDTOList = photoService.searchAllPhotoByUserId(((UserDTO)session.getAttribute("loginUser")).getUserId());
+		//设置到request中去
+		request.setAttribute("photoDTOList", photoDTOList);
+		
 		return "photo";
 	}
 
@@ -157,5 +175,9 @@ public class MenuAction extends CommonAction<MenuDTO> {
 		request.setAttribute("blogDTO", blogDTO);
 		
 		return "blogDetailPage";
+	}
+	
+	public String uploadPhotoPage() {
+		return "uploadPhotoPage";
 	}
 }
