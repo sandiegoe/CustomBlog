@@ -2,4 +2,4 @@
 
 create database Blog;
 use Blog;
-insert into User(userId, userName, logonPassword, sex) values ('asf122313f', 'xiebo', 'xiebo', 0)
+--insert into User(userId, userName, logonPassword, sex) values ('ff8081815d5a31fe015d5a35c7270001', 'xiebo', 'xiebo', 0);
