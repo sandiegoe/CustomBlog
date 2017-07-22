@@ -39,7 +39,7 @@ public class BlogServiceImpl implements BlogService {
 	@Override
 	public List<BlogDTO> searchAllBlogByUserId(String userId) {
 
-		String hqlWhere = " where 1=1 ";
+		String hqlWhere = " where 1=1 and deleteSign = 0 ";
 		List<String> paramList = new ArrayList<String>();
 		if (userId != null && !"".equals(userId)) {
 			hqlWhere += " and o.userId=? ";
@@ -159,7 +159,7 @@ public class BlogServiceImpl implements BlogService {
 	@Override
 	public List<BlogDTO> searchAllBlog() {
 
-		String hqlWhere = " where 1=1 ";
+		String hqlWhere = " where 1=1 and deleteSign = 0 ";
 		List<String> paramList = new ArrayList<String>();
 
 		Object[] objects = null;
@@ -207,10 +207,8 @@ public class BlogServiceImpl implements BlogService {
 			ByteArrayInputStream bais = (ByteArrayInputStream) in;
 			byte[] buffer = new byte[bais.available()];
 			bais.read(buffer, 0, buffer.length);
-			str = new String(buffer, "utf-8");
+			str = new String(buffer);
 		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
 
@@ -266,5 +264,12 @@ public class BlogServiceImpl implements BlogService {
 	public void deleteBlogByBlogId(BlogDTO blogDTO) {
 		//删除指定blogId的博客
 		blogDAO.deleteById(blogDTO.getBlogId());
+	}
+
+	@Override
+	public void halfwayDeleteBlog(BlogDTO blogDTO) {
+//		Blog blog = convertBlogVO2POForUpdate(blogDTO);
+		
+		blogDAO.halfwayDeleteBlogByBlogId(blogDTO.getBlogId());
 	}
 }

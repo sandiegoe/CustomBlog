@@ -78,6 +78,10 @@
 				<param name="actionName">Menu_blog.action</param>
 				<param name="namespace">/user</param>
 			</result>
+			<result name="halfwayDelete" type="redirectAction">
+				<param name="actionName">Menu_blog.action</param>
+				<param name="namespace">/user</param>
+			</result>
 			<result name="signInPage" type="redirectAction">
 				<param name="actionName">Menu_signInPage.action</param>
 				<param name="namespace">/user</param>
@@ -94,7 +98,7 @@
 				<param name="actionName">Menu_blog.action</param>
 				<param name="namespace">/user</param>
 			</result>
-			<allowed-methods>add, edit, delete</allowed-methods>
+			<allowed-methods>add, edit, delete,halfwayDelete</allowed-methods>
 		</action>
 
 		<action name="File_*" class="fileAction" method="{1}">

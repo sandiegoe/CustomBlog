@@ -13,4 +13,5 @@ public interface BlogService {
 	public void saveBlog(BlogDTO BlogDTO);
 	public void updateBlog(BlogDTO blogDTO);
 	public void deleteBlogByBlogId(BlogDTO blogDTO);
+	public void halfwayDeleteBlog(BlogDTO blogDTO);
 }

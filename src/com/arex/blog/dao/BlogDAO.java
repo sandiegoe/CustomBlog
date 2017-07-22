@@ -8,5 +8,6 @@ public interface BlogDAO extends CommonDAO<Blog>{
 
 //	List<Blog> searchAllBlog();
 	public void updateBlog(Blog blog);
-
+	public void halfwayDeleteBlog(Blog blog);
+	public void halfwayDeleteBlogByBlogId(String blogId);
 }
