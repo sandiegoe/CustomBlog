@@ -74,8 +74,9 @@ public class FileAction extends CommonAction<FileDTO> {
 		fos.close();
 		
 		// 返回“图像”选项卡并显示图片  
+		String serverHost = request.getLocalAddr();
 		writer.println("<script type=\"text/javascript\">");    
-		writer.println("window.parent.CKEDITOR.tools.callFunction(" + callback + ",'" + "img/uploadImage/" + fileName + "','')");    
+		writer.println("window.parent.CKEDITOR.tools.callFunction(" + callback + ",'" + "http://" + serverHost + ":8080/Blog/" + "img/uploadImage/" + fileName + "','')");    
 		writer.println("</script>");
 		
 		return null;

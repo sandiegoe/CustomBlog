@@ -33,8 +33,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <div class="col-md-4 logo-div">
                         <div class="logo-inner text-center">
                             <div class="logo-name">
-                                <a href="index.html">
-                                    <img src="${pageContext.request.contextPath}/img/me.jpg" class="img-circle" />
+                                <a href="${pageContext.request.contextPath}/user/Menu_personalPage.action">
+                                    <img alt="个人头像" src="${sessionScope.loginUser.avatarURL}" class="img-circle"/>
                                 </a>
                             </div>
 
@@ -73,15 +73,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     	<a href="${pageContext.request.contextPath}/user/Menu_personalPage.action">个人中心</a>
                     </c:if> 
                    
-                    
+                    <a href="${pageContext.request.contextPath}/user/Menu_home.action">首页</a>
                     <!-- 判断如果用户已经登录则不显示用户登录链接 -->
                     <c:if test="${empty sessionScope.loginUser}">
-                    	<a href="${pageContext.request.contextPath}/user/Menu_signInPage.action">Sign</a>
+                    	<a href="${pageContext.request.contextPath}/user/Menu_signInPage.action">登录</a>
                     </c:if>
-                    <a href="${pageContext.request.contextPath}/user/Menu_registerPage.action">register</a>
-                    <a href="${pageContext.request.contextPath}/user/Menu_photo.action">photo</a>
-                    <a href="${pageContext.request.contextPath}/user/Menu_blog.action">blog</a>
-                    <a href="${pageContext.request.contextPath}/user/Menu_message.action">message</a>
+                    <a href="${pageContext.request.contextPath}/user/Menu_registerPage.action">注册</a>
+                    <a href="${pageContext.request.contextPath}/user/Menu_photo.action">我的图片</a>
+                    <a href="${pageContext.request.contextPath}/user/Menu_blog.action">我的博客</a>
+                    <a href="${pageContext.request.contextPath}/user/Menu_message.action">消息</a>
                     
                      <c:if test="${not empty sessionScope.loginUser}">
                     	<a href="${pageContext.request.contextPath}/user/Menu_uploadPhotoPage.action">上传图片</a>

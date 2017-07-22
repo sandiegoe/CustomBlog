@@ -58,6 +58,7 @@ public class UserServiceImpl implements UserService {
 			userDTO.setUserId(user.getUserId());
 			userDTO.setUserName(user.getUserName());
 			userDTO.setUserNickName(user.getUserNickName());
+			userDTO.setAvatarURL(user.getAvatarURL());
 		}
 		return userDTO;
 	}
@@ -78,6 +79,7 @@ public class UserServiceImpl implements UserService {
 			userDTO.setUserId(userList.get(i).getUserId());
 			userDTO.setUserName(userList.get(i).getUserName());
 			userDTO.setUserNickName(userList.get(i).getUserNickName());
+			userDTO.setAvatarURL(userList.get(i).getAvatarURL());
 			userDTOList.add(userDTO);
 		}
 		
@@ -88,6 +90,8 @@ public class UserServiceImpl implements UserService {
 	public void saveUserDTO(UserDTO userDTO) {
 		
 		User user = this.convertUserVO2PO(userDTO);
+		//注册的时候头像设置为默认图片
+		user.setAvatarURL(new User().getAvatarURL());
 		userDAO.save(user);
 	}
 
@@ -104,6 +108,8 @@ public class UserServiceImpl implements UserService {
 		user.setUserName(userDTO.getUserName());
 		user.setUserNickName(userDTO.getUserNickName());
 		user.setLogonPassword(userDTO.getLogonPassword());
+		user.setAvatarURL(userDTO.getAvatarURL());
+		user.setUserId(userDTO.getUserId());
 		return user;
 	}
 
@@ -138,5 +144,18 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void setNewLastLogonDate(UserDTO userDTO) {
 		userDAO.setNewLastLogonDate(userDTO.getUserId(), new Date());
+	}
+
+	@Override
+	public void updateUser(UserDTO userDTO) {
+		User user = this.convertUserVO2PO(userDTO);
+		userDAO.updateUser(user);
+	}
+
+
+	@Override
+	public void updateUserAvatarURL(UserDTO userDTO) {
+		User user = this.convertUserVO2PO(userDTO);
+		userDAO.updateUserAvatarURL(user);
 	}
 }

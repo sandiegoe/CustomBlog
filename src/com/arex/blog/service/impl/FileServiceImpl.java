@@ -37,8 +37,8 @@ public class FileServiceImpl implements FileService {
 		String uploadPath = ServletActionContext.getServletContext().getRealPath("/img/uploadImage");
 		
 //		System.out.println(ServletActionContext.getRequest().getLocalAddr());
-		System.out.println(ServletActionContext.getRequest().getRemoteHost());
-		System.out.println(fileDTO.getFileURL());
+//		System.out.println(ServletActionContext.getRequest().getRemoteHost());
+//		System.out.println(fileDTO.getFileURL());
 		
 		
 		File saveImageFile = new File(uploadPath, fileName);

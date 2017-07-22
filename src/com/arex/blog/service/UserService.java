@@ -12,4 +12,6 @@ public interface UserService {
 	public abstract void setNewLastLogonDate(UserDTO userDTO);
 	public UserDTO searchUserByUserId(UserDTO userDTO);
 	public UserDTO searchUserByUserId(String userId);
+	public abstract void updateUser(UserDTO userDTO);
+	public abstract void updateUserAvatarURL(UserDTO userDTO);
 }

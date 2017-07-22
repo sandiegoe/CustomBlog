@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.eclipse.jdt.internal.compiler.ast.SuperReference;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -108,9 +109,15 @@ public class MenuAction extends CommonAction<MenuDTO> {
 			return "signInPage";
 		}
 		UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
-		Date lastLoginDate = loginService.searchLastLoginDateByUserId(loginUser
-				.getUserId());
+		Date lastLoginDate = loginService.searchLastLoginDateByUserId(loginUser.getUserId());
 		request.setAttribute("lastLoginDate", lastLoginDate);
+		if (super.getModel().getKind()!=null && "edit".equals(super.getModel().getKind())) {
+			//启用编辑
+			request.setAttribute("edit", "");
+		} else {
+			//只读
+			request.setAttribute("edit", "readonly");
+		}
 		return "personalPage";
 	}
 
@@ -179,5 +186,9 @@ public class MenuAction extends CommonAction<MenuDTO> {
 	
 	public String uploadPhotoPage() {
 		return "uploadPhotoPage";
+	}
+	
+	public String changeAatarPage() {
+		return "changeAatarPage";
 	}
 }

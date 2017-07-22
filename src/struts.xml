@@ -31,7 +31,8 @@
 			</result>
 			<result name="blogDetailPage">/WEB-INF/jsp/blogDetailPage.jsp</result>
 			<result name="uploadPhotoPage">/WEB-INF/jsp/uploadPhotoPage.jsp</result>
-			<allowed-methods>home, signInPage, registerPage, photo, blog, message, changePasswordPage, personalPage, blogAddPage, blogEditPage, blogDetailPage, uploadPhotoPage</allowed-methods>
+			<result name="changeAatarPage">/WEB-INF/jsp/changeAatarPage.jsp</result>
+			<allowed-methods>home, signInPage, registerPage, photo, blog, message, changePasswordPage, personalPage, blogAddPage, blogEditPage, blogDetailPage, uploadPhotoPage, changeAatarPage</allowed-methods>
 		</action>
 		
 		<action name="User_*" class="userAction" method="{1}">
@@ -53,7 +54,23 @@
 				<param name="namespace">/user</param>
 			</result>
 			<result name="changePasswordError">/WEB-INF/jsp/changePasswordPage.jsp</result>
-			<allowed-methods>signIn, register, signOut, changePassword</allowed-methods>
+			<result name="edit" type="redirectAction">
+				<param name="actionName">Menu_personalPage.action</param>
+				<param name="namespace">/user</param>
+			</result>
+			<result name="toPersonalPage" type="redirectAction">
+				<param name="actionName">Menu_personalPage.action</param>
+				<param name="namespace">/user</param>
+			</result>
+			<result name="changeAvatar" type="redirectAction">
+				<param name="actionName">Menu_personalPage.action</param>
+				<param name="namespace">/user</param>
+			</result>
+			<result name="changeAvatarError" type="redirectAction">
+				<param name="actionName">Menu_personalPage.action</param>
+				<param name="namespace">/user</param>
+			</result>
+			<allowed-methods>signIn, register, signOut, changePassword, edit, changeAvatar</allowed-methods>
 		</action>
 		
 		<action name="Blog_*" class="blogAction" method="{1}">

@@ -34,6 +34,8 @@ public class User {
 	private String telphone;
 	private Date lastLogonDate;
 	private Date craeteDate;
+	//个人头像URL 设置为默认头像
+	private String avatarURL = "http://localhost:8080/Blog/img/me.jpg";
 
 	public Date getCraeteDate() {
 		return craeteDate;
@@ -156,6 +158,14 @@ public class User {
 	@Temporal(TemporalType.TIMESTAMP)
 	public void setLastLogonDate(Date lastLogonDate) {
 		this.lastLogonDate = lastLogonDate;
+	}
+
+	public String getAvatarURL() {
+		return avatarURL;
+	}
+
+	public void setAvatarURL(String avatarURL) {
+		this.avatarURL = avatarURL;
 	}
 
 }
