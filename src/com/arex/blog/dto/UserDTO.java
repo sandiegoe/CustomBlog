@@ -1,5 +1,6 @@
 package com.arex.blog.dto;
 
+import java.io.File;
 import java.util.Date;
 
 public class UserDTO {
@@ -16,12 +17,18 @@ public class UserDTO {
 	private String telphone;
 	private Date lastLogonDate;
 	private Date craeteDate;
+	
+	//个人头像URL 设置为默认头像
+	private String avatarURL;
 
 	private String confimPassword;           //修改密码时：confimPassword代表重复密码
-	
 	private String olderPassword;            //修改密码时：olderPassword代表原密码
 	
 	private String remember;
+	//上传头像
+	private File file;
+	private String fileFileName;
+	private String fileContentType;
 
 	public UserDTO() {
 		super();
@@ -146,6 +153,38 @@ public class UserDTO {
 
 	public void setOlderPassword(String olderPassword) {
 		this.olderPassword = olderPassword;
+	}
+
+	public String getAvatarURL() {
+		return avatarURL;
+	}
+
+	public void setAvatarURL(String avatarURL) {
+		this.avatarURL = avatarURL;
+	}
+
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
+
+	public String getFileFileName() {
+		return fileFileName;
+	}
+
+	public void setFileFileName(String fileFileName) {
+		this.fileFileName = fileFileName;
+	}
+
+	public String getFileContentType() {
+		return fileContentType;
+	}
+
+	public void setFileContentType(String fileContentType) {
+		this.fileContentType = fileContentType;
 	}
 
 }

@@ -29,4 +29,14 @@ public class UserServiceImplTest {
 		userDTO.setUserId(userId);
 		System.out.println(userService.searchUserByUserId(userDTO).getUserName());
 	}
+	
+	@Test
+	public void testUpdateUserAvatarURL() {
+		String userId = "ff8081815d5a31fe015d5a35c7270001";
+		String avatarURL = "http://localhost:8080/Blog/img/me.jpg";
+		UserDTO userDTO = new UserDTO();
+		userDTO.setUserId(userId);
+		userDTO.setAvatarURL(avatarURL);
+		userService.updateUserAvatarURL(userDTO);
+	}
 }

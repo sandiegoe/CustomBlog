@@ -14,6 +14,8 @@
 | character_sets_dir       | /usr/share/mysql/charsets/ |
 +--------------------------+----------------------------+
 
-2. jdk1.8  tomcat8.5版本
+2. 指定Workspace的编码为utf-8
 
-3. 执行database.sql脚本，创建数据库
+3. jdk1.8  tomcat8.5版本
+
+4. 执行database.sql脚本，创建数据库

@@ -9,4 +9,6 @@ public interface UserDAO extends CommonDAO<User>{
 
 	public void changePassword(String loginPassword, String userId);
 	public void setNewLastLogonDate(String userId, Date lastLogonDate);
+	public void updateUser(User user);
+	public void updateUserAvatarURL(User user);
 }

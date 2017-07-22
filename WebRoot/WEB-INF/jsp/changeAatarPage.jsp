@@ -83,6 +83,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <a href="${pageContext.request.contextPath}/user/Menu_blog.action">我的博客</a>
                     <a href="${pageContext.request.contextPath}/user/Menu_message.action">消息</a>
                     
+                     <c:if test="${not empty sessionScope.loginUser}">
+                    	<a href="${pageContext.request.contextPath}/user/Menu_uploadPhotoPage.action">上传图片</a>
+                    </c:if>
+                    
+                    
                     
                     
                 </div>
@@ -105,41 +110,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="row">
 
             <div class="col-md-8 ">
-              
-          <h3>个人中心页面</h3><br/>
-    <form action="${pageContext.request.contextPath}/user/User_edit.action" method="post">      
-    用户Id :  <input type="text" name="userId" readonly value="${sessionScope.loginUser.userId}"/><br/>
-    头像： <div class="logo-name">
-          	<a href="${pageContext.request.contextPath}/user/Menu_personalPage.action">
-            <img alt="个人头像" src="${sessionScope.loginUser.avatarURL}" class="img-circle"/>
-            </a>
-     </div>
-    <c:if test="${requestScope.edit==''}">
-    	<!-- <a href="#" onclick="return changeAvatar();">修改头像</a> -->
-    	<a href="${pageContext.request.contextPath}/user/Menu_changeAatarPage.action">修改头像</a>
-    	<div class="changeAvatar" id="changeAvatarContainer"></div>
-    </c:if>
-    <br/>
-    用户名 : <input type="text" name="userName" readonly value="${sessionScope.loginUser.userName }"/><br/>
-    用户昵称：<input type="text" name="userNickName" ${requestScope.edit} value="${sessionScope.loginUser.userNickName}"/><br/>
-    性别：<input type="text" name="sex" ${requestScope.edit} value="${sessionScope.loginUser.sex }"/><br/>
-    生日日期：<input type="text" name="birthdate" ${requestScope.edit} value="${sessionScope.loginUser.birthdate }"/><br/>
-    地址：<input type="text" name="address" ${requestScope.edit} value="${sessionScope.loginUser.address }"/><br/>
-    联系电话：<input type="text" name="contactTel" ${requestScope.edit} value="${sessionScope.loginUser.contactTel }"/><br/>
-    邮箱： <input type="text" name="email" ${requestScope.edit} value="${sessionScope.loginUser.email }"/><br/>
-    手机号：<input type="text" name="telphone" ${requestScope.edit} value="${sessionScope.loginUser.telphone }"/><br/>
-    上次登录时间：<input type="text" name="lastLoginDate" disabled value="${requestScope.lastLoginDate}"/><br/>
-    
-    <!-- ${requestScope.edit==''} 表示启用编辑 -->
-    <c:if test="${requestScope.edit==''}">
-    	<input type="submit" value="确认修改"/>
-    </c:if>
-    </form>
-                
+            
+            	
+            	<s:form action="user/User_changeAvatar.action" theme="simple" enctype="multipart/form-data">
+            		选择图片<s:file name="file"></s:file><br/>
+            		<s:submit value="取消"></s:submit>
+            		<s:submit value="上传"></s:submit>
+            	</s:form>
+            
+            
+          		
+          		
             </div>
-            <c:if test="${requestScope.edit=='readonly'}">
-            	<div class="col-md-1"><a href="${pageContext.request.contextPath}/user/Menu_personalPage.action?kind=edit">启用编辑</a></div>
-            </c:if>
+            
+            
+            
+            <div class="col-md-1"></div>
             <div class="col-md-3" style="padding-top: 30px;">
 				<div class="row">
                 <ul class="list-group">
@@ -182,20 +168,5 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script src="${pageContext.request.contextPath}/js/jquery-1.11.1.js"></script>
     <!-- BOOTSTRAP SCRIPTS -->
     <script src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
-    
-    <script type="text/javascript">
-    
-    	function changeAvatar() {
-    		var avatarContainer = document.getElementById('changeAvatarContainer');
-    		
-    		
-    		var script ="<s:form action='user/Photo_upload.action' theme='simple' enctype='multipart/form-data'>选择图片<s:file name='file'></s:file><s:submit value='取消'></s:submit>" + 
-    		"<s:submit value='上传'></s:submit></s:form>";
-    		
-    		
-    		avatarContainer.innerHTML = script;
-    	}
-    </script>
-    
 </body>
 </html>

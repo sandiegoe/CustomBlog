@@ -33,8 +33,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <div class="col-md-4 logo-div">
                         <div class="logo-inner text-center">
                             <div class="logo-name">
-                                <a href="index.html">
-                                    <img src="${pageContext.request.contextPath}/img/me.jpg" class="img-circle" />
+                               <a href="${pageContext.request.contextPath}/user/Menu_personalPage.action">
+                                    <img alt="个人头像" src="${sessionScope.loginUser.avatarURL}" class="img-circle"/>
                                 </a>
                             </div>
 

@@ -53,5 +53,42 @@ public class UserDAOImpl extends CommonDAOImpl<User> implements UserDAO {
 		});
 	}
 
+
+	@Override
+	public void updateUser(final User user) {
+		hibernateTemplate.execute(new HibernateCallback<Object>() {
+			@Override
+			public Object doInHibernate(Session session) throws HibernateException {
+				session.createQuery("update User user set user.userNickName=:userNickName, sex=:sex, birthdate=:birthdate, address=:address, "
+						+ "contactTel=:contactTel, email=:email, telphone=:telphone where user.userId=:userId")
+					.setParameter("userNickName", user.getUserNickName())
+					.setParameter("sex", user.getSex())
+					.setParameter("birthdate", user.getBirthdate())
+					.setParameter("address", user.getAddress())
+					.setParameter("contactTel", user.getContactTel())
+					.setParameter("telphone", user.getTelphone())
+					.setParameter("email", user.getEmail())
+					.setParameter("userId", user.getUserId())
+					.executeUpdate();
+				return null;
+			}
+		});
+	}
+
+
+	@Override
+	public void updateUserAvatarURL(final User user) {
+		hibernateTemplate.execute(new HibernateCallback<Object>() {
+			@Override
+			public Object doInHibernate(Session session) throws HibernateException {
+				session.createQuery("update User user set user.avatarURL=:avatarURL where user.userId=:userId ")
+					.setParameter("avatarURL", user.getAvatarURL())
+					.setParameter("userId", user.getUserId())
+					.executeUpdate();
+				return null;
+			}
+		});
+	}
+
 	
 }

@@ -10,10 +10,15 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.arex.blog.dto.FileDTO;
 import com.arex.blog.dto.LoginDTO;
+import com.arex.blog.dto.PhotoDTO;
 import com.arex.blog.dto.UserDTO;
+import com.arex.blog.service.FileService;
 import com.arex.blog.service.LoginService;
 import com.arex.blog.service.UserService;
+import com.arex.blog.utils.FileUtils;
+import com.arex.blog.utils.LoginUtils;
 
 @Component(value="userAction")
 @Scope(value="prototype")
@@ -23,6 +28,8 @@ public class UserAction extends CommonAction<UserDTO> {
 	private UserService userService;
 	@Resource(name="loginServiceImpl")
 	private LoginService loginService;
+	@Resource(name="fileServiceImpl")
+	private FileService fileService;
 	
 	public String signIn() {
 		
@@ -138,5 +145,80 @@ public class UserAction extends CommonAction<UserDTO> {
 		userService.changePassword(userDTO);
 		
 		return "changePassword";
+	}
+	
+	public String edit() {
+		
+		//判断是否登录
+		UserDTO userDTO = super.getModel();
+		if(!LoginUtils.checkUserIsAlreadyLogin(session)) {
+			request.setAttribute("messageInfo", "请登录....");
+			return "sinInPage";
+		}
+		//判断是否传输数据
+		if (userDTO == null) {
+			request.setAttribute("messageInfo", "未添加任何数据.");
+			return "toPersonalPage";
+		}
+		
+		userService.updateUser(userDTO);
+		
+		//更新完用户，需要将session中的loginUser也更新
+		UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
+		loginUser = userService.searchUserByUserName(loginUser);
+		session.setAttribute("loginUser", loginUser);
+		
+		return "edit";
+	}
+	
+	public String changeAvatar() {
+		
+		UserDTO userDTO = super.getModel();
+		UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
+		
+		//检查当前用户是否已经登录
+		if (!LoginUtils.checkUserIsAlreadyLogin(session)) {
+			request.setAttribute("messageInfo", "请登录.");
+			return "signInPage";
+		}
+		
+		//判断
+		if (userDTO==null || userDTO.getFile()==null) {
+			request.setAttribute("messageInfo", "图片上传出错.");
+			return "changeAvatarError";
+		}
+		if (userDTO.getFileContentType()==null || !FileUtils.isPhotoByContentType(userDTO.getFileContentType())) {
+			request.setAttribute("messageInfo", "请上传图片文件.");
+			return "changeAvatarError";
+		}
+		if (userDTO.getFile().length() > 1024 * 1024) {
+			request.setAttribute("messageInfo", "文件大小不得大于1024k.");
+			return "changeAvatarError";
+		}
+	
+		//将PhotoDTO转化为FileDTO
+		FileDTO fileDTO = new FileDTO();
+		fileDTO.setUpload(userDTO.getFile());
+		fileDTO.setUploadContentType(userDTO.getFileContentType());
+		fileDTO.setUploadFileName(userDTO.getFileFileName());
+		
+		//上传图片
+		fileDTO = fileService.uploadFile(fileDTO);
+		
+		//判断是否上传成功
+		if (!fileDTO.isUploadSuccessFlags()) {
+			request.setAttribute("messageInfo", "图片上传失败.");
+			return "changeAvatarError";
+		}
+		//设置avatarURL
+		userDTO.setAvatarURL(fileDTO.getFileURL());
+		userDTO.setUserId(loginUser.getUserId());
+		//在User表中更新avatarURL路径
+		userService.updateUserAvatarURL(userDTO);
+		//更新session中loginUser
+		loginUser = userService.searchUserByUserName(loginUser);
+		session.setAttribute("loginUser", loginUser);
+		
+		return "changeAvatar";
 	}
 }
