@@ -4,6 +4,14 @@ import java.util.Date;
 
 public class BlogDTO {
 
+	public int getDeleteSign() {
+		return deleteSign;
+	}
+
+	public void setDeleteSign(int deleteSign) {
+		this.deleteSign = deleteSign;
+	}
+
 	private String blogId;
 	private String kindId;
 	private String blogTitle;
@@ -14,6 +22,7 @@ public class BlogDTO {
 	private int blogReadCounts;
 	private int blogCommentCounts;
 	private String userId;
+	private int deleteSign = 0;
 	
 	private String blogContentText;
 	

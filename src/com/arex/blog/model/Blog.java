@@ -30,6 +30,15 @@ public class Blog {
 	private int blogReadCounts;
 	private int blogCommentCounts;
 	private String userId;
+	private int deleteSign =0 ;
+
+	public int getDeleteSign() {
+		return deleteSign;
+	}
+
+	public void setDeleteSign(int deleteSign) {
+		this.deleteSign = deleteSign;
+	}
 
 	private Blob blogContentText;
 

@@ -2,6 +2,7 @@ package com.arex.blog.action;
 
 import javax.annotation.Resource;
 
+import org.eclipse.jdt.internal.compiler.ast.SuperReference;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +23,7 @@ public class BlogAction extends CommonAction<BlogDTO> {
 		//判断blogAddPage.jsp中从sessionshahi的userId是否为空
 		//如果为空则跳转到登录页面
 		//如果不为空，则将BlogDTO保存到数据库中
+System.out.println(super.getModel().getBlogTitle());
 		if (super.getModel()==null || super.getModel().getUserId()==null || "".equals(super.getModel().getUserId())) {
 			request.setAttribute("messageInfo", "请重新登录");
 			return "signInPage";
@@ -83,5 +85,30 @@ public class BlogAction extends CommonAction<BlogDTO> {
 		blogService.deleteBlogByBlogId(blogDTO);
 		
 		return "delete";
+	}
+	
+public String halfwayDelete() {
+		
+		BlogDTO blogDTO = super.getModel();
+		
+		//判断blogDTO，userId， blogId
+		if (blogDTO == null) {
+			request.setAttribute("messageInfo", "未获取提交修改的数据.");
+			return "toBlog";
+		}
+		//判断当前用户是否登录
+		if (!LoginUtils.checkUserIsAlreadyLogin(session)) {
+			request.setAttribute("messageInfo", "未登录，请登录后再编辑...");
+			return "signInPage";
+		}
+		BlogDTO searchBlogDTO = blogService.searchBlogByBlogId(blogDTO.getBlogId());
+		if (searchBlogDTO == null) {
+			request.setAttribute("messageInfo", "当前博客不存在...");
+			return "toBlog";
+		}
+		
+		blogService.halfwayDeleteBlog(blogDTO);
+		
+		return "halfwayDelete";
 	}
 }

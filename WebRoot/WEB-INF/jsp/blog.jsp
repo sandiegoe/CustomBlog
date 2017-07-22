@@ -122,7 +122,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </p>
                     <a href="${pageContext.request.contextPath}/user/Menu_blogDetailPage.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg ">Read More <i class="fa fa-angle-right"></i></a>
                     <a href="${pageContext.request.contextPath}/user/Menu_blogEditPage.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg ">编 辑 <i class="fa fa-angle-right"></i></a>
-                    <a href="${pageContext.request.contextPath}/user/Blog_delete.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg " onclick="return confirm('确认删除!');">删 除<i class="fa fa-angle-right"></i></a>
+                    <a href="${pageContext.request.contextPath}/user/Blog_halfwayDelete.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg ">删除<i class="fa fa-angle-right"></i></a>
+                    <a href="${pageContext.request.contextPath}/user/Blog_delete.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg " onclick="return confirm('确认删除!');">彻底删除<i class="fa fa-angle-right"></i></a>
                 </div>
              </c:forEach> 
              

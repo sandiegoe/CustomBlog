@@ -51,4 +51,28 @@ public class BlogDAOImpl extends CommonDAOImpl<Blog> implements BlogDAO {
 			}
 		});
 	}
+
+
+	@Override
+	public void halfwayDeleteBlog(final Blog blog) {
+
+		hibernateTemplate.execute(new HibernateCallback<Object>() {
+			@Override
+			public Object doInHibernate(Session session) throws HibernateException {
+				session.createQuery("update Blog blog set blog.deleteSign = 1 where blog.blogId=:blogId")
+					.setParameter("blogId", blog.getBlogId())
+					.executeUpdate();
+				return null;
+			}
+		});
+	}
+
+
+	@Override
+	public void halfwayDeleteBlogByBlogId(String blogId) {
+		Blog blog = new Blog();
+		blog.setBlogId(blogId);
+		this.halfwayDeleteBlog(blog);
+	}
+
 }
