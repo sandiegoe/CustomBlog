@@ -32,7 +32,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <div class="col-md-4 logo-div">
                         <div class="logo-inner text-center">
                             <div class="logo-name">
-                               <a href="${pageContext.request.contextPath}/user/Menu_personalPage.action">
+                                <a href="${pageContext.request.contextPath}/user/Menu_personalPage.action">
                                     <img alt="个人头像" src="${sessionScope.loginUser.avatarURL}" class="img-circle"/>
                                 </a>
                             </div>
@@ -64,7 +64,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     
                     
                     
-                <a href="${pageContext.request.contextPath}/user/Menu_blogAddPage.action">编写博客</a>
+                
                   <c:if test="${not empty sessionScope.loginUser}">
                     	  Hi : ${sessionScope.loginUser.userName}
                     	<a href="${pageContext.request.contextPath}/user/User_signOut.action">signOut</a>
@@ -104,17 +104,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="row">
 
             <div class="col-md-8 ">
-            
-            
-            
-            
-            
-            
-            
-            <c:forEach items="${requestScope.blogDTOList}" var="blogDTO">
-           
-            	
-                <div class="blog-post">
+              
+              编写私信，添加消息页面
+                <%--  <div class="blog-post">
                     <h2>${blogDTO.blogTitle}</h2>
                     <h4>Posted by <a href="#">${blogDTO.userName}</a> on ${blogDTO.blogCreateDate} </h4>
                     <p>
@@ -124,29 +116,35 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <a href="${pageContext.request.contextPath}/user/Menu_blogEditPage.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg ">编 辑 <i class="fa fa-angle-right"></i></a>
                     <a href="${pageContext.request.contextPath}/user/Blog_halfwayDelete.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg ">删除 <i class="fa fa-angle-right"></i></a>
                     <a href="${pageContext.request.contextPath}/user/Blog_delete.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg " onclick="return confirm('确认删除!');">彻底删除 <i class="fa fa-angle-right"></i></a>
+                </div> --%>
+                
+                
+                <form action="${pageContext.request.contextPath}/user/Message_add.action" method="post">
+                	发给 : <input type="text" name="receiverId" style="width:433px" value="${requestScope.receiverId}"/><br/>
+                	内容 : <textarea cols="40" rows="5" name="messageContent">${requestScope.messageContent}</textarea><br/>
+                	<input type="submit" value="私信"/>
+                </form>
+                
+               <div class="blog-post">
+               		未读通知：0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               		 <a href="#" class="btn btn-default btn-lg ">全部标记为已读 <i class="fa fa-angle-right"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               		 <a href="#" class="btn btn-default btn-lg ">清空所有通知 <i class="fa fa-angle-right"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               		 <a href="#" class="btn btn-default btn-lg ">私信 <i class="fa fa-angle-right"></i></a>
+                   	 <br/>
+                   	 <br/>
+                     <a href="#">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</a><hr><br/>
+                     <a href="#">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</a><hr><br/>
+                     <a href="#">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</a><hr><br/>
+                     <a href="#">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</a><hr><br/>
+                     <a href="#">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</a><hr><br/>
+                     <a href="#">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</a><hr><br/>
+                 
+                   
                 </div>
-             </c:forEach> 
-             
-                <br />
-                <nav>
-                    <ul class="pagination">
-                        <li>
-                            <a href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li>
-                            <a href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+              
+              
+          
+                
             </div>
             <div class="col-md-1"></div>
             <div class="col-md-3" style="padding-top: 30px;">
@@ -191,10 +189,5 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script src="${pageContext.request.contextPath}/js/jquery-1.11.1.js"></script>
     <!-- BOOTSTRAP SCRIPTS -->
     <script src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
-
 </body>
 </html>
-
-  	
-  		<a href="${pageContext.request.contextPath}/user/Menu_blogAddPage.action">编写博客</a>
-

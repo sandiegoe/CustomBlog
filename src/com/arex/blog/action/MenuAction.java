@@ -90,7 +90,22 @@ public class MenuAction extends CommonAction<MenuDTO> {
 	}
 
 	public String message() {
+		// 检查当前用户是否已经登录
+		if (!LoginUtils.checkUserIsAlreadyLogin(session)) {
+			request.setAttribute("messageInfo", "请登录.");
+			return "signInPage";
+		}
 		return "message";
+	}
+	
+	//私信页面
+	public String messageAddPage() {
+		// 检查当前用户是否已经登录
+		if (!LoginUtils.checkUserIsAlreadyLogin(session)) {
+			request.setAttribute("messageInfo", "请登录.");
+			return "signInPage";
+		}
+		return "messageAddPage";
 	}
 
 	public String changePasswordPage() {
@@ -113,10 +128,10 @@ public class MenuAction extends CommonAction<MenuDTO> {
 		request.setAttribute("lastLoginDate", lastLoginDate);
 		if (super.getModel().getKind()!=null && "edit".equals(super.getModel().getKind())) {
 			//启用编辑
-			request.setAttribute("edit", "");
+			request.setAttribute("kind", "");
 		} else {
 			//只读
-			request.setAttribute("edit", "readonly");
+			request.setAttribute("kind", "disabled");
 		}
 		return "personalPage";
 	}

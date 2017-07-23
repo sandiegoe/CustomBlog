@@ -15,6 +15,7 @@
 +--------------------------+----------------------------+
 
 2. 指定Workspace的编码为utf-8
+	Window -> Preferences -> General -> Workspace -> Text file encoding里的Other -> UTF-8
 
 3. jdk1.8  tomcat8.5版本
 

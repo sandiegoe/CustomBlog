@@ -38,6 +38,15 @@ MenuAction负责页面中的公共链接跳转
     Menu_personalPage.action 个人中心页面
         个人信息从session中获取
         其它信息，待添加
+        判断当前用户有没有登录，如果没有登录则跳转到登录页面
+        从登录表中获取上次登录时间，设置到request中, lastLoginDate : lastLoginDate
+        获取UserDTOh中的kind属性
+        	如果不为空，且等于edit，则在request中设置 kind : ""
+        		表示跳转到对应的personalPage.jsp页面的时候启用编辑
+        	否则，设置 kind : "disabled",表示在personalPage.jsp中不启用编辑
+        		在input上设置 readonly 则不可编辑
+        注意到是不能都设置为disabled，因为设置disabled后，表单中相关的参数是提交不了的
+        	用户名和用户Id是不允许修改的，因此可以将这两个属性设置为readonly，否则userId和userName传递为空
     Menu_blogAddPage.action  博客添加页面
     	判断当期用户是否登录
     		如果没有登录，则跳转到signInPage，提示用户登录
@@ -57,6 +66,10 @@ MenuAction负责页面中的公共链接跳转
 		调用blogService查询指定blogId, 判断获取到的blogDTO是否为空
 			如果blogDTO为空，则设置messageInfo 为 当前Blog不存在
 		将获取到的blogDTO设置到request中去，跳转到blogEditPage.jsp中
+	Menu_changeAvatarPage.action  用于跳转上传头像的页面
+	Menu_uploadPhotoPage.action 跳转到上传图片页面
+	
+		
 		
 			
 UserAction   （类似于我的）
@@ -76,6 +89,27 @@ UserAction   （类似于我的）
 		检查session中loginUser是否为空
 			如果不为空，则移除session中的loginUser
         最后跳转到Menu_home.action
+	User_edit.action  修改用户基本信息
+		判断用户是否已经登录
+			如果没有登录，设置messageInfo ： 请登录, 则跳转到登录页面
+		判断传输的userDTO是否为空
+			如果为空，设置messageInfo ： 未添加任何数据，跳转到个人中心
+		查询数据库，更新session中的loginUser
+	User_changeAvatar.action  负责更改头像
+		判断是否已经登录
+			如果没有登录，设置messageInfo ： 请登录. 则跳转到sinInPage，让用户进行登录
+		判断userDTO是否为空，userDTO.getFile是否为空，请上传图片文件., 
+			如果为空，则设置messageInfo ： 图片上传出错.  跳转到changeAatarPage.jsp页面
+		userDTO.contentTye是否为空， 是否是图片
+			如果为空或者false 则设置messageInfo ： 请上传图片文件. 跳转到changeAatarPage.jsp页面
+		文件大小要小于1M
+			如果大于1M，则设置messageInfo ： 文件大小不得大于1024k. 跳转到changeAatarPage.jsp页面
+		将userDTO转化为FileDTO
+		调用fileService上传fileDTO，返回一个FileDTO
+		通过fileDTO.isUploadSuccessFlags判断是否上传成功
+			如果成功了，则设置messageInfo ： "图片上传失败. 跳转到changeAatarPage.jsp页面
+		在userDTO中设置avatarURL和userId，调用userService更新用户的头像路径
+		查询User，更新session中的loginUser
 
  BlogAction 负责日志的发布，修改，删除等等
 
@@ -98,19 +132,37 @@ UserAction   （类似于我的）
     	调用blogService层deleteBlog(BlogDTO) 删除blog
     		service层中，通过调用userDAO.deleteById(id);完成删除
     	跳转到博客列表页面(Menu_blog.action)
+    halfwayDelete.action blog伪删除
+    	获取blog.jsp传递过来的blogId
+    	对blogId进行判断
+    		如果为空，则设置messageInfo 为 删除的博客不存在
+    	调用blogSrvice层halfwayDeleteBlog(blogDTO) 将blog的deleteSign置为1,表示删除
     	
 
 
 PhotoAction 部分实现上传图片, 删除图片，下载图片等等
-
-    Photo_list.action
-    Photo_addPage.action
-    Photo_add.action
-    Photo_editPage.action
-    Photo_delete.action 
-    Photo_download.action
-
-
+    Photo_upload.action 上传图片
+    	判断是否已经登录
+			如果没有登录，设置messageInfo ： 请登录. 则跳转到sinInPage，让用户进行登录
+		判断userDTO是否为空，userDTO.getFile是否为空，请上传图片文件.,  跳转到Menu_sinInPage.action signInPage.jsp页面
+			如果为空，则设置messageInfo ： 图片上传出错.  跳转到Menu_photo.action photo.jsp页面
+		userDTO.contentTye是否为空， 是否是图片
+			如果为空或者false 则设置messageInfo ： 请上传图片文件. 跳转到Menu_photo.action photo.jsp页面
+		文件大小要小于1M
+			如果大于1M，则设置messageInfo ： 文件大小不得大于1024k. 跳转到Menu_photo.action photo.jsp页面
+		将userDTO转化为FileDTO
+		调用fileService上传fileDTO，返回一个FileDTO
+		通过fileDTO.isUploadSuccessFlags判断是否上传成功
+			如果成功了，则设置messageInfo ： "图片上传失败. 跳转到Menu_photo.action photo.jsp页面
+		设置PhotoDTO保存的必要属性
+		调用photoService的savePhoto方法，将上传的photoDTO保存到数据库中
+	Photo_delete.action 删除图片
+		检查当前用户是否已经登录
+			如果没有登录，设置messageInfo ： 请登录. 则跳转到sinInPage，让用户进行登录
+		检查photoDTO， photoId是否为空
+			如果为空，设置messageInfo ： 删除图片失败. 跳转到Menu_photo.action photo.jsp页面
+		调用photoService层deleteByPhotoId，删除指定photoId的图片
+		
 MessageAction 负责留言管理
 
     Message_list.action
@@ -163,6 +215,11 @@ UserService
 		查询指定userId的用户名
 		userId为要查找到的用户Id
 		返回的是查询的后的UserDTO
+	public void updateUser(UserDTO)
+		更新用户的基本信息
+		userDTO为personalPage.jsp页面传递过来的修改数据
+	public void udpateUserAvatarURL(userDTO)
+		userDTO存放更新的userId和新的头像路径	
 
 BlogService
 
@@ -197,6 +254,8 @@ BlogService
     public void deleteBlogByBlogId(String blogId);
     	删除指定blogId的博客
     	blogId为博客的Id
+    public void halfwayDeleteBlog(BlogDTO blogDTO)
+    	将指定blogId的deleteSign置为1
 	
 LoginService  用户登录情况管理的Service
 	public void addLoginRecord(LoginDTO loginDTO);
@@ -227,7 +286,17 @@ LoginService  用户登录情况管理的Service
 		调用searchLastLoginDateByUserId获取登录时间
 		
 PhotoService
-
+	public void savePhoto(PhotoDTO photoDTO)
+		保存图片的有关信息
+		photoDTO为要保存的图片信息，photoDate, photoName, photoSize, photoSize, photoURL, userId
+	public List<PhotoDTO> searchAllPhotoByUserId(String userId);
+		搜索指定userId的所有photoDTO
+		userId为要搜寻的用户Id
+		返回值为List<PhotoDTO>，一系列的PhotoDTO
+	public void deletePhotoByPhotoId(String photoId) {
+		删除指定photoId的图片记录
+		photoId为待删除的图片Id
+		
 messageService
 
 dao

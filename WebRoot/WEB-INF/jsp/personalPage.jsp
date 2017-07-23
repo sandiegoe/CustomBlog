@@ -114,30 +114,30 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <img alt="个人头像" src="${sessionScope.loginUser.avatarURL}" class="img-circle"/>
             </a>
      </div>
-    <c:if test="${requestScope.edit==''}">
+    <c:if test="${requestScope.kind==''}">
     	<!-- <a href="#" onclick="return changeAvatar();">修改头像</a> -->
     	<a href="${pageContext.request.contextPath}/user/Menu_changeAatarPage.action">修改头像</a>
     	<div class="changeAvatar" id="changeAvatarContainer"></div>
     </c:if>
     <br/>
     用户名 : <input type="text" name="userName" readonly value="${sessionScope.loginUser.userName }"/><br/>
-    用户昵称：<input type="text" name="userNickName" ${requestScope.edit} value="${sessionScope.loginUser.userNickName}"/><br/>
-    性别：<input type="text" name="sex" ${requestScope.edit} value="${sessionScope.loginUser.sex }"/><br/>
-    生日日期：<input type="text" name="birthdate" ${requestScope.edit} value="${sessionScope.loginUser.birthdate }"/><br/>
-    地址：<input type="text" name="address" ${requestScope.edit} value="${sessionScope.loginUser.address }"/><br/>
-    联系电话：<input type="text" name="contactTel" ${requestScope.edit} value="${sessionScope.loginUser.contactTel }"/><br/>
-    邮箱： <input type="text" name="email" ${requestScope.edit} value="${sessionScope.loginUser.email }"/><br/>
-    手机号：<input type="text" name="telphone" ${requestScope.edit} value="${sessionScope.loginUser.telphone }"/><br/>
+    用户昵称：<input type="text" name="userNickName" ${requestScope.kind} value="${sessionScope.loginUser.userNickName}"/><br/>
+    性别：<input type="text" name="sex" ${requestScope.kind} value="${sessionScope.loginUser.sex }"/><br/>
+    生日日期：<input type="text" name="birthdate" ${requestScope.kind} value="${sessionScope.loginUser.birthdate }"/><br/>
+    地址：<input type="text" name="address" ${requestScope.kind} value="${sessionScope.loginUser.address }"/><br/>
+    联系电话：<input type="text" name="contactTel" ${requestScope.kind} value="${sessionScope.loginUser.contactTel }"/><br/>
+    邮箱： <input type="text" name="email" ${requestScope.kind} value="${sessionScope.loginUser.email }"/><br/>
+    手机号：<input type="text" name="telphone" ${requestScope.kind} value="${sessionScope.loginUser.telphone }"/><br/>
     上次登录时间：<input type="text" name="lastLoginDate" disabled value="${requestScope.lastLoginDate}"/><br/>
     
-    <!-- ${requestScope.edit==''} 表示启用编辑 -->
-    <c:if test="${requestScope.edit==''}">
+    <!-- ${requestScope.kind==''} 表示启用编辑 -->
+    <c:if test="${requestScope.kind==''}">
     	<input type="submit" value="确认修改"/>
     </c:if>
     </form>
                 
             </div>
-            <c:if test="${requestScope.edit=='readonly'}">
+            <c:if test="${requestScope.kind=='disabled'}">
             	<div class="col-md-1"><a href="${pageContext.request.contextPath}/user/Menu_personalPage.action?kind=edit">启用编辑</a></div>
             </c:if>
             <div class="col-md-3" style="padding-top: 30px;">

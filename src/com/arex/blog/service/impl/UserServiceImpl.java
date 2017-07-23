@@ -14,26 +14,27 @@ import com.arex.blog.dto.UserDTO;
 import com.arex.blog.model.User;
 import com.arex.blog.service.UserService;
 
-@Component(value="userServiceImpl")
+@Component(value = "userServiceImpl")
 public class UserServiceImpl implements UserService {
-	
-	@Resource(name="userDAOImpl")
+
+	@Resource(name = "userDAOImpl")
 	private UserDAO userDAO;
-	
+
 	@Override
 	public UserDTO searchUserByUserName(UserDTO userDTO) {
-		UserDTO searchUserDTO = this.searchUserByUserName(userDTO.getUserName());
-		
+		UserDTO searchUserDTO = this
+				.searchUserByUserName(userDTO.getUserName());
+
 		return searchUserDTO;
 	}
-	
+
 	@Override
 	public UserDTO searchUserByUserId(UserDTO userDTO) {
-		
+
 		UserDTO searchUserDTO = this.searchUserByUserId(userDTO.getUserId());
 		return searchUserDTO;
 	}
-	
+
 	@Override
 	public UserDTO searchUserByUserId(String userId) {
 		User user = userDAO.searchById(userId);
@@ -42,7 +43,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	private UserDTO convertUserPO2VO(User user) {
-		
+
 		UserDTO userDTO = null;
 		if (user != null) {
 			userDTO = new UserDTO();
@@ -63,9 +64,9 @@ public class UserServiceImpl implements UserService {
 		return userDTO;
 	}
 
-	private List<UserDTO> convertUserListPO2VO(List<User> userList) { 
+	private List<UserDTO> convertUserListPO2VO(List<User> userList) {
 		List<UserDTO> userDTOList = new ArrayList<UserDTO>();
-		for (int i=0; userList!=null && i<userList.size(); ++i) {
+		for (int i = 0; userList != null && i < userList.size(); ++i) {
 			UserDTO userDTO = new UserDTO();
 			userDTO.setAddress(userList.get(i).getAddress());
 			userDTO.setBirthdate(userList.get(i).getBirthdate());
@@ -82,15 +83,15 @@ public class UserServiceImpl implements UserService {
 			userDTO.setAvatarURL(userList.get(i).getAvatarURL());
 			userDTOList.add(userDTO);
 		}
-		
+
 		return userDTOList;
 	}
-	
+
 	@Override
 	public void saveUserDTO(UserDTO userDTO) {
-		
+
 		User user = this.convertUserVO2PO(userDTO);
-		//注册的时候头像设置为默认图片
+		// 注册的时候头像设置为默认图片
 		user.setAvatarURL(new User().getAvatarURL());
 		userDAO.save(user);
 	}
@@ -116,23 +117,24 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void changePassword(UserDTO userDTO) {
 		userDAO.changePassword(userDTO.getLogonPassword(), userDTO.getUserId());
-	
+
 	}
 
 	@Override
 	public UserDTO searchUserByUserName(String userName) {
 		String hqlWhere = " where 1=1 ";
 		List<String> paramsList = new ArrayList<String>();
-		if (userName!=null && !"".equals(userName)) {
+		if (userName != null && !"".equals(userName)) {
 			hqlWhere += "and o.userName like ? ";
 			paramsList.add(userName + "%");
 		}
 		Object[] objects = paramsList.toArray();
 		LinkedHashMap<String, String> orderby = null;
 
-		List<User> userList = userDAO.searchCollectionByConditionNoPage(hqlWhere, objects, orderby);
+		List<User> userList = userDAO.searchCollectionByConditionNoPage(
+				hqlWhere, objects, orderby);
 		List<UserDTO> userDTOList = this.convertUserListPO2VO(userList);
-		
+
 		if (userDTOList.size() >= 1) {
 			return userDTOList.get(0);
 		} else {
@@ -152,10 +154,19 @@ public class UserServiceImpl implements UserService {
 		userDAO.updateUser(user);
 	}
 
-
 	@Override
 	public void updateUserAvatarURL(UserDTO userDTO) {
 		User user = this.convertUserVO2PO(userDTO);
 		userDAO.updateUserAvatarURL(user);
+	}
+
+	@Override
+	public boolean isExistsUserByUserId(String userId) {
+		UserDTO userDTO = this.searchUserByUserId(userId);
+		if (userDTO == null) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 }

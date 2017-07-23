@@ -82,7 +82,7 @@ public class PhotoAction extends CommonAction<PhotoDTO> {
 			return "signInPage";
 		}
 		if (super.getModel()==null || super.getModel().getPhotoId()==null || "".equals(super.getModel().getPhotoId())) {
-			request.setAttribute("messageInfo", "删除的图片失败.");
+			request.setAttribute("messageInfo", "删除图片失败.");
 			return "toPhoto";
 		}
 		

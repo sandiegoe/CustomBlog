@@ -110,7 +110,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 			<c:forEach items="${requestScope.photoDTOList}" var="photoDTO">
 	            <div class="col-md-8 ">
-	          	<img alt="这是一张图片" src="${photoDTO.photoURL}" width="500ox" height="300px"/>
+	          	<img alt="图片去火星！！！" src="${photoDTO.photoURL}" width="500ox" height="300px"/>
 	            <a href="${pageContext.request.contextPath}/user/Photo_delete.action?photoId=${photoDTO.photoId}" onclick="return confirm('确认删除.');">删除图片</a>
 	            </div>
 	           	<br/>

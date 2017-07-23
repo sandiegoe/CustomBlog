@@ -32,7 +32,8 @@
 			<result name="blogDetailPage">/WEB-INF/jsp/blogDetailPage.jsp</result>
 			<result name="uploadPhotoPage">/WEB-INF/jsp/uploadPhotoPage.jsp</result>
 			<result name="changeAatarPage">/WEB-INF/jsp/changeAatarPage.jsp</result>
-			<allowed-methods>home, signInPage, registerPage, photo, blog, message, changePasswordPage, personalPage, blogAddPage, blogEditPage, blogDetailPage, uploadPhotoPage, changeAatarPage</allowed-methods>
+			<result name="messageAddPage">/WEB-INF/jsp/messageAddPage.jsp</result>
+			<allowed-methods>home, signInPage, registerPage, photo, blog, message, changePasswordPage, personalPage, blogAddPage, blogEditPage, blogDetailPage, uploadPhotoPage, changeAatarPage, messageAddPage</allowed-methods>
 		</action>
 		
 		<action name="User_*" class="userAction" method="{1}">
@@ -128,6 +129,26 @@
 				<param name="namespace">/user</param>
 			</result>
 			<allowed-methods>toPhoto, upload, delete</allowed-methods>
+		</action>
+		
+		<action name="Message_*" class="messageAction" method="{1}">
+			<result name="add" type="redirectAction">	
+				<param name="actionName">Menu_message.action</param>
+				<param name="namespace">/user</param>
+			</result>
+			<result name="signInPage" type="redirectAction">
+				<param name="actionName">Menu_signInPage.action</param>
+				<param name="namespace">/user</param>
+			</result>
+			<result name="toMessage" type="redirectAction">
+				<param name="actionName">Menu_message.action</param>
+				<param name="namespace">/user</param>
+			</result>
+			<result name="addError" type="redirectAction">
+				<param name="actionName">Menu_messageAddPage.action</param>
+				<param name="namespace">/user</param>
+			</result>
+			<allowed-methods>add</allowed-methods>
 		</action>
 	</package>
 
