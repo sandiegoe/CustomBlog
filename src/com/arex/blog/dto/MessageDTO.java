@@ -13,6 +13,8 @@ public class MessageDTO {
 	private int messageStatus;
 	private int messageIsDelete;
 	private String senderIp;
+	
+	private String userNames; //存储所有的用户名，以，隔开
 
 	public MessageDTO() {
 		super();
@@ -88,5 +90,13 @@ public class MessageDTO {
 
 	public void setSenderIp(String senderIp) {
 		this.senderIp = senderIp;
+	}
+
+	public String getUserNames() {
+		return userNames;
+	}
+
+	public void setUserNames(String userNames) {
+		this.userNames = userNames;
 	}
 }

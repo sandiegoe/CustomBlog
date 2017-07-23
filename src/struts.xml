@@ -21,6 +21,7 @@
 			<result name="photo">/WEB-INF/jsp/photo.jsp</result>
 			<result name="blog">/WEB-INF/jsp/blog.jsp</result>
 			<result name="message">/WEB-INF/jsp/message.jsp</result>
+			<result name="messageDetail">/WEB-INF/jsp/messageDetail.jsp</result>
 			<result name="changePasswordPage">/WEB-INF/jsp/changePasswordPage.jsp</result>
 			<result name="personalPage">/WEB-INF/jsp/personalPage.jsp</result>
 			<result name="blogAddPage">/WEB-INF/jsp/blogAddPage.jsp</result>
@@ -33,7 +34,7 @@
 			<result name="uploadPhotoPage">/WEB-INF/jsp/uploadPhotoPage.jsp</result>
 			<result name="changeAatarPage">/WEB-INF/jsp/changeAatarPage.jsp</result>
 			<result name="messageAddPage">/WEB-INF/jsp/messageAddPage.jsp</result>
-			<allowed-methods>home, signInPage, registerPage, photo, blog, message, changePasswordPage, personalPage, blogAddPage, blogEditPage, blogDetailPage, uploadPhotoPage, changeAatarPage, messageAddPage</allowed-methods>
+			<allowed-methods>home, signInPage, registerPage, photo, blog, message, changePasswordPage, personalPage, blogAddPage, blogEditPage, blogDetailPage, uploadPhotoPage, changeAatarPage, messageAddPage, messageDetail</allowed-methods>
 		</action>
 		
 		<action name="User_*" class="userAction" method="{1}">
@@ -148,7 +149,15 @@
 				<param name="actionName">Menu_messageAddPage.action</param>
 				<param name="namespace">/user</param>
 			</result>
-			<allowed-methods>add</allowed-methods>
+			<result name="readAllMessage" type="redirectAction">
+				<param name="actionName">Menu_message.action</param>
+				<param name="namespace">/user</param>
+			</result>
+			<result name="deleteAllMessage" type="redirectAction">
+				<param name="actionName">Menu_message.action</param>
+				<param name="namespace">/user</param>
+			</result>
+			<allowed-methods>add,readAllMessage,deleteAllMessage</allowed-methods>
 		</action>
 	</package>
 

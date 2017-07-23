@@ -120,7 +120,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 
                 
                 <form action="${pageContext.request.contextPath}/user/Message_add.action" method="post">
-                	发给 : <input type="text" name="receiverId" style="width:433px" value="${requestScope.receiverId}"/><br/>
+                	发给 : <input type="text" name="userNames" style="width:433px" value="${requestScope.userNames}"/><br/>
                 	内容 : <textarea cols="40" rows="5" name="messageContent">${requestScope.messageContent}</textarea><br/>
                 	<input type="submit" value="私信"/>
                 </form>

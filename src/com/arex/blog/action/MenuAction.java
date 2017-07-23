@@ -6,15 +6,18 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.eclipse.jdt.internal.compiler.ast.SuperReference;
+import org.omg.CORBA.PRIVATE_MEMBER;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.arex.blog.dto.BlogDTO;
 import com.arex.blog.dto.MenuDTO;
+import com.arex.blog.dto.MessageDTO;
 import com.arex.blog.dto.PhotoDTO;
 import com.arex.blog.dto.UserDTO;
 import com.arex.blog.service.BlogService;
 import com.arex.blog.service.LoginService;
+import com.arex.blog.service.MessageService;
 import com.arex.blog.service.PhotoService;
 import com.arex.blog.service.UserService;
 import com.arex.blog.utils.LoginUtils;
@@ -31,6 +34,8 @@ public class MenuAction extends CommonAction<MenuDTO> {
 	private BlogService blogService;
 	@Resource(name="photoServiceImpl")
 	private PhotoService photoService;
+	@Resource(name="messageServiceImpl")
+	private MessageService messageService;
 
 	public String home() {
 
@@ -90,11 +95,27 @@ public class MenuAction extends CommonAction<MenuDTO> {
 	}
 
 	public String message() {
+		
+		UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
+		
 		// 检查当前用户是否已经登录
 		if (!LoginUtils.checkUserIsAlreadyLogin(session)) {
 			request.setAttribute("messageInfo", "请登录.");
 			return "signInPage";
 		}
+		
+		//获取当前登录用户的所有信息
+		//receiverId为当前登录用户userId的消息，messageStatus <> 1
+		//List<MessageDTO> messageDTOList = messageService.searchAllMessageByReceiverId(loginUser.getUserId());
+		//获取新消息
+		List<MessageDTO> messageDTOListWithNew = messageService.searchAllMessageByReceiverIdAndMessageStatus(loginUser.getUserId(), 1);
+		//获取已读消息
+		List<MessageDTO> messageDTOListWithRead = messageService.searchAllMessageByReceiverIdAndMessageStatus(loginUser.getUserId(), 2);
+		//设置到request中去
+		request.setAttribute("messageDTOListWithNew", messageDTOListWithNew);
+		request.setAttribute("messageDTOListWithRead", messageDTOListWithRead);
+		request.setAttribute("messages", messageDTOListWithNew.size());
+		
 		return "message";
 	}
 	
@@ -106,6 +127,31 @@ public class MenuAction extends CommonAction<MenuDTO> {
 			return "signInPage";
 		}
 		return "messageAddPage";
+	}
+	
+	public String messageDetail() {
+		
+		MenuDTO menuDTO = super.getModel();
+		
+		// 检查当前用户是否已经登录
+		if (!LoginUtils.checkUserIsAlreadyLogin(session)) {
+			request.setAttribute("messageInfo", "请登录.");
+			return "signInPage";
+		}
+		if (menuDTO==null || menuDTO.getMessageId()==null || "".equals(menuDTO.getMessageId())) {
+			request.setAttribute("messageInfo", "获取消息详情出错");
+			return "message";
+		}
+		
+		//设置指定messageId的消息已读取
+		messageService.updateMessageStatus(menuDTO.getMessageId(), 2);
+		
+		//获取指定messageId的MessageDTO对象
+		MessageDTO messageDTO = messageService.searchMessageByMessageId(menuDTO.getMessageId());
+		//设置到request中
+		request.setAttribute("messageDTO", messageDTO);
+		
+		return "messageDetail";
 	}
 
 	public String changePasswordPage() {
