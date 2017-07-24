@@ -90,5 +90,27 @@ public class UserDAOImpl extends CommonDAOImpl<User> implements UserDAO {
 		});
 	}
 
+
+	@Override
+	public void halfwayDeleteUser(final User user) {
+		hibernateTemplate.execute(new HibernateCallback<Object>() {
+			@Override
+			public Object doInHibernate(Session session) throws HibernateException {
+				session.createQuery("update User user set user.idSign = 1 where user.userId=:userId ")
+					.setParameter("userId", user.getUserId())
+					.executeUpdate();
+				return null;
+			}
+		});
+	}
+
+
+	@Override
+	public void halfwayDeleteUserByUserId(String userId) {
+		User user = new User();
+		user.setUserId(userId);
+		this.halfwayDeleteUser(user);
+	}
+
 	
 }

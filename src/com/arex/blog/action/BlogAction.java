@@ -90,17 +90,7 @@ System.out.println(super.getModel().getBlogTitle());
 public String halfwayDelete() {
 		
 		BlogDTO blogDTO = super.getModel();
-		
-		//判断blogDTO，userId， blogId
-		if (blogDTO == null) {
-			request.setAttribute("messageInfo", "未获取提交修改的数据.");
-			return "toBlog";
-		}
-		//判断当前用户是否登录
-		if (!LoginUtils.checkUserIsAlreadyLogin(session)) {
-			request.setAttribute("messageInfo", "未登录，请登录后再编辑...");
-			return "signInPage";
-		}
+
 		BlogDTO searchBlogDTO = blogService.searchBlogByBlogId(blogDTO.getBlogId());
 		if (searchBlogDTO == null) {
 			request.setAttribute("messageInfo", "当前博客不存在...");
@@ -111,4 +101,20 @@ public String halfwayDelete() {
 		
 		return "halfwayDelete";
 	}
+
+public String restore(){
+	
+	BlogDTO blogDTO = super.getModel();
+	
+	//判断blogDTO，userId， blogId
+	BlogDTO searchBlogDTO = blogService.searchBlogByBlogId(blogDTO.getBlogId());
+	if (searchBlogDTO == null) {
+		request.setAttribute("messageInfo", "当前博客不存在...");
+		return "toBlog";
+	}
+	
+	blogService.restoreBlog(blogDTO);
+	return "restore";
+}
+
 }

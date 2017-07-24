@@ -15,4 +15,5 @@ public interface UserService {
 	public abstract void updateUser(UserDTO userDTO);
 	public abstract void updateUserAvatarURL(UserDTO userDTO);
 	public abstract boolean isExistsUserByUserId(String userId);
+	public void halfwayDeleteUser(UserDTO userDTO);
 }
