@@ -11,11 +11,13 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.arex.blog.dto.BlogDTO;
+import com.arex.blog.dto.CommentDTO;
 import com.arex.blog.dto.MenuDTO;
 import com.arex.blog.dto.MessageDTO;
 import com.arex.blog.dto.PhotoDTO;
 import com.arex.blog.dto.UserDTO;
 import com.arex.blog.service.BlogService;
+import com.arex.blog.service.CommentService;
 import com.arex.blog.service.LoginService;
 import com.arex.blog.service.MessageService;
 import com.arex.blog.service.PhotoService;
@@ -36,6 +38,8 @@ public class MenuAction extends CommonAction<MenuDTO> {
 	private PhotoService photoService;
 	@Resource(name="messageServiceImpl")
 	private MessageService messageService;
+	@Resource(name="commentServiceImpl")
+	private CommentService commentService;
 
 	public String home() {
 
@@ -241,8 +245,12 @@ public class MenuAction extends CommonAction<MenuDTO> {
 			return "toBlog";
 		}
 		
+		//取出所有评论
+		List<CommentDTO> commentDTOList = commentService.searchAllCommentByBlogId(blogId);
+		
 		//设置到request中"blogDTO" : blogDTO
 		request.setAttribute("blogDTO", blogDTO);
+		request.setAttribute("commentDTOList", commentDTOList);
 		
 		return "blogDetailPage";
 	}
