@@ -20,3 +20,5 @@
 3. jdk1.8  tomcat8.5版本
 
 4. 执行database.sql脚本，创建数据库
+
+5. 对于js文件报错解决办法,项目右击,选择MyEclipse点击Exclude From Validation,然后再点击Run validation
