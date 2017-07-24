@@ -105,8 +105,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 
             <div class="col-md-8 ">
-            
-            
                 <div class="blog-post">
                     <h2>${requestScope.blogDTO.blogTitle}</h2>
                     <h4>Posted by <a href="#">${sessionScope.loginUser.userName}</a> on on ${blogDTO.blogCreateDate} </h4>
@@ -114,10 +112,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						${requestScope.blogDTO.blogContent}
                     </p>
                 </div>
-                
-
                 <br />
-               
+                
+                <c:forEach items="${requestScope.commentDTOList}" var="commentDTO">
+                	<h4>Posted by ${commentDTO.userName} | ${commentDTO.commentContent}</h4>
+                </c:forEach>
+                
+                <c:if test="${not empty sessionScope.loginUser}">
+	                <form action="${pageContext.request.contextPath}/user/Comment_add.action" method="post">
+	                	用户名 : ${sessionScope.loginUser.userName}<br/>
+	                	<input type="hidden" name="userId" value="${sessionScope.loginUser.userId}"/>
+	                	<input type="hidden" name="blogId" value="${requestScope.blogDTO.blogId}"/>
+	                	<input type="hidden" name="parentId" value="${requestScope.blogDTO.blogId}"/>
+	                	评论内容 : <textarea rows="7" cols="40" name="commentContent"></textarea><br/>
+	                	<input type="submit" value="提交"/>
+	                </form>
+                </c:if>
             </div>
             <div class="col-md-1"></div>
             <div class="col-md-3" style="padding-top: 30px;">
