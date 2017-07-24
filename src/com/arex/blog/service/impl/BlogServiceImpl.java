@@ -269,7 +269,31 @@ public class BlogServiceImpl implements BlogService {
 	@Override
 	public void halfwayDeleteBlog(BlogDTO blogDTO) {
 //		Blog blog = convertBlogVO2POForUpdate(blogDTO);
-		
 		blogDAO.halfwayDeleteBlogByBlogId(blogDTO.getBlogId());
+	}
+	
+
+	@Override
+	public List<BlogDTO> searchAllDeletedBlogByUserId(String userId) {
+		String hqlWhere = " where 1=1 and deleteSign = 1 ";
+		List<String> paramList = new ArrayList<String>();
+		if (userId != null && !"".equals(userId)) {
+			hqlWhere += " and o.userId=? ";
+			paramList.add(userId);
+		}
+		Object[] objects = paramList.toArray();
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("o.blogCreateDate", "desc");
+
+		List<Blog> blogList = blogDAO.searchCollectionByConditionNoPage(
+				hqlWhere, objects, orderby);
+		List<BlogDTO> blogDTOList = this.convertBlogPO2VO2(blogList);
+
+		return blogDTOList;
+	}
+
+	@Override
+	public void restoreBlog(BlogDTO blogDTO) {
+		blogDAO.restoreBlogByBlogId(blogDTO.getBlogId());
 	}
 }

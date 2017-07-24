@@ -81,6 +81,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <a href="${pageContext.request.contextPath}/user/Menu_photo.action">我的图片</a>
                     <a href="${pageContext.request.contextPath}/user/Menu_blog.action">我的博客</a>
                     <a href="${pageContext.request.contextPath}/user/Menu_message.action">消息</a>
+                    <a href="${pageContext.request.contextPath}/user/Menu_deleted.action">已删除博客</a>
                     
                     
                     
@@ -123,7 +124,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <a href="${pageContext.request.contextPath}/user/Menu_blogDetailPage.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg ">Read More <i class="fa fa-angle-right"></i></a>
                     <a href="${pageContext.request.contextPath}/user/Menu_blogEditPage.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg ">编 辑 <i class="fa fa-angle-right"></i></a>
                     <a href="${pageContext.request.contextPath}/user/Blog_halfwayDelete.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg ">删除 <i class="fa fa-angle-right"></i></a>
-                    <a href="${pageContext.request.contextPath}/user/Blog_delete.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg " onclick="return confirm('确认删除!');">彻底删除 <i class="fa fa-angle-right"></i></a>
                 </div>
              </c:forEach> 
              

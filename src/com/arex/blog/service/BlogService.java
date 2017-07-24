@@ -14,4 +14,6 @@ public interface BlogService {
 	public void updateBlog(BlogDTO blogDTO);
 	public void deleteBlogByBlogId(BlogDTO blogDTO);
 	public void halfwayDeleteBlog(BlogDTO blogDTO);
+	public List<BlogDTO> searchAllDeletedBlogByUserId(String userId);
+	public void restoreBlog(BlogDTO blogDTO);
 }

@@ -39,9 +39,13 @@ public class UserAction extends CommonAction<UserDTO> {
 		
 		//判断
 		if (userDTO == null) {
-			request.setAttribute("messageInfo", "用户名输入错误，没有该用户.");
+			request.setAttribute("messageInfo", "用户名输入错误.");
 			return "error";
 		}
+		/*if(userDTO.getIdSign() == 1){
+			request.setAttribute("messageInfo", "没有此用户");
+			return "error";
+		}*/
 		if (logonPassword==null || "".equals(logonPassword)) {
 			request.setAttribute("messageInfo", "请输入密码.");
 			return "error";
@@ -220,5 +224,23 @@ public class UserAction extends CommonAction<UserDTO> {
 		session.setAttribute("loginUser", loginUser);
 		
 		return "changeAvatar";
+	}
+	
+	public String halfwayDelete(){
+		//判断是否登录
+		UserDTO userDTO = super.getModel();
+		if(!LoginUtils.checkUserIsAlreadyLogin(session)) {
+			request.setAttribute("messageInfo", "请登录....");
+			return "sinInPage";
+		}
+		//更行用户表中删除标志
+		userService.halfwayDeleteUser(userDTO);
+		
+		//更新完用户，需要将session中的loginUser也更新
+		UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
+		loginUser = userService.searchUserByUserName(loginUser);
+		session.setAttribute("loginUser", loginUser);
+		
+		return "halfwayDelete";
 	}
 }
