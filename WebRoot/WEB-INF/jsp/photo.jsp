@@ -67,7 +67,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 
                   <c:if test="${not empty sessionScope.loginUser}">
                     	  Hi : ${sessionScope.loginUser.userName}
-                    	<a href="${pageContext.request.contextPath}/user/User_signOut.action">signOut</a>
+                    	<a href="${pageContext.request.contextPath}/user/User_signOut.action">退出</a>
                     	<a href="${pageContext.request.contextPath}/user/Menu_changePasswordPage.action">修改密码</a>
                     	<a href="${pageContext.request.contextPath}/user/Menu_personalPage.action">个人中心</a>
                     </c:if> 
@@ -110,7 +110,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 			<c:forEach items="${requestScope.photoDTOList}" var="photoDTO">
 	            <div class="col-md-8 ">
-	          	<img alt="这是一张图片" src="${photoDTO.photoURL}" width="500ox" height="300px"/>
+	          	<img alt="图片去火星！！！" src="${photoDTO.photoURL}" width="500ox" height="300px"/>
 	            <a href="${pageContext.request.contextPath}/user/Photo_delete.action?photoId=${photoDTO.photoId}" onclick="return confirm('确认删除.');">删除图片</a>
 	            </div>
 	           	<br/>

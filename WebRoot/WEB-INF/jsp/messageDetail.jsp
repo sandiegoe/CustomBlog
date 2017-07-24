@@ -105,14 +105,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
             <div class="col-md-8 ">
               
-               
-                <form action="${pageContext.request.contextPath}/user/User_signIn.action" method="post" onsubmit="return check(this)">
-    	${requestScope.messageInfo} <br/>
-    	 用户名: <input type="text" name="userName" value="${cookie.userName.value}"/><br/>
-    	 密码: <input type="password" name="logonPassword" value="${cookie.logonPassword.value}"/><br/>
-    	 记住密码:<input type="checkbox" name="remember" checked="checked"/>
-    	 <input type="submit" value="登录"/>
-    </form>
+       
+                  <div class="blog-post">
+                    <h2>${requestScope.messageDTO.messageTitle}</h2>
+                    <h4>sendBy <a href="#">${requestScope.messageDTO.senderId}</a> on ${requestScope.messageDTO.messageDate} </h4>
+                    <p>
+                       ${requestScope.messageDTO.messageContent}
+                    </p>
+                    <a href="${pageContext.request.contextPath}/user/Message_delete.action?messageId=${requestScope.messageDTO.messageId}" class="btn btn-default btn-lg ">删除 <i class="fa fa-angle-right"></i></a>
+                </div>
                 
             </div>
             <div class="col-md-1"></div>
@@ -158,29 +159,5 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script src="${pageContext.request.contextPath}/js/jquery-1.11.1.js"></script>
     <!-- BOOTSTRAP SCRIPTS -->
     <script src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
-	<script type="text/javacript">
-		function check(obj) {
-			
-		}
-	</script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   
-    
-   

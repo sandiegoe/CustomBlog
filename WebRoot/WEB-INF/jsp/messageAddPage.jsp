@@ -105,14 +105,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
             <div class="col-md-8 ">
               
-               
-                <form action="${pageContext.request.contextPath}/user/User_signIn.action" method="post" onsubmit="return check(this)">
-    	${requestScope.messageInfo} <br/>
-    	 用户名: <input type="text" name="userName" value="${cookie.userName.value}"/><br/>
-    	 密码: <input type="password" name="logonPassword" value="${cookie.logonPassword.value}"/><br/>
-    	 记住密码:<input type="checkbox" name="remember" checked="checked"/>
-    	 <input type="submit" value="登录"/>
-    </form>
+                <%--  <div class="blog-post">
+                    <h2>${blogDTO.blogTitle}</h2>
+                    <h4>Posted by <a href="#">${blogDTO.userName}</a> on ${blogDTO.blogCreateDate} </h4>
+                    <p>
+                        ${blogDTO.blogContentText}
+                    </p>
+                    <a href="${pageContext.request.contextPath}/user/Menu_blogDetailPage.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg ">Read More <i class="fa fa-angle-right"></i></a>
+                    <a href="${pageContext.request.contextPath}/user/Menu_blogEditPage.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg ">编 辑 <i class="fa fa-angle-right"></i></a>
+                    <a href="${pageContext.request.contextPath}/user/Blog_halfwayDelete.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg ">删除 <i class="fa fa-angle-right"></i></a>
+                    <a href="${pageContext.request.contextPath}/user/Blog_delete.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg " onclick="return confirm('确认删除!');">彻底删除 <i class="fa fa-angle-right"></i></a>
+                </div> --%>
+                
+                
+                <form action="${pageContext.request.contextPath}/user/Message_add.action" method="post">
+                	发给 : <input type="text" name="userNames" style="width:433px" value="${requestScope.userNames}"/><br/>
+                	内容 : <textarea cols="40" rows="5" name="messageContent">${requestScope.messageContent}</textarea><br/>
+                	<input type="submit" value="私信"/>
+                </form>
                 
             </div>
             <div class="col-md-1"></div>
@@ -158,29 +168,5 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script src="${pageContext.request.contextPath}/js/jquery-1.11.1.js"></script>
     <!-- BOOTSTRAP SCRIPTS -->
     <script src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
-	<script type="text/javacript">
-		function check(obj) {
-			
-		}
-	</script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   
-    
-   
