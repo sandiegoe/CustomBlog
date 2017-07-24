@@ -1,6 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="s" uri="/struts-tags"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -33,7 +32,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <div class="col-md-4 logo-div">
                         <div class="logo-inner text-center">
                             <div class="logo-name">
-                                <a href="${pageContext.request.contextPath}/user/Menu_personalPage.action">
+                               <a href="${pageContext.request.contextPath}/user/Menu_personalPage.action">
                                     <img alt="个人头像" src="${sessionScope.loginUser.avatarURL}" class="img-circle"/>
                                 </a>
                             </div>
@@ -65,7 +64,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     
                     
                     
-                
+                <a href="${pageContext.request.contextPath}/user/Menu_blogAddPage.action">编写博客</a>
                   <c:if test="${not empty sessionScope.loginUser}">
                     	  Hi : ${sessionScope.loginUser.userName}
                     	<a href="${pageContext.request.contextPath}/user/User_signOut.action">退出</a>
@@ -88,7 +87,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </div>
                 <div class="col-md-2">
                     <div class="social-link">
-                        	<a href="#" class="btn btn-default btn-xs"><i class="fa fa-facebook fa-2x"></i></a>
+                        <a href="#" class="btn btn-default btn-xs"><i class="fa fa-facebook fa-2x"></i></a>
                         <a href="#" class="btn btn-default btn-xs"><i class="fa fa-linkedin fa-2x"></i></a>
                         <a href="#" class="btn btn-default btn-xs"><i class="fa fa-google-plus fa-2x"></i></a>
                     </div>
@@ -96,7 +95,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </div>
 
             </div>
-        </div>			
+        </div>
     </div>
     <div class="copyrights">Collect from <a href="http://www.cssmoban.com/"  title="网站模板">网站模板</a></div>
     <!--END INFO SECTION-->
@@ -105,45 +104,49 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="row">
 
             <div class="col-md-8 ">
-              
-          <h3>个人中心页面</h3><br/>
-    <form action="${pageContext.request.contextPath}/user/User_edit.action" method="post">      
-    用户Id :  <input type="text" name="userId" readonly value="${sessionScope.loginUser.userId}"/><br/>
-    头像： <div class="logo-name">
-          	<a href="${pageContext.request.contextPath}/user/Menu_personalPage.action">
-            <img alt="个人头像" src="${sessionScope.loginUser.avatarURL}" class="img-circle"/>
-            </a>
-     </div>
-    <c:if test="${requestScope.kind==''}">
-    	<!-- <a href="#" onclick="return changeAvatar();">修改头像</a> -->
-    	<a href="${pageContext.request.contextPath}/user/Menu_changeAatarPage.action">修改头像</a>
-    	<div class="changeAvatar" id="changeAvatarContainer"></div>
-    </c:if>
-    <br/>
-    用户名 : <input type="text" name="userName" readonly value="${sessionScope.loginUser.userName }"/><br/>
-    用户昵称：<input type="text" name="userNickName" ${requestScope.kind} value="${sessionScope.loginUser.userNickName}"/><br/>
-    性别：<input type="text" name="sex" ${requestScope.kind} value="${sessionScope.loginUser.sex }"/><br/>
-    生日日期：<input type="text" name="birthdate" ${requestScope.kind} value="${sessionScope.loginUser.birthdate }"/><br/>
-    地址：<input type="text" name="address" ${requestScope.kind} value="${sessionScope.loginUser.address }"/><br/>
-    联系电话：<input type="text" name="contactTel" ${requestScope.kind} value="${sessionScope.loginUser.contactTel }"/><br/>
-    邮箱： <input type="text" name="email" ${requestScope.kind} value="${sessionScope.loginUser.email }"/><br/>
-    手机号：<input type="text" name="telphone" ${requestScope.kind} value="${sessionScope.loginUser.telphone }"/><br/>
-    上次登录时间：<input type="text" name="lastLoginDate" disabled value="${requestScope.lastLoginDate}"/><br/>
-      <!-- ${requestScope.kind==''} 表示启用编辑 -->
-    <c:if test="${requestScope.kind==''}">
-    	<input type="submit" value="确认修改"/>
-    </c:if>
-   <br>
-    <c:if test="${requestScope.kind==''}">
-    	<a href="${pageContext.request.contextPath}/user/User_halfwayDelete.action?userId=${sessionScope.loginUser.userId}" onclick="return confirm('确认删除.');">删除用户</a>
-    </c:if>
-     </form>
-  
-                
+            
+            
+            
+            
+            
+            
+            
+            <c:forEach items="${requestScope.blogDTODeletedList}" var="blogDTO">
+           
+            	
+                <div class="blog-post">
+                    <h2>${blogDTO.blogTitle}</h2>
+                    <h4>Posted by <a href="#">${blogDTO.userName}</a> on ${blogDTO.blogCreateDate} </h4>
+                    <p>
+                        ${blogDTO.blogContentText}
+                    </p>
+                    <a href="${pageContext.request.contextPath}/user/Blog_restore.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg ">还原 <i class="fa fa-angle-right"></i></a>
+                    <a href="${pageContext.request.contextPath}/user/Blog_delete.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg " onclick="return confirm('确认删除!');">清除<i class="fa fa-angle-right"></i></a>
+                </div>
+             </c:forEach> 
+             
+                <br />
+                <nav>
+                    <ul class="pagination">
+                        <li>
+                            <a href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li>
+                            <a href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
-            <c:if test="${requestScope.kind=='disabled'}">
-            	<div class="col-md-1"><a href="${pageContext.request.contextPath}/user/Menu_personalPage.action?kind=edit">启用编辑</a></div>
-            </c:if>
+            <div class="col-md-1"></div>
             <div class="col-md-3" style="padding-top: 30px;">
 				<div class="row">
                 <ul class="list-group">
@@ -186,20 +189,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script src="${pageContext.request.contextPath}/js/jquery-1.11.1.js"></script>
     <!-- BOOTSTRAP SCRIPTS -->
     <script src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
-    
-    <script type="text/javascript">
-    
-    	function changeAvatar() {
-    		var avatarContainer = document.getElementById('changeAvatarContainer');
-    		
-    		
-    		var script ="<s:form action='user/Photo_upload.action' theme='simple' enctype='multipart/form-data'>选择图片<s:file name='file'></s:file><s:submit value='取消'></s:submit>" + 
-    		"<s:submit value='上传'></s:submit></s:form>";
-    		
-    		
-    		avatarContainer.innerHTML = script;
-    	}
-    </script>
-    
+
 </body>
 </html>
+
+  	
+  		<a href="${pageContext.request.contextPath}/user/Menu_blogAddPage.action">编写博客</a>
+
