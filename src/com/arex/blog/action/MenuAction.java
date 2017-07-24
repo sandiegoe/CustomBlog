@@ -85,7 +85,9 @@ public class MenuAction extends CommonAction<MenuDTO> {
 			blogDTOList = blogService.searchAllBlogByUserId(((UserDTO)session.getAttribute("loginUser")).getUserId());
 		} else {
 			//没有登录，显示所有博客列表
-			blogDTOList = blogService.searchAllBlog();
+			//blogDTOList = blogService.searchAllBlog();
+			request.setAttribute("messageInfo", "未登录，请登录...");
+			return "signInPage";
 		}
 		
 		//将blogDTOList设置到request中
@@ -251,5 +253,14 @@ public class MenuAction extends CommonAction<MenuDTO> {
 	
 	public String changeAatarPage() {
 		return "changeAatarPage";
+	}
+	
+	public String deleted(){
+		List<BlogDTO> blogDTODeletedList = blogService.searchAllDeletedBlogByUserId(((UserDTO)session.getAttribute("loginUser")).getUserId());
+		
+		//将blogDTOList设置到request中
+		request.setAttribute("blogDTODeletedList", blogDTODeletedList);
+
+		return "deleted";
 	}
 }

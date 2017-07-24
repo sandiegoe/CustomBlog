@@ -34,6 +34,16 @@ public class User {
 	private String telphone;
 	private Date lastLogonDate;
 	private Date craeteDate;
+	private int idSign = 0;
+	
+	public int getIdSign() {
+		return idSign;
+	}
+
+	public void setIdSign(int idSign) {
+		this.idSign = idSign;
+	}
+
 	//个人头像URL 设置为默认头像
 	private String avatarURL = "http://localhost:8080/Blog/img/me.jpg";
 

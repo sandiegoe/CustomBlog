@@ -122,7 +122,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDTO searchUserByUserName(String userName) {
-		String hqlWhere = " where 1=1 ";
+		String hqlWhere = " where 1=1 and idSign = 0 ";
 		List<String> paramsList = new ArrayList<String>();
 		if (userName != null && !"".equals(userName)) {
 			hqlWhere += "and o.userName like ? ";
@@ -168,5 +168,10 @@ public class UserServiceImpl implements UserService {
 		} else {
 			return true;
 		}
+	}
+
+	@Override
+	public void halfwayDeleteUser(UserDTO userDTO) {
+		userDAO.halfwayDeleteUserByUserId(userDTO.getUserId());
 	}
 }
