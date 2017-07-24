@@ -57,17 +57,21 @@ public class MessageServiceImpl implements MessageService {
 			//获取这个用户名所对应的userId
 			String userId;
 			UserDTO userDTO = userService.searchUserByUserName(userName);
+			int messageStatus = userDTO==null ? 0 :1;
+			//更新messageDTO的messageStatus
+			messageDTO.setMessageStatus(messageStatus);
 			userId = userDTO==null ? "" : userDTO.getUserId();
 			
 			Message message = this.convertMessageVO2PO(messageDTO, userId);
 			messageDAO.save(message);
-			//查找接收者是否存在，如果存在则设置Message表中的messageStatus ： 1  为发送成功
+			
+			/*//查找接收者是否存在，如果存在则设置Message表中的messageStatus ： 1  为发送成功
 			if (userService.isExistsUserByUserId(message.getReceiverId())) {
 				//根据senderId， receiverId,messageContent 查找最近的一条消息的messageId
 				String messageId = this.searchMessageIdRecentlyAdd(message.getSenderId(), message.getReceiverId(), message.getMessageContent());
 				//更新messageStatus 为 1
 				this.updateMessageStatus(messageId, 1);
-			}
+			}*/
 		}
 	}
 
@@ -150,5 +154,10 @@ public class MessageServiceImpl implements MessageService {
 	public void readAllMessage(String receiverId) {
 		messageDAO.readAllmessage(receiverId);
 		return;
+	}
+
+	@Override
+	public void deleteMessageByMessageId(MessageDTO messageDTO) {
+		messageDAO.deleteById(messageDTO.getMessageId());
 	}
 }

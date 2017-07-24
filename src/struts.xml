@@ -157,7 +157,11 @@
 				<param name="actionName">Menu_message.action</param>
 				<param name="namespace">/user</param>
 			</result>
-			<allowed-methods>add,readAllMessage,deleteAllMessage</allowed-methods>
+			<result name="delete" type="redirectAction">
+				<param name="actionName">Menu_message.action</param>
+				<param name="namespace">/user</param>
+			</result>
+			<allowed-methods>add,readAllMessage,deleteAllMessage, delete</allowed-methods>
 		</action>
 	</package>
 

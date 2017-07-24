@@ -3,6 +3,7 @@ package com.arex.blog.service;
 import java.util.List;
 
 import com.arex.blog.dto.MessageDTO;
+import com.arex.blog.dto.UserDTO;
 
 public interface MessageService {
 
@@ -19,5 +20,7 @@ public interface MessageService {
 	public void deleteAllMessage(String receiverId);
 
 	public void readAllMessage(String receiverId);
+
+	public void deleteMessageByMessageId(MessageDTO messageDTO);
 
 }

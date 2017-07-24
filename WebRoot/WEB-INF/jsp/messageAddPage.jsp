@@ -67,7 +67,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 
                   <c:if test="${not empty sessionScope.loginUser}">
                     	  Hi : ${sessionScope.loginUser.userName}
-                    	<a href="${pageContext.request.contextPath}/user/User_signOut.action">signOut</a>
+                    	<a href="${pageContext.request.contextPath}/user/User_signOut.action">退出</a>
                     	<a href="${pageContext.request.contextPath}/user/Menu_changePasswordPage.action">修改密码</a>
                     	<a href="${pageContext.request.contextPath}/user/Menu_personalPage.action">个人中心</a>
                     </c:if> 
@@ -105,7 +105,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
             <div class="col-md-8 ">
               
-              编写私信，添加消息页面
                 <%--  <div class="blog-post">
                     <h2>${blogDTO.blogTitle}</h2>
                     <h4>Posted by <a href="#">${blogDTO.userName}</a> on ${blogDTO.blogCreateDate} </h4>
@@ -124,26 +123,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 	内容 : <textarea cols="40" rows="5" name="messageContent">${requestScope.messageContent}</textarea><br/>
                 	<input type="submit" value="私信"/>
                 </form>
-                
-               <div class="blog-post">
-               		未读通知：0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-               		 <a href="#" class="btn btn-default btn-lg ">全部标记为已读 <i class="fa fa-angle-right"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-               		 <a href="#" class="btn btn-default btn-lg ">清空所有通知 <i class="fa fa-angle-right"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-               		 <a href="#" class="btn btn-default btn-lg ">私信 <i class="fa fa-angle-right"></i></a>
-                   	 <br/>
-                   	 <br/>
-                     <a href="#">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</a><hr><br/>
-                     <a href="#">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</a><hr><br/>
-                     <a href="#">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</a><hr><br/>
-                     <a href="#">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</a><hr><br/>
-                     <a href="#">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</a><hr><br/>
-                     <a href="#">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</a><hr><br/>
-                 
-                   
-                </div>
-              
-              
-          
                 
             </div>
             <div class="col-md-1"></div>

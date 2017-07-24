@@ -91,4 +91,25 @@ public class MessageAction extends CommonAction<MessageDTO> {
 		
 		return "readAllMessage";
 	}
+	
+	//删除指定messageId的消息
+	public String delete() {
+		
+		MessageDTO messageDTO = super.getModel();
+		UserDTO userDTO = (UserDTO) session.getAttribute("loginUser");
+
+		// 检查当前用户是否已经登录
+		if (!LoginUtils.checkUserIsAlreadyLogin(session)) {
+			request.setAttribute("messageInfo", "请登录.");
+			return "signInPage";
+		}
+		if (messageDTO==null || messageDTO.getMessageId()==null || "".equals(messageDTO.getMessageId())) {
+			request.setAttribute("messageInfo", "删除的消息不存在.");
+			return "toMessage";
+		}
+		
+		messageService.deleteMessageByMessageId(messageDTO);
+		
+		return "delete";
+	}
 }

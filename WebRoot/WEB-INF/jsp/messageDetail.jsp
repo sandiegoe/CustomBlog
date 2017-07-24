@@ -67,7 +67,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 
                   <c:if test="${not empty sessionScope.loginUser}">
                     	  Hi : ${sessionScope.loginUser.userName}
-                    	<a href="${pageContext.request.contextPath}/user/User_signOut.action">signOut</a>
+                    	<a href="${pageContext.request.contextPath}/user/User_signOut.action">退出</a>
                     	<a href="${pageContext.request.contextPath}/user/Menu_changePasswordPage.action">修改密码</a>
                     	<a href="${pageContext.request.contextPath}/user/Menu_personalPage.action">个人中心</a>
                     </c:if> 
@@ -112,7 +112,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <p>
                        ${requestScope.messageDTO.messageContent}
                     </p>
-                    <a href="${pageContext.request.contextPath}/user/Blog_halfwayDelete.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg ">删除 <i class="fa fa-angle-right"></i></a>
+                    <a href="${pageContext.request.contextPath}/user/Message_delete.action?messageId=${requestScope.messageDTO.messageId}" class="btn btn-default btn-lg ">删除 <i class="fa fa-angle-right"></i></a>
                 </div>
                 
             </div>
