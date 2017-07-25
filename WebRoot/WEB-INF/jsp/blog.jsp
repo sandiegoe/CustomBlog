@@ -42,16 +42,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         </div>
 
                     </div>
-                    <div class="col-md-8 header-text-top " id="about">
-
-
-
-                        <h1>Nice responsive template for blogger.</h1>
-						This blogging template use bootstrap and html to create a very nice blogging page with great responsive. <br /> 
-						Here you can write a general notes about your blog.<br />
-						<h2><strong>Who I am ? </strong></h2>
-                        <i>I am Jhon Deo </i>
-						
+                   <div class="col-md-8 header-text-top " id="about">
+                        <h1>追求极致.</h1>
+						为您提供始终如一最完美的体验是我们始终一致的追求.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--- 
+						designed by arex.<br />
                     </div>
                 </div>
             </div>

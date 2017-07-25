@@ -27,3 +27,15 @@
 	text-decoration: line-through;
 	color: grey;
 }
+
+#about h1 {
+	font-size:35px;
+	letter-spacing : 5;
+}
+
+#about {
+	font-size:18px;
+	letter-spacing : 5;
+	font-family:微软雅黑;
+	font-weight:normal;
+}
