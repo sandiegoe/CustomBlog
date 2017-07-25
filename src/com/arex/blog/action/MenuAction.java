@@ -231,6 +231,7 @@ public class MenuAction extends CommonAction<MenuDTO> {
 		
 		//获取列表页面传递的blogId
 		String blogId = super.getModel().getBlogId();
+		String blogId2 = request.getParameter("blogId");
 		
 		//调用blogService查询指定blogId
 		//如果指定的blogId不存在，跳转到列表页面

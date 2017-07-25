@@ -22,6 +22,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link href="${pageContext.request.contextPath}/css/font-awesome.css" rel="stylesheet" />
     <!-- CUSTOM STYLE CSS -->
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" />
+    <!-- 自定义样式部分 -->
+   	<link href="${pageContext.request.contextPath}/css/mystyle.css" rel="stylesheet"/>
 </head>
 <body>
 <br/>
@@ -60,30 +62,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="container">
             <div class="row">
                 <div class="col-md-10">
-                    Say hello to me at <strong>hello</strong>@yourdomain.com
-                    
-                    
-                    
-                
-                  <c:if test="${not empty sessionScope.loginUser}">
-                    	  Hi : ${sessionScope.loginUser.userName}
-                    	<a href="${pageContext.request.contextPath}/user/User_signOut.action">退出</a>
-                    	<a href="${pageContext.request.contextPath}/user/Menu_changePasswordPage.action">修改密码</a>
-                    	<a href="${pageContext.request.contextPath}/user/Menu_personalPage.action">个人中心</a>
-                    </c:if> 
-                   
-                    <a href="${pageContext.request.contextPath}/user/Menu_home.action">首页</a>
-                    <!-- 判断如果用户已经登录则不显示用户登录链接 -->
-                    <c:if test="${empty sessionScope.loginUser}">
-                    	<a href="${pageContext.request.contextPath}/user/Menu_signInPage.action">登录</a>
-                    </c:if>
-                    <a href="${pageContext.request.contextPath}/user/Menu_registerPage.action">注册</a>
-                    <a href="${pageContext.request.contextPath}/user/Menu_photo.action">我的图片</a>
-                    <a href="${pageContext.request.contextPath}/user/Menu_blog.action">我的博客</a>
-                    <a href="${pageContext.request.contextPath}/user/Menu_message.action">消息</a>
-                    
-                    
-                    
+                    <div class="menu">欢迎 <strong>${sessionScope.loginUser.userName}</strong>
+	                	<a href="${pageContext.request.contextPath}/user/Menu_home.action">首页</a>
+	                	<a href="${pageContext.request.contextPath}/user/Menu_photo.action">我的图片</a>
+	                	<a href="${pageContext.request.contextPath}/user/Menu_blog.action">我的博客</a>
+	                	<a href="${pageContext.request.contextPath}/user/Menu_message.action">消息</a>
+	                    <c:if test="${not empty sessionScope.loginUser}">
+	                    	<a href="${pageContext.request.contextPath}/user/Menu_personalPage.action">个人中心</a>
+	                    	<a href="${pageContext.request.contextPath}/user/User_signOut.action">退出</a>
+	                    </c:if> 
+	                    <!-- 判断如果用户已经登录则不显示用户登录链接 -->
+	                	<c:if test="${empty sessionScope.loginUser}">
+	                    	<a href="${pageContext.request.contextPath}/user/Menu_signInPage.action">登录</a>
+	                    </c:if>
+	                    <a href="${pageContext.request.contextPath}/user/Menu_registerPage.action">注册</a>
+	                </div>
                 </div>
                 <div class="col-md-2">
                     <div class="social-link">
@@ -97,7 +90,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </div>
         </div>
     </div>
-    <div class="copyrights">Collect from <a href="http://www.cssmoban.com/"  title="网站模板">网站模板</a></div>
     <!--END INFO SECTION-->
     <div class="container">
 
@@ -105,19 +97,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
             <div class="col-md-8 ">
               
-                <%--  <div class="blog-post">
-                    <h2>${blogDTO.blogTitle}</h2>
-                    <h4>Posted by <a href="#">${blogDTO.userName}</a> on ${blogDTO.blogCreateDate} </h4>
-                    <p>
-                        ${blogDTO.blogContentText}
-                    </p>
-                    <a href="${pageContext.request.contextPath}/user/Menu_blogDetailPage.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg ">Read More <i class="fa fa-angle-right"></i></a>
-                    <a href="${pageContext.request.contextPath}/user/Menu_blogEditPage.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg ">编 辑 <i class="fa fa-angle-right"></i></a>
-                    <a href="${pageContext.request.contextPath}/user/Blog_halfwayDelete.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg ">删除 <i class="fa fa-angle-right"></i></a>
-                    <a href="${pageContext.request.contextPath}/user/Blog_delete.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg " onclick="return confirm('确认删除!');">彻底删除 <i class="fa fa-angle-right"></i></a>
-                </div> --%>
-                
-                
                 <form action="${pageContext.request.contextPath}/user/Message_add.action" method="post">
                 	发给 : <input type="text" name="userNames" style="width:433px" value="${requestScope.userNames}"/><br/>
                 	内容 : <textarea cols="40" rows="5" name="messageContent">${requestScope.messageContent}</textarea><br/>
@@ -156,8 +135,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="footer-sec" style="margin-top: 0px;">
         <div class="container">
             <div class="row">
-                <div class="col-md-12 foo-inner">
-                    &copy; 2015 Yourdomain.com | More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a>
+                <div class="col-md-12 foo-inner" style="text-align:center;font-size:18px;">
+                    &copy;&nbsp;&nbsp;CopyRight 2017-2018 arex.com,&nbsp;&nbsp;Inc.All Rights Reserved. 
                 </div>
             </div>
         </div>

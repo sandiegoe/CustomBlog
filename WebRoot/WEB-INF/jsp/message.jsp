@@ -9,6 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+	<meta http-equiv="refresh" content="5">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="" />
@@ -23,6 +24,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link href="${pageContext.request.contextPath}/css/font-awesome.css" rel="stylesheet" />
     <!-- CUSTOM STYLE CSS -->
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" />
+    <!-- 自定义样式部分 -->
+   	<link href="${pageContext.request.contextPath}/css/mystyle.css" rel="stylesheet"/>
 </head>
 <body>
 <br/>
@@ -61,30 +64,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="container">
             <div class="row">
                 <div class="col-md-10">
-                    Say hello to me at <strong>hello</strong>@yourdomain.com
-                    
-                    
-                    
-                
-                  <c:if test="${not empty sessionScope.loginUser}">
-                    	  Hi : ${sessionScope.loginUser.userName}
-                    	<a href="${pageContext.request.contextPath}/user/User_signOut.action">退出</a>
-                    	<a href="${pageContext.request.contextPath}/user/Menu_changePasswordPage.action">修改密码</a>
-                    	<a href="${pageContext.request.contextPath}/user/Menu_personalPage.action">个人中心</a>
-                    </c:if> 
-                   
-                    <a href="${pageContext.request.contextPath}/user/Menu_home.action">首页</a>
-                    <!-- 判断如果用户已经登录则不显示用户登录链接 -->
-                    <c:if test="${empty sessionScope.loginUser}">
-                    	<a href="${pageContext.request.contextPath}/user/Menu_signInPage.action">登录</a>
-                    </c:if>
-                    <a href="${pageContext.request.contextPath}/user/Menu_registerPage.action">注册</a>
-                    <a href="${pageContext.request.contextPath}/user/Menu_photo.action">我的图片</a>
-                    <a href="${pageContext.request.contextPath}/user/Menu_blog.action">我的博客</a>
-                    <a href="${pageContext.request.contextPath}/user/Menu_message.action">消息</a>
-                    
-                    
-                    
+                    <div class="menu">欢迎 <strong>${sessionScope.loginUser.userName}</strong>
+	                	<a href="${pageContext.request.contextPath}/user/Menu_home.action">首页</a>
+	                	<a href="${pageContext.request.contextPath}/user/Menu_photo.action">我的图片</a>
+	                	<a href="${pageContext.request.contextPath}/user/Menu_blog.action">我的博客</a>
+	                	<a href="${pageContext.request.contextPath}/user/Menu_message.action">消息</a>
+	                    <c:if test="${not empty sessionScope.loginUser}">
+	                    	<a href="${pageContext.request.contextPath}/user/Menu_personalPage.action">个人中心</a>
+	                    	<a href="${pageContext.request.contextPath}/user/User_signOut.action">退出</a>
+	                    </c:if> 
+	                    <!-- 判断如果用户已经登录则不显示用户登录链接 -->
+	                	<c:if test="${empty sessionScope.loginUser}">
+	                    	<a href="${pageContext.request.contextPath}/user/Menu_signInPage.action">登录</a>
+	                    </c:if>
+	                    <a href="${pageContext.request.contextPath}/user/Menu_registerPage.action">注册</a>
+	                </div>
                 </div>
                 <div class="col-md-2">
                     <div class="social-link">
@@ -98,7 +92,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </div>
         </div>
     </div>
-    <div class="copyrights">Collect from <a href="http://www.cssmoban.com/"  title="网站模板">网站模板</a></div>
     <!--END INFO SECTION-->
     <div class="container">
 
@@ -106,20 +99,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
             <div class="col-md-8 ">
               
-              消息列表页面
-                <%--  <div class="blog-post">
-                    <h2>${blogDTO.blogTitle}</h2>
-                    <h4>Posted by <a href="#">${blogDTO.userName}</a> on ${blogDTO.blogCreateDate} </h4>
-                    <p>
-                        ${blogDTO.blogContentText}
-                    </p>
-                    <a href="${pageContext.request.contextPath}/user/Menu_blogDetailPage.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg ">Read More <i class="fa fa-angle-right"></i></a>
-                    <a href="${pageContext.request.contextPath}/user/Menu_blogEditPage.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg ">编 辑 <i class="fa fa-angle-right"></i></a>
-                    <a href="${pageContext.request.contextPath}/user/Blog_halfwayDelete.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg ">删除 <i class="fa fa-angle-right"></i></a>
-                    <a href="${pageContext.request.contextPath}/user/Blog_delete.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg " onclick="return confirm('确认删除!');">彻底删除 <i class="fa fa-angle-right"></i></a>
-                </div> --%>
                <div class="blog-post">
-               		未读通知：${requestScope.messages} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               		未读通知：<strong>${requestScope.messages}</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                		 <a href="${pageContext.request.contextPath}/user/Message_readAllMessage.action" class="btn btn-default btn-lg ">全部标记为已读 <i class="fa fa-angle-right"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                		 <a href="${pageContext.request.contextPath}/user/Message_deleteAllMessage.action" class="btn btn-default btn-lg ">清空所有通知 <i class="fa fa-angle-right"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                		 <a href="${pageContext.request.contextPath}/user/Menu_messageAddPage.action" class="btn btn-default btn-lg ">私信 <i class="fa fa-angle-right"></i></a>
@@ -128,12 +109,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                    	 
                    	 <c:forEach items="${requestScope.messageDTOListWithNew}" var="messageDTO">
                     	 <a href="${pageContext.request.contextPath}/user/Menu_messageDetail.action?messageId=${messageDTO.messageId}">${messageDTO.messageTitle}</a>
-                    	 新消息
+                    	 <span span="new">新消息</span>
                     	 <hr><br/>
                      </c:forEach>
                      <c:forEach items="${requestScope.messageDTOListWithRead}" var="messageDTO">
                     	 <a href="${pageContext.request.contextPath}/user/Menu_messageDetail.action?messageId=${messageDTO.messageId}">${messageDTO.messageTitle}</a>
-                    	 已读
+                    	 <span class="read">已读</span>
                     	 <hr><br/>
                      </c:forEach>
                    
@@ -174,8 +155,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="footer-sec" style="margin-top: 0px;">
         <div class="container">
             <div class="row">
-                <div class="col-md-12 foo-inner">
-                    &copy; 2015 Yourdomain.com | More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a>
+                <div class="col-md-12 foo-inner" style="text-align:center;font-size:18px;">
+                    &copy;&nbsp;&nbsp;CopyRight 2017-2018 arex.com,&nbsp;&nbsp;Inc.All Rights Reserved. 
                 </div>
             </div>
         </div>

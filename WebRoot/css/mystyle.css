@@ -1,0 +1,29 @@
+@CHARSET "UTF-8";
+
+.menu {
+	font-size: 18px;
+}
+
+.menu a {
+	text-decoration: none;
+	color: white;
+	padding-left: 30px;
+}
+
+.blog-post {
+	font-size: 18px;
+}
+
+.blog-post>strong {
+	color: red;
+}
+
+.blog-post a+span {
+	font-size: 12px;
+	margin-left: 15px;
+}
+
+.blog-post .read {
+	text-decoration: line-through;
+	color: grey;
+}

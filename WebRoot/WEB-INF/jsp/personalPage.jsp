@@ -23,6 +23,42 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link href="${pageContext.request.contextPath}/css/font-awesome.css" rel="stylesheet" />
     <!-- CUSTOM STYLE CSS -->
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" />
+   	<!-- 自定义样式部分 -->
+   	<link href="${pageContext.request.contextPath}/css/mystyle.css" rel="stylesheet"/>
+    
+     <script type="text/javascript">
+    
+    	function check(temp) {
+    		var sex = document.getElementsByName("sex")[0];
+    		//alert(sex.value == '女');
+    		if (sex.value == '男') {
+    			sex.value = 0;
+    			//alert(document.getElementsByName("sex")[0].value);
+    			return true;
+    		}
+			 if (sex.value == '女'){
+				 sex.value = 1;
+    		//	alert(document.getElementsByName("sex")[0].value);
+    			return true;
+    		} else {
+    			sex.focus();
+    			alert("请填入正确的性别.");
+    			return false;
+    		}
+    	}
+    
+    /* 	function changeAvatar() {
+    		var avatarContainer = document.getElementById('changeAvatarContainer');
+    		
+    		
+    		var script ="<s:form action='user/Photo_upload.action' theme='simple' enctype='multipart/form-data'>选择图片<s:file name='file'></s:file><s:submit value='取消'></s:submit>" + 
+    		"<s:submit value='上传'></s:submit></s:form>";
+    		
+    		
+    		avatarContainer.innerHTML = script;
+    	} */
+    </script>
+    
 </head>
 <body>
 <br/>
@@ -61,30 +97,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="container">
             <div class="row">
                 <div class="col-md-10">
-                    Say hello to me at <strong>hello</strong>@yourdomain.com
-                    
-                    
-                    
-                
-                  <c:if test="${not empty sessionScope.loginUser}">
-                    	  Hi : ${sessionScope.loginUser.userName}
-                    	<a href="${pageContext.request.contextPath}/user/User_signOut.action">退出</a>
-                    	<a href="${pageContext.request.contextPath}/user/Menu_changePasswordPage.action">修改密码</a>
-                    	<a href="${pageContext.request.contextPath}/user/Menu_personalPage.action">个人中心</a>
-                    </c:if> 
-                   
-                    <a href="${pageContext.request.contextPath}/user/Menu_home.action">首页</a>
-                    <!-- 判断如果用户已经登录则不显示用户登录链接 -->
-                    <c:if test="${empty sessionScope.loginUser}">
-                    	<a href="${pageContext.request.contextPath}/user/Menu_signInPage.action">登录</a>
-                    </c:if>
-                    <a href="${pageContext.request.contextPath}/user/Menu_registerPage.action">注册</a>
-                    <a href="${pageContext.request.contextPath}/user/Menu_photo.action">我的图片</a>
-                    <a href="${pageContext.request.contextPath}/user/Menu_blog.action">我的博客</a>
-                    <a href="${pageContext.request.contextPath}/user/Menu_message.action">消息</a>
-                    
-                    
-                    
+	                <div class="menu">欢迎 <strong>${sessionScope.loginUser.userName}</strong>
+	                	<a href="${pageContext.request.contextPath}/user/Menu_home.action">首页</a>
+	                	<a href="${pageContext.request.contextPath}/user/Menu_photo.action">我的图片</a>
+	                	<a href="${pageContext.request.contextPath}/user/Menu_blog.action">我的博客</a>
+	                	<a href="${pageContext.request.contextPath}/user/Menu_message.action">消息</a>
+	                    <c:if test="${not empty sessionScope.loginUser}">
+	                    	<a href="${pageContext.request.contextPath}/user/Menu_personalPage.action">个人中心</a>
+	                    	<a href="${pageContext.request.contextPath}/user/User_signOut.action">退出</a>
+	                    </c:if> 
+	                    <!-- 判断如果用户已经登录则不显示用户登录链接 -->
+	                	<c:if test="${empty sessionScope.loginUser}">
+	                    	<a href="${pageContext.request.contextPath}/user/Menu_signInPage.action">登录</a>
+	                    </c:if>
+	                    <a href="${pageContext.request.contextPath}/user/Menu_registerPage.action">注册</a>
+	                </div>
                 </div>
                 <div class="col-md-2">
                     <div class="social-link">
@@ -98,7 +125,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </div>
         </div>			
     </div>
-    <div class="copyrights">Collect from <a href="http://www.cssmoban.com/"  title="网站模板">网站模板</a></div>
     <!--END INFO SECTION-->
     <div class="container">
 
@@ -107,36 +133,76 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="col-md-8 ">
               
           <h3>个人中心页面</h3><br/>
-    <form action="${pageContext.request.contextPath}/user/User_edit.action" method="post">      
-    用户Id :  <input type="text" name="userId" readonly value="${sessionScope.loginUser.userId}"/><br/>
-    头像： <div class="logo-name">
-          	<a href="${pageContext.request.contextPath}/user/Menu_personalPage.action">
-            <img alt="个人头像" src="${sessionScope.loginUser.avatarURL}" class="img-circle"/>
-            </a>
-     </div>
-    <c:if test="${requestScope.kind==''}">
-    	<!-- <a href="#" onclick="return changeAvatar();">修改头像</a> -->
-    	<a href="${pageContext.request.contextPath}/user/Menu_changeAatarPage.action">修改头像</a>
-    	<div class="changeAvatar" id="changeAvatarContainer"></div>
-    </c:if>
-    <br/>
-    用户名 : <input type="text" name="userName" readonly value="${sessionScope.loginUser.userName }"/><br/>
-    用户昵称：<input type="text" name="userNickName" ${requestScope.kind} value="${sessionScope.loginUser.userNickName}"/><br/>
-    性别：<input type="text" name="sex" ${requestScope.kind} value="${sessionScope.loginUser.sex }"/><br/>
-    生日日期：<input type="text" name="birthdate" ${requestScope.kind} value="${sessionScope.loginUser.birthdate }"/><br/>
-    地址：<input type="text" name="address" ${requestScope.kind} value="${sessionScope.loginUser.address }"/><br/>
-    联系电话：<input type="text" name="contactTel" ${requestScope.kind} value="${sessionScope.loginUser.contactTel }"/><br/>
-    邮箱： <input type="text" name="email" ${requestScope.kind} value="${sessionScope.loginUser.email }"/><br/>
-    手机号：<input type="text" name="telphone" ${requestScope.kind} value="${sessionScope.loginUser.telphone }"/><br/>
-    上次登录时间：<input type="text" name="lastLoginDate" disabled value="${requestScope.lastLoginDate}"/><br/>
-      <!-- ${requestScope.kind==''} 表示启用编辑 -->
-    <c:if test="${requestScope.kind==''}">
-    	<input type="submit" value="确认修改"/>
-    </c:if>
-   <br>
-    <c:if test="${requestScope.kind==''}">
-    	<a href="${pageContext.request.contextPath}/user/User_halfwayDelete.action?userId=${sessionScope.loginUser.userId}" onclick="return confirm('确认删除.');">删除用户</a>
-    </c:if>
+    <form action="${pageContext.request.contextPath}/user/User_edit.action" method="post">    
+    
+     <table>
+    	<tr>	
+    		<td> 用户Id :</td>
+    		<td><input type="text" name="userId" readonly value="${sessionScope.loginUser.userId}"/><br/></td>
+    	</tr>
+    	<tr>
+    		<td>头像：</td>
+    		<td>
+    			<div class="logo-name">
+		          	<a href="${pageContext.request.contextPath}/user/Menu_personalPage.action">
+		            	<img alt="个人头像" src="${sessionScope.loginUser.avatarURL}" class="img-circle"/>
+		            </a>
+     			</div>
+     			<c:if test="${requestScope.kind==''}">
+    				<!-- <a href="#" onclick="return changeAvatar();">修改头像</a> -->
+    				<a href="${pageContext.request.contextPath}/user/Menu_changeAatarPage.action">修改头像</a>
+    				<div class="changeAvatar" id="changeAvatarContainer"></div>
+    			</c:if>
+     		</td>
+    	</tr>
+    	<tr>
+    		<td> 用户名 : </td>
+    		<td> <input type="text" name="userName" readonly value="${sessionScope.loginUser.userName }"/></td>
+    	</tr>
+    	<tr>
+    		<td>用户昵称 : </td>
+    		<td><input type="text" name="userNickName" ${requestScope.kind} value="${sessionScope.loginUser.userNickName}"/></td>
+    	</tr>
+    	<tr>
+    		<td>性别：</td>
+    		<td><input type="text" name="sex" ${requestScope.kind} value="${sessionScope.loginUser.sex==0 ? '男' : '女'}"/></td>
+    	</tr>
+    	<tr>
+    		<td>生日日期：</td>
+    		<td><input type="text" name="birthdate" ${requestScope.kind} value="${sessionScope.loginUser.birthdate }"/></td>
+    	</tr>
+    	<tr>
+    		<td>地址：</td>
+    		<td> <input type="text" name="address" ${requestScope.kind} value="${sessionScope.loginUser.address }"/></td>
+    	</tr>
+    	<tr>
+    		<td> 联系电话：</td>
+    		<td><input type="text" name="contactTel" ${requestScope.kind} value="${sessionScope.loginUser.contactTel }"/></td>
+    	</tr>
+    	<tr>
+    		<td>邮箱：</td>
+    		<td><input type="text" name="email" ${requestScope.kind} value="${sessionScope.loginUser.email }"/></td>
+    	</tr>
+    	<tr>
+    		<td> 手机号：</td>
+    		<td><input type="text" name="telphone" ${requestScope.kind} value="${sessionScope.loginUser.telphone }"/></td>
+    	</tr>
+    	<tr>
+    		<td>上次登录时间：</td>
+    		<td><input type="text" name="lastLoginDate" disabled value="${requestScope.lastLoginDate}"/></td>
+    	</tr>
+    	<tr style="text-align:center;">
+    		 <!-- ${requestScope.kind==''} 表示启用编辑 -->
+    		 <c:if test="${requestScope.kind==''}">
+	    		<td>
+	    			<input type="reset" value="取消"/>
+	    		</td>
+	    		<td>
+	    			<input type="submit" value="确认修改" onclick="return check(this.form);"/>
+	    		</td>
+    		</c:if>
+    	</tr>
+    </table>
      </form>
   
                 
@@ -144,6 +210,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <c:if test="${requestScope.kind=='disabled'}">
             	<div class="col-md-1"><a href="${pageContext.request.contextPath}/user/Menu_personalPage.action?kind=edit">启用编辑</a></div>
             </c:if>
+             <c:if test="${requestScope.kind==''}">
+    			<a href="${pageContext.request.contextPath}/user/Menu_changePasswordPage.action">修改密码</a> 
+    			<a href="${pageContext.request.contextPath}/user/User_halfwayDelete.action?userId=${sessionScope.loginUser.userId}" onclick="return confirm('确认删除.');">删除用户</a>
+    		</c:if>
             <div class="col-md-3" style="padding-top: 30px;">
 				<div class="row">
                 <ul class="list-group">
@@ -174,8 +244,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="footer-sec" style="margin-top: 0px;">
         <div class="container">
             <div class="row">
-                <div class="col-md-12 foo-inner">
-                    &copy; 2015 Yourdomain.com | More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a>
+                <div class="col-md-12 foo-inner" style="text-align:center;font-size:18px;">
+                    &copy;&nbsp;&nbsp;CopyRight 2017-2018 arex.com,&nbsp;&nbsp;Inc.All Rights Reserved. 
                 </div>
             </div>
         </div>
@@ -186,20 +256,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script src="${pageContext.request.contextPath}/js/jquery-1.11.1.js"></script>
     <!-- BOOTSTRAP SCRIPTS -->
     <script src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
-    
-    <script type="text/javascript">
-    
-    	function changeAvatar() {
-    		var avatarContainer = document.getElementById('changeAvatarContainer');
-    		
-    		
-    		var script ="<s:form action='user/Photo_upload.action' theme='simple' enctype='multipart/form-data'>选择图片<s:file name='file'></s:file><s:submit value='取消'></s:submit>" + 
-    		"<s:submit value='上传'></s:submit></s:form>";
-    		
-    		
-    		avatarContainer.innerHTML = script;
-    	}
-    </script>
     
 </body>
 </html>
