@@ -22,6 +22,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link href="${pageContext.request.contextPath}/css/font-awesome.css" rel="stylesheet" />
     <!-- CUSTOM STYLE CSS -->
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" />
+    <!-- 自定义样式部分 -->
+   	<link href="${pageContext.request.contextPath}/css/mystyle.css" rel="stylesheet"/>
 </head>
 <body>
 <br/>
@@ -41,15 +43,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
                     </div>
                     <div class="col-md-8 header-text-top " id="about">
-
-
-
-                        <h1>Nice responsive template for blogger.</h1>
-						This blogging template use bootstrap and html to create a very nice blogging page with great responsive. <br /> 
-						Here you can write a general notes about your blog.<br />
-						<h2><strong>Who I am ? </strong></h2>
-                        <i>I am Jhon Deo </i>
-						
+                        <h1>追求极致.</h1>
+						为您提供始终如一最完美的体验是我们始终一致的追求.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--- 
+						designed by arex.<br />
                     </div>
                 </div>
             </div>
@@ -60,37 +56,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="container">
             <div class="row">
                 <div class="col-md-10">
-                    Say hello to me at <strong>hello</strong>@yourdomain.com
-                    
-                    
-                    
-                
-                  <c:if test="${not empty sessionScope.loginUser}">
-                    	  Hi : ${sessionScope.loginUser.userName}
-                    	<a href="${pageContext.request.contextPath}/user/User_signOut.action">退出</a>
-                    	<a href="${pageContext.request.contextPath}/user/Menu_changePasswordPage.action">修改密码</a>
-                    	<a href="${pageContext.request.contextPath}/user/Menu_personalPage.action">个人中心</a>
-                    </c:if> 
-                   
-                   
-                    <a href="${pageContext.request.contextPath}/user/Menu_home.action">首页</a>
-                    <!-- 判断如果用户已经登录则不显示用户登录链接 -->
-                    <c:if test="${empty sessionScope.loginUser}">
-                    	<a href="${pageContext.request.contextPath}/user/Menu_signInPage.action">登录</a>
-                    </c:if>
-                    <a href="${pageContext.request.contextPath}/user/Menu_registerPage.action">注册</a>
-                    <a href="${pageContext.request.contextPath}/user/Menu_photo.action">我的图片</a>
-                    <a href="${pageContext.request.contextPath}/user/Menu_blog.action">我的博客</a>
-                    <a href="${pageContext.request.contextPath}/user/Menu_message.action">消息</a>
-                    
-                    
-                    
+                    <div class="menu">欢迎 <strong>${sessionScope.loginUser.userName}</strong>
+	                	<a href="${pageContext.request.contextPath}/user/Menu_home.action">首页</a>
+	                	<a href="${pageContext.request.contextPath}/user/Menu_photo.action">我的图片</a>
+	                	<a href="${pageContext.request.contextPath}/user/Menu_blog.action">我的博客</a>
+	                	<a href="${pageContext.request.contextPath}/user/Menu_message.action">消息</a>
+	                    <c:if test="${not empty sessionScope.loginUser}">
+	                    	<a href="${pageContext.request.contextPath}/user/Menu_personalPage.action">个人中心</a>
+	                    	<a href="${pageContext.request.contextPath}/user/User_signOut.action">退出</a>
+	                    </c:if> 
+	                    <!-- 判断如果用户已经登录则不显示用户登录链接 -->
+	                	<c:if test="${empty sessionScope.loginUser}">
+	                    	<a href="${pageContext.request.contextPath}/user/Menu_signInPage.action">登录</a>
+	                    </c:if>
+	                    <a href="${pageContext.request.contextPath}/user/Menu_registerPage.action">注册</a>
+	                </div>
                 </div>
                 <div class="col-md-2">
                     <div class="social-link">
-                        <a href="#" class="btn btn-default btn-xs"><i class="fa fa-facebook fa-2x"></i></a>
-                        <a href="#" class="btn btn-default btn-xs"><i class="fa fa-linkedin fa-2x"></i></a>
-                        <a href="#" class="btn btn-default btn-xs"><i class="fa fa-google-plus fa-2x"></i></a>
+                        <a href="https://www.facebook.com" class="btn btn-default btn-xs"><i class="fa fa-facebook fa-2x"></i></a>
+                        <a href="https://cn.linkedin.com" class="btn btn-default btn-xs"><i class="fa fa-linkedin fa-2x"></i></a>
+                        <a href="https://www.google.com" class="btn btn-default btn-xs"><i class="fa fa-google-plus fa-2x"></i></a>
                     </div>
 
                 </div>
@@ -98,7 +84,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </div>
         </div>
     </div>
-    <div class="copyrights">Collect from <a href="http://www.cssmoban.com/"  title="网站模板">网站模板</a></div>
     <!--END INFO SECTION-->
     <div class="container">
 
@@ -154,7 +139,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </ul>
 				</div>
 				<div class="row">
-				<h3>Advertising</h3>
+				<h3></h3>
 				
 
 				</div>
@@ -169,8 +154,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="footer-sec" style="margin-top: 0px;">
         <div class="container">
             <div class="row">
-                <div class="col-md-12 foo-inner">
-                    &copy; 2015 Yourdomain.com | More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a>
+                <div class="col-md-12 foo-inner" style="text-align:center;font-size:18px;">
+                    &copy;&nbsp;&nbsp;CopyRight 2017-2018 arex.com,&nbsp;&nbsp;Inc.All Rights Reserved. 
                 </div>
             </div>
         </div>

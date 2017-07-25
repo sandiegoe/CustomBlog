@@ -132,7 +132,10 @@ public class MessageServiceImpl implements MessageService {
 			messageDTO.setReceiverId(message.getReceiverId());
 			messageDTO.setSenderId(message.getSenderId());
 			messageDTO.setSenderIp(message.getSenderIp());
-//			messageDTO.setUserNames(userNames);
+			//获取该消息的发送人名字
+			UserDTO senderUserDTO = userService.searchUserByUserId(message.getSenderId());
+			String userName = senderUserDTO==null ? "" : senderUserDTO.getUserName();
+			messageDTO.setUserNames(userName);
 		}
 		return messageDTO;
 	}

@@ -3,6 +3,8 @@ package com.arex.blog.dto;
 import java.io.File;
 import java.util.Date;
 
+import com.sun.corba.se.spi.orb.StringPair;
+
 public class UserDTO {
 
 	private String userId;
