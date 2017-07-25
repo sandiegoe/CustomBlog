@@ -174,14 +174,6 @@
 		</action>
 		
 		<action name="Comment_*" class="commentAction" method="{1}">
-<<<<<<< HEAD
-			<result name="add" type="redirectAction">
-				<param name="actionName">Menu_blogDetailPage.action</param>
-				<param name="namespace">/user</param>
-			</result>
-			<result name="addError" type="redirectAction">
-				<param name="actionName">Menu_blog.action</param>
-=======
 			<result name="add" type="chain">
 				Menu_blogDetailPage
 			</result>
@@ -190,7 +182,6 @@
 			</result>
 			<result name="signInPage" type="redirectAction">
 				<param name="actionName">Menu_signInPage.action</param>
->>>>>>> 3b5279146d7a5f007b0751d136b96230e9c2d309
 				<param name="namespace">/user</param>
 			</result>
 			<allowed-methods>add</allowed-methods>
