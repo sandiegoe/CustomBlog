@@ -96,8 +96,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						${requestScope.blogDTO.blogContent}
                     </p>
                 </div>
-                <br />
-                
+                <br/>
+               <h4>                                                                                    </h4> 
                 <c:forEach items="${requestScope.commentDTOList}" var="commentDTO">
                 	<h4>Posted by ${commentDTO.userName} | ${commentDTO.commentContent}</h4>
                 </c:forEach>

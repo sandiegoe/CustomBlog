@@ -22,8 +22,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link href="${pageContext.request.contextPath}/css/font-awesome.css" rel="stylesheet" />
     <!-- CUSTOM STYLE CSS -->
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" />
+<<<<<<< HEAD
+    <link href="${pageContext.request.contextPath}/css/style_new.css" rel="stylesheet" >
+=======
     <!-- 自定义样式部分 -->
    	<link href="${pageContext.request.contextPath}/css/mystyle.css" rel="stylesheet"/>
+>>>>>>> 3b5279146d7a5f007b0751d136b96230e9c2d309
 </head>
 <body>
 <br/>
@@ -88,23 +92,37 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="container">
 
         <div class="row">
-
             <div class="col-md-8 ">
-              
-               
-                <form action="${pageContext.request.contextPath}/user/User_signIn.action" method="post" onsubmit="return check(this)">
+    <form action="${pageContext.request.contextPath}/user/User_signIn.action" method="post" onsubmit="return check(this)" class="login">
+    <p>
+      <label for="login">用户名:</label>
+     <input type="text" name="userName" value="${cookie.userName.value}" id="login"/>
+    </p>
+
+    <p>
+      <label for="password">密码:</label>
+      <input type="password" name="logonPassword" value="${cookie.logonPassword.value}" id="password"/>
+    </p>
+
+    <p class="login-submit">
+      <button type="submit" class="login-button">Login</button>
+    </p>
+
+    <p class="forgot-password"><a href="index.html">Forgot your password?</a></p>
+  </form>
+ <%--<form action="${pageContext.request.contextPath}/user/User_signIn.action" method="post" onsubmit="return check(this)">
     	${requestScope.messageInfo} <br/>
-    	 用户名: <input type="text" name="userName" value="${cookie.userName.value}"/><br/>
-    	 密码: <input type="password" name="logonPassword" value="${cookie.logonPassword.value}"/><br/>
+    	 用户名: <input type="text" name="userName" value="${cookie.userName.value}" id="login"/><br/>
+    	 密码: <input type="password" name="logonPassword" value="${cookie.logonPassword.value}" id="password"/><br/>
     	 记住密码:<input type="checkbox" name="remember" checked="checked"/>
     	 <input type="submit" value="登录"/>
-    </form>
-                
+   	 </form>
+                 --%>
             </div>
             <div class="col-md-1"></div>
             <div class="col-md-3" style="padding-top: 30px;">
 				<div class="row">
-                <ul class="list-group">
+                <!-- <ul class="list-group">
                     <li class="list-group-item"><strong>CATEGORIES</strong></li>
                     <li class="list-group-item">Dapibus ac facilisis in</li>
                     <li class="list-group-item">Morbi leo risus</li>
@@ -114,7 +132,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <li class="list-group-item">Morbi leo risus</li>
                     <li class="list-group-item">Porta ac consectetur ac</li>
                     <li class="list-group-item">Vestibulum at eros</li>
-                </ul>
+                </ul> -->
 				</div>
 				<div class="row">
 				<h3>Advertising</h3>

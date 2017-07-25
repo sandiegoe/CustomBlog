@@ -22,12 +22,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link href="${pageContext.request.contextPath}/css/font-awesome.css" rel="stylesheet" />
     <!-- CUSTOM STYLE CSS -->
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" />
+<<<<<<< HEAD
+    
+    <link href="${pageContext.request.contextPath}/css/register-style.css" rel="stylesheet" />
+=======
     <!-- 自定义样式部分 -->
    	<link href="${pageContext.request.contextPath}/css/mystyle.css" rel="stylesheet"/>
    	<!-- 自定义样式部分 -->
    	<link href="${pageContext.request.contextPath}/css/mystyle.css" rel="stylesheet"/>
+>>>>>>> 3b5279146d7a5f007b0751d136b96230e9c2d309
 </head>
-<body>
+<body style="background:#2F2F2F">
 <br/>
     <div id="header">
         <div class="overlay">
@@ -91,9 +96,48 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
         <div class="row">
 
-            <div class="col-md-8 ">
-              
-           <form action="${pageContext.request.contextPath}/user/User_register.action" method="post">
+            <div class="col-md-8">
+            
+            <div id="registration" style="margin:50px auto">
+ <h2>用户注册</h2>
+
+ <form id="RegisterUserForm" action="${pageContext.request.contextPath}/user/User_register.action" method="post">
+ 	<fieldset>
+         <p>
+            <label for="name">姓名</label><br>
+            <input id="name" name="userName" type="text" class="text"/>
+         </p>
+        
+         <p>
+            <label for="tel">电话号码</label>
+            <input id="tel" name="telphone" type="text" class="text"/>
+         </p>
+        
+         <p>
+            <label for="email">Email</label><br>
+            <input id="email" name="email" type="text" class="text"/>
+         </p>
+        
+         <p>
+            <label for="password">密码</label><br>
+            <input id="password" name="logonPassword" class="text" type="password" />
+         </p>
+        
+         <p><input id="acceptTerms" name="acceptTerms" type="checkbox" />
+            <label for="acceptTerms">
+                I agree to the <a href="">Terms and Conditions</a> and <a href="">Privacy Policy</a>
+            </label>
+         </p>
+        
+         <p>
+            <button id="registerNew" type="submit">Register</button>
+         </p>
+ 	</fieldset>
+
+ </form>
+</div>
+      
+       <%--  <form action="${pageContext.request.contextPath}/user/User_register.action" method="post">
     	用户名:<input type="text" name="userName"/><br/>
     	密码: <input type="password" name="logonPassword"/><br/>
     	重复密码: <input type="password" name="confimPassword"/><br/>
@@ -106,13 +150,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	手机号 : <input type="text" name="telphone"/><br/>
     	
     	<input type="submit" value="注册"/>
-    </form>
+    	</form> --%>
                 
             </div>
             <div class="col-md-1"></div>
             <div class="col-md-3" style="padding-top: 30px;">
 				<div class="row">
-                <ul class="list-group">
+               <!--  <ul class="list-group">
                     <li class="list-group-item"><strong>CATEGORIES</strong></li>
                     <li class="list-group-item">Dapibus ac facilisis in</li>
                     <li class="list-group-item">Morbi leo risus</li>
@@ -122,10 +166,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <li class="list-group-item">Morbi leo risus</li>
                     <li class="list-group-item">Porta ac consectetur ac</li>
                     <li class="list-group-item">Vestibulum at eros</li>
-                </ul>
+                </ul> -->
 				</div>
 				<div class="row">
-				<h3>Advertising</h3>
+				<!-- <h3>Advertising</h3> -->
 				
 
 				</div>
