@@ -175,11 +175,11 @@
 		
 		<action name="Comment_*" class="commentAction" method="{1}">
 			<result name="add" type="redirectAction">
-				<param name="actionName">Menu_blogEditPage.action</param>
+				<param name="actionName">Menu_blogDetailPage.action</param>
 				<param name="namespace">/user</param>
 			</result>
 			<result name="addError" type="redirectAction">
-				<param name="actionName">Menu_blogEditPage.action</param>
+				<param name="actionName">Menu_blog.action</param>
 				<param name="namespace">/user</param>
 			</result>
 			<allowed-methods>add</allowed-methods>
