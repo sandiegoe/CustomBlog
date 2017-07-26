@@ -207,8 +207,10 @@ public class BlogServiceImpl implements BlogService {
 			ByteArrayInputStream bais = (ByteArrayInputStream) in;
 			byte[] buffer = new byte[bais.available()];
 			bais.read(buffer, 0, buffer.length);
-			str = new String(buffer);
+			str = new String(buffer, "utf-8");
 		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
 
@@ -220,10 +222,12 @@ public class BlogServiceImpl implements BlogService {
 		Blob blob = null;
 		
 		try {
-			blob = new SerialBlob(str.getBytes());
+			blob = new SerialBlob(str.getBytes("utf-8"));
 		} catch (SerialException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
 		
