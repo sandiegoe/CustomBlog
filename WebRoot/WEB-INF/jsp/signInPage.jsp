@@ -108,7 +108,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <button type="submit" class="login-button">Login</button>
     </p>
 
-    <p class="forgot-password"><a href="index.html">Forgot your password?</a></p>
+    <p class="forgot-password"><input type="checkbox" name="remember" checked/>&nbsp;&nbsp;记住密码</p>
   </form>
  <%--<form action="${pageContext.request.contextPath}/user/User_signIn.action" method="post" onsubmit="return check(this)">
     	${requestScope.messageInfo} <br/>

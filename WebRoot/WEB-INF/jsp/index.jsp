@@ -78,7 +78,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <a href="https://cn.linkedin.com" class="btn btn-default btn-xs"><i class="fa fa-linkedin fa-2x"></i></a>
                         <a href="https://www.google.com" class="btn btn-default btn-xs"><i class="fa fa-google-plus fa-2x"></i></a>
                     </div>
-
                 </div>
 
             </div>

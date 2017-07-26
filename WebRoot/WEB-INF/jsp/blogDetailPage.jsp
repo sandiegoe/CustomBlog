@@ -22,6 +22,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link href="${pageContext.request.contextPath}/css/font-awesome.css" rel="stylesheet" />
     <!-- CUSTOM STYLE CSS -->
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" />
+    <!-- 自定义样式部分 -->
+   	<link href="${pageContext.request.contextPath}/css/mystyle.css" rel="stylesheet"/>
 </head>
 <body>
 <br/>
@@ -97,10 +99,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </p>
                 </div>
                 <br/>
-               <h4>                                                                                    </h4> 
-                <c:forEach items="${requestScope.commentDTOList}" var="commentDTO">
-                	<h4>Posted by ${commentDTO.userName} | ${commentDTO.commentContent}</h4>
-                </c:forEach>
+               <h4></h4> 
+                <div class="wrapper">
+					 <c:forEach items="${requestScope.commentDTOList}" var="commentDTO">	
+						<div class="ds-post-main">
+								<div class="ds-avatar">
+									<a title="设计达人" href="http://www.shejidaren.com" target="_blank"><img alt="设计达人" src="http://tp3.sinaimg.cn/1750584642/50/5612846168/1"></a>
+								</div>
+								<div class="ds-comment-body">
+									<a title="设计达人" href="http://www.shejidaren.com" target="_blank" class="user-name">${commentDTO.userName}</a>
+									<p>${commentDTO.commentContent}</p>
+								</div>
+						</div>
+			 		</c:forEach> 			                
+                </div>
+                
                 
                 <c:if test="${not empty sessionScope.loginUser}">
 	                <form action="${pageContext.request.contextPath}/user/Comment_add.action" method="post">
