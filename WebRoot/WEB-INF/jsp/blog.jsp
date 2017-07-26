@@ -71,7 +71,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                    </c:if>
 	                    <a href="${pageContext.request.contextPath}/user/Menu_registerPage.action">注册</a>
 	                    <a href="${pageContext.request.contextPath}/user/Menu_blogAddPage.action">编写博客</a>
-                		<a href="${pageContext.request.contextPath}/user/Menu_deleted.action">已删除博客</a>
+                		<a href="${pageContext.request.contextPath}/user/Menu_deleted.action">已删</a>
 	                </div>
                 </div>
                 <div class="col-md-2">

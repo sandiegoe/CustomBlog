@@ -74,11 +74,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </div>
                 <div class="col-md-2">
                     <div class="social-link">
-                        <a href="#" class="btn btn-default btn-xs"><i class="fa fa-facebook fa-2x"></i></a>
-                        <a href="#" class="btn btn-default btn-xs"><i class="fa fa-linkedin fa-2x"></i></a>
-                        <a href="#" class="btn btn-default btn-xs"><i class="fa fa-google-plus fa-2x"></i></a>
+                        <a href="https://www.facebook.com" class="btn btn-default btn-xs"><i class="fa fa-facebook fa-2x"></i></a>
+                        <a href="https://cn.linkedin.com" class="btn btn-default btn-xs"><i class="fa fa-linkedin fa-2x"></i></a>
+                        <a href="https://www.google.com" class="btn btn-default btn-xs"><i class="fa fa-google-plus fa-2x"></i></a>
                     </div>
-
                 </div>
 
             </div>
