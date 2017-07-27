@@ -35,9 +35,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <div class="col-md-4 logo-div">
                         <div class="logo-inner text-center">
                             <div class="logo-name">
-                               <a href="${pageContext.request.contextPath}/user/Menu_personalPage.action">
-                                    <img alt="个人头像" src="${sessionScope.loginUser.avatarURL}" class="img-circle"/>
-                                </a>
+                               <!-- 判断如果用户没有登录则不显示用户头像 -->
+			                	<c:if test="${not empty sessionScope.loginUser}">
+			                    	 <a href="${pageContext.request.contextPath}/user/Menu_personalPage.action">
+                                    	<img alt="个人头像" src="${sessionScope.loginUser.avatarURL}" class="img-circle"/>
+                                	</a>
+			                    </c:if>
                             </div>
 
                         </div>
