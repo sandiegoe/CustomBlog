@@ -48,8 +48,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </div>
                     <div class="col-md-8 header-text-top " id="about">
                         <h1>追求极致.</h1>
-						为您提供始终如一最完美的体验是我们不变的追求.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--- 
-						designed by arex.<br />
+						为您提供始终如一最完美的体验是我们不变的追求.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </div>
                 </div>
             </div>
@@ -97,7 +96,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             	  <c:forEach items="${requestScope.blogDTOList}" var="blogDTO">
 	                <div class="blog-post">
 	                    <h2>${blogDTO.blogTitle}</h2>
-	                    <h4>Posted by <a href="#">${blogDTO.userName}</a> on ${blogDTO.blogCreateDate} </h4>
+	                    <h4><a href="#">${blogDTO.userName}</a> &nbsp;发表于&nbsp; ${blogDTO.blogCreateDate} </h4>
 	                    <p>
 	                        ${blogDTO.blogContentText}
 	                    </p>

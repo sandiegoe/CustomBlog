@@ -45,7 +45,7 @@ public class User {
 	}
 
 	//个人头像URL 设置为默认头像
-	private String avatarURL = "http://localhost:8080/Blog/img/me.jpg";
+	private String avatarURL;
 
 	public Date getCraeteDate() {
 		return craeteDate;

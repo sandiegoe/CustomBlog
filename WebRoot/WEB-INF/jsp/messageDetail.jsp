@@ -48,8 +48,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </div>
                    <div class="col-md-8 header-text-top " id="about">
                         <h1>追求极致.</h1>
-						为您提供始终如一最完美的体验是我们不变的追求.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--- 
-						designed by arex.<br />
+						为您提供始终如一最完美的体验是我们不变的追求.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </div>
                 </div>
             </div>
@@ -102,6 +101,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <p>
                        ${requestScope.messageDTO.messageContent}
                     </p>
+                    <a href="${pageContext.request.contextPath}/user/Menu_message.action" class="btn btn-default btn-lg"><i class="glyphicon glyphicon-arrow-left"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
                     <a href="${pageContext.request.contextPath}/user/Message_delete.action?messageId=${requestScope.messageDTO.messageId}" class="btn btn-default btn-lg ">删除 <i class="fa fa-angle-right"></i></a>
                 </div>
                 
@@ -122,7 +122,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </ul>
 				</div>
 				<div class="row">
-				<h3>Advertising</h3>
+				<h3></h3>
 				
 
 				</div>

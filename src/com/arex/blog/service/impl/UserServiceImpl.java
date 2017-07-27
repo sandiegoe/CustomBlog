@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.annotation.Resource;
 
@@ -92,7 +94,10 @@ public class UserServiceImpl implements UserService {
 
 		User user = this.convertUserVO2PO(userDTO);
 		// 注册的时候头像设置为默认图片
-		user.setAvatarURL(new User().getAvatarURL());
+		ResourceBundle bundle = ResourceBundle.getBundle("deploy", Locale.CHINA);
+		String defaultAvatarURL = bundle.getString("defaultAvatarURL");
+		defaultAvatarURL = "http://" + bundle.getString("serverhost") + ":8080" + defaultAvatarURL;
+		user.setAvatarURL(defaultAvatarURL);
 		userDAO.save(user);
 	}
 

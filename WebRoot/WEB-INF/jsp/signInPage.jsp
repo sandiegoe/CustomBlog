@@ -49,8 +49,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </div>
                    <div class="col-md-8 header-text-top " id="about">
                         <h1>追求极致.</h1>
-						为您提供始终如一最完美的体验是我们不变的追求.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--- 
-						designed by arex.<br />
+						为您提供始终如一最完美的体验是我们不变的追求.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </div>
                 </div>
             </div>
@@ -95,6 +94,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="row">
             <div class="col-md-8 ">
     <form action="${pageContext.request.contextPath}/user/User_signIn.action" method="post" onsubmit="return check(this)" class="login">
+    ${requestScope.messageInfo} <br/>
     <p>
       <label for="login">用户名:</label>
      <input type="text" name="userName" value="${cookie.userName.value}" id="login"/>
@@ -136,7 +136,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </ul> -->
 				</div>
 				<div class="row">
-				<h3>Advertising</h3>
+				<h3></h3>
 				
 
 				</div>

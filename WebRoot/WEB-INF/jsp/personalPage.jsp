@@ -83,8 +83,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </div>
                    <div class="col-md-8 header-text-top " id="about">
                         <h1>追求极致.</h1>
-						为您提供始终如一最完美的体验是我们不变的追求.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--- 
-						designed by arex.<br />
+						为您提供始终如一最完美的体验是我们不变的追求.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </div>
                 </div>
             </div>
@@ -133,10 +132,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <h3>个人中心页面</h3><br/>
     <form action="${pageContext.request.contextPath}/user/User_edit.action" method="post">    
     
-     <table>
+     <table class="table">
     	<tr>	
     		<td> 用户Id :</td>
-    		<td><input type="text" name="userId" readonly value="${sessionScope.loginUser.userId}"/><br/></td>
+    		<td><input type="text" name="userId" readonly value="${sessionScope.loginUser.userId}" style="width:300px;"/><br/></td>
     	</tr>
     	<tr>
     		<td>头像：</td>
@@ -155,39 +154,39 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	</tr>
     	<tr>
     		<td> 用户名 : </td>
-    		<td> <input type="text" name="userName" readonly value="${sessionScope.loginUser.userName }"/></td>
+    		<td> <input type="text" name="userName" style="width:300px;"  readonly value="${sessionScope.loginUser.userName }"/></td>
     	</tr>
     	<tr>
     		<td>用户昵称 : </td>
-    		<td><input type="text" name="userNickName" ${requestScope.kind} value="${sessionScope.loginUser.userNickName}"/></td>
+    		<td><input type="text" name="userNickName" style="width:300px;"  ${requestScope.kind} value="${sessionScope.loginUser.userNickName}"/></td>
     	</tr>
     	<tr>
     		<td>性别：</td>
-    		<td><input type="text" name="sex" ${requestScope.kind} value="${sessionScope.loginUser.sex==0 ? '男' : '女'}"/></td>
+    		<td><input type="text" name="sex" style="width:300px;"  ${requestScope.kind} value="${sessionScope.loginUser.sex==0 ? '男' : '女'}"/></td>
     	</tr>
     	<tr>
     		<td>生日日期：</td>
-    		<td><input type="text" name="birthdate" ${requestScope.kind} value="${sessionScope.loginUser.birthdate }"/></td>
+    		<td><input type="text" name="birthdate" style="width:300px;"  ${requestScope.kind} value="${sessionScope.loginUser.birthdate }"/></td>
     	</tr>
     	<tr>
     		<td>地址：</td>
-    		<td> <input type="text" name="address" ${requestScope.kind} value="${sessionScope.loginUser.address }"/></td>
+    		<td> <input type="text" name="address" style="width:300px;"  ${requestScope.kind} value="${sessionScope.loginUser.address }"/></td>
     	</tr>
     	<tr>
     		<td> 联系电话：</td>
-    		<td><input type="text" name="contactTel" ${requestScope.kind} value="${sessionScope.loginUser.contactTel }"/></td>
+    		<td><input type="text" name="contactTel" style="width:300px;"  ${requestScope.kind} value="${sessionScope.loginUser.contactTel }"/></td>
     	</tr>
     	<tr>
     		<td>邮箱：</td>
-    		<td><input type="text" name="email" ${requestScope.kind} value="${sessionScope.loginUser.email }"/></td>
+    		<td><input type="text" name="email" style="width:300px;"  ${requestScope.kind} value="${sessionScope.loginUser.email }"/></td>
     	</tr>
     	<tr>
     		<td> 手机号：</td>
-    		<td><input type="text" name="telphone" ${requestScope.kind} value="${sessionScope.loginUser.telphone }"/></td>
+    		<td><input type="text" name="telphone" style="width:300px;"  ${requestScope.kind} value="${sessionScope.loginUser.telphone }"/></td>
     	</tr>
     	<tr>
     		<td>上次登录时间：</td>
-    		<td><input type="text" name="lastLoginDate" disabled value="${requestScope.lastLoginDate}"/></td>
+    		<td><input type="text" name="lastLoginDate" style="width:300px;" disabled value="${requestScope.lastLoginDate}"/></td>
     	</tr>
     	<tr style="text-align:center;">
     		 <!-- ${requestScope.kind==''} 表示启用编辑 -->
@@ -227,7 +226,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </ul>
 				</div>
 				<div class="row">
-				<h3>Advertising</h3>
+				<h3></h3>
 				
 
 				</div>

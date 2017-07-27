@@ -23,6 +23,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link href="${pageContext.request.contextPath}/css/font-awesome.css" rel="stylesheet" />
     <!-- CUSTOM STYLE CSS -->
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" />
+    <!-- 自定义样式部分 -->
+   	<link href="${pageContext.request.contextPath}/css/mystyle.css" rel="stylesheet"/>
 </head>
 <body>
 <br/>
@@ -46,8 +48,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </div>
                    <div class="col-md-8 header-text-top " id="about">
                         <h1>追求极致.</h1>
-						为您提供始终如一最完美的体验是我们不变的追求.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--- 
-						designed by arex.<br />
+						为您提供始终如一最完美的体验是我们不变的追求.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </div>
                 </div>
             </div>
@@ -92,14 +93,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="row">
 
             <div class="col-md-8 ">
-         <form action="${pageContext.request.contextPath}/user/User_changePassword.action" method="post">
-    	${requestScope.messageInfo} <br/>
-    	<input type="hidden" name="userId" value="${sessionScope.loginUser.userId}"/>
-    	原密码: <input type="password" name="olderPassword"/><br/>
-    	新密码: <input type="password" name="logonPassword"/><br/>
-    	重复密码: <input type="password" name="confimPassword"/><br/>
-    	<input type="submit" value="修改"/>
-    </form>
+            <table class="table">
+		         <form action="${pageContext.request.contextPath}/user/User_changePassword.action" method="post">
+			    	${requestScope.messageInfo} <br/>
+			    	<input type="hidden" name="userId" value="${sessionScope.loginUser.userId}"/>
+			    	<tr>
+			    		<td>原密码:</td>
+			    		<td><input type="password" name="olderPassword"/></td>
+			    	</tr>
+			    	<tr>
+			    		<td>新密码:</td>
+			    		<td><input type="password" name="logonPassword"/></td>
+			    	</tr>
+			    	<tr>
+			    		<td>重复密码:</td>
+			    		<td><input type="password" name="confimPassword"/></td>
+			    	</tr>
+			    	<tr>
+			    		<td><input type="reset" value="取消"/></td>
+		    			<td><input type="submit" value="修改"/></td>
+			    	</tr>
+		    	</form>
+		    </table>
                 
             </div>
             <div class="col-md-1"></div>
@@ -118,7 +133,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </ul>
 				</div>
 				<div class="row">
-				<h3>Advertising</h3>
+				<h3></h3>
 				
 
 				</div>
