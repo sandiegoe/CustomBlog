@@ -93,7 +93,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="col-md-8 ">
                 <div class="blog-post">
                     <h2>${requestScope.blogDTO.blogTitle}</h2>
-                    <h4>Posted by <a href="#">${sessionScope.loginUser.userName}</a> on on ${blogDTO.blogCreateDate} </h4>
+                    <h4>Posted by <a href="#">${requestScope.blogDTO.userName}</a> on on ${blogDTO.blogCreateDate} </h4>
                     <p>
 						${requestScope.blogDTO.blogContent}
                     </p>
