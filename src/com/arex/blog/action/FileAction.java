@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.UUID;
 
 import org.apache.struts2.ServletActionContext;
@@ -74,7 +76,10 @@ public class FileAction extends CommonAction<FileDTO> {
 		fos.close();
 		
 		// 返回“图像”选项卡并显示图片  
-		String serverHost = request.getLocalAddr();
+		//String serverHost = request.getLocalAddr();
+		//配置为服务器的地址,通过配置文件指定,通过上述方式获取的是内网IP地址,指定为公网IP地址
+		ResourceBundle bundle = ResourceBundle.getBundle("deploy",Locale.CHINA);
+		String serverHost = bundle.getString("serverhost");
 		writer.println("<script type=\"text/javascript\">");    
 		writer.println("window.parent.CKEDITOR.tools.callFunction(" + callback + ",'" + "http://" + serverHost + ":8080/Blog/" + "img/uploadImage/" + fileName + "','')");    
 		writer.println("</script>");
