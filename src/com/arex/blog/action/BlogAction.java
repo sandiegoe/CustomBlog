@@ -20,16 +20,17 @@ public class BlogAction extends CommonAction<BlogDTO> {
 	
 	public String add() {
 		
+		BlogDTO blogDTO = super.getModel();
+		
 		//判断blogAddPage.jsp中从sessionshahi的userId是否为空
 		//如果为空则跳转到登录页面
 		//如果不为空，则将BlogDTO保存到数据库中
-System.out.println(super.getModel().getBlogTitle());
-		if (super.getModel()==null || super.getModel().getUserId()==null || "".equals(super.getModel().getUserId())) {
+		if (blogDTO==null || blogDTO.getUserId()==null || "".equals(blogDTO.getUserId())) {
 			request.setAttribute("messageInfo", "请重新登录");
 			return "signInPage";
 		}
 		
-		blogService.saveBlog(super.getModel());
+		blogService.saveBlog(blogDTO);
 		
 		return "add";
 	}

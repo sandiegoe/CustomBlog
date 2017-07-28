@@ -21,7 +21,7 @@ import org.hibernate.annotations.GenericGenerator;
 public class Blog {
 
 	private String blogId;
-	private String kindId;
+	private String kindId; //博客的种类
 	private String blogTitle;
 	private Blob blogContent;
 	private String blogDescription;

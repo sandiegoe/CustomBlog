@@ -100,7 +100,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             
             <c:forEach items="${requestScope.blogDTOList}" var="blogDTO">
                 <div class="blog-post">
-                    <h2>${blogDTO.blogTitle}</h2>
+                    <h2>${blogDTO.blogTitle}</h2>  
+                    <c:if test="${blogDTO.kindId==0}">原创</c:if><c:if test="${blogDTO.kindId==1}">转载</c:if>
                      <h4><a href="#">${blogDTO.userName}</a> &nbsp;发表于&nbsp; ${blogDTO.blogCreateDate} </h4>
                     <p>
                         ${blogDTO.blogContentText}

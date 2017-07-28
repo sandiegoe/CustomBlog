@@ -25,6 +25,7 @@ import com.arex.blog.model.Blog;
 import com.arex.blog.model.User;
 import com.arex.blog.service.BlogService;
 import com.arex.blog.service.UserService;
+import com.arex.blog.utils.PropertyUtils;
 
 @Component(value = "blogServiceImpl")
 public class BlogServiceImpl implements BlogService {
@@ -127,7 +128,8 @@ public class BlogServiceImpl implements BlogService {
 			blog.setUserId(blogDTO.getUserId());
 			blog.setBlogId(blogDTO.getBlogId());
 			// TODO 博客分类
-			blog.setKindId("1");
+			//获取BlogDTO中设置的kindId,如果为null或者为空则设置为默认值1
+			PropertyUtils.setPropertyValue(blog, "kindId", blogDTO.getKindId(), "0");
 		}
 
 		return blog;

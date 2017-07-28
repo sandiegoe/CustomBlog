@@ -96,7 +96,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="col-md-12 ">
               
           <form action="${pageContext.request.contextPath}/user/Blog_add.action" method="post">
-    	文章标题: <input type="text" name="blogTitle" value="${requestScope.blogDTO.blogTitle}" style="width:742px;"/><br/>
+    	文章标题: <br/>
+    	<select name="kindId">
+    		<option value="">请选择</option>
+    		<option value="0">原创</option>
+    		<option value="1">转载</option>
+    	</select>
+    	<input type="text" name="blogTitle" value="${requestScope.blogDTO.blogTitle}" style="width:742px;"/><br/>
   		文章内容:<textarea name="blogContent" id="blogContent" value="${requestScope.blogDTO.blogContent}" rows="50"></textarea>
   		<script type="text/javascript">
   			CKEDITOR.replace('blogContent', {"filebrowserUploadUrl" : "${pageContext.request.contextPath}/user/File_uploadPhoto.action", height:"500px", width:"800px"});
