@@ -106,12 +106,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                    	 
                    	 <c:forEach items="${requestScope.messageDTOListWithNew}" var="messageDTO">
                     	 <a href="${pageContext.request.contextPath}/user/Menu_messageDetail.action?messageId=${messageDTO.messageId}">${messageDTO.messageTitle}</a>
-                    	 <span span="new">新消息</span>
+                    	 <span>新消息</span>
                     	 <hr><br/>
                      </c:forEach>
                      <c:forEach items="${requestScope.messageDTOListWithRead}" var="messageDTO">
-                    	 <a href="${pageContext.request.contextPath}/user/Menu_messageDetail.action?messageId=${messageDTO.messageId}">${messageDTO.messageTitle}</a>
-                    	 <span class="read">已读</span>
+                    	 <a class="read" href="${pageContext.request.contextPath}/user/Menu_messageDetail.action?messageId=${messageDTO.messageId}">${messageDTO.messageTitle}</a>
+                    	 <span class="readFlag">已读</span>
                     	 <hr><br/>
                      </c:forEach>
                    

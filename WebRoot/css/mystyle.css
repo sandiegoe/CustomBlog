@@ -32,6 +32,10 @@
 	color: grey;
 }
 
+.blog-post .readFlag {
+	color: grey;
+}
+
 #about h1 {
 	font-size: 35px;
 	letter-spacing: 5;

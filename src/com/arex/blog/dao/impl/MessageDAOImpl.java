@@ -110,7 +110,7 @@ public class MessageDAOImpl extends CommonDAOImpl<Message> implements MessageDAO
 			@Override
 			public List<Message> doInHibernate(Session session) throws HibernateException {
 				//读取receiverId为userId的，且没有删除，不是发送失败的消息(包括发送成功和已经阅读的消息)
-				List<Message> messageList = session.createQuery("from Message message where message.receiverId=:receiverId and message.messageIsDelete=0 and message.messageStatus=:messageStatus")
+				List<Message> messageList = session.createQuery("from Message message where message.receiverId=:receiverId and message.messageIsDelete=0 and message.messageStatus=:messageStatus order by message.messageDate desc")
 					.setParameter("receiverId", userId)
 					.setParameter("messageStatus", messageStatus)
 					.getResultList();
