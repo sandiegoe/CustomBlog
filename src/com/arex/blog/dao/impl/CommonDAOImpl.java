@@ -20,6 +20,7 @@ import org.springframework.stereotype.Component;
 
 import com.arex.blog.dao.CommonDAO;
 import com.arex.blog.utils.GenericUtils;
+import com.arex.blog.utils.PageInfo;
 
 @Component(value = "commonDAOImpl")
 @Transactional
@@ -98,6 +99,33 @@ public class CommonDAOImpl<T> implements CommonDAO<T> {
 
 		return list;
 	}
+	
+	@Override
+	public List<T> searchCollectionByCondition(String hqlWhere,
+			final Object[] objects, LinkedHashMap<String, String> orderby,
+			final PageInfo pageInfo) {
+		Class clazz = GenericUtils.getActualClass(this.getClass());
+		String hqlOrderby = this.orderbyCondition(orderby);
+		final String hql = "from " + clazz.getSimpleName() + " o " + hqlWhere
+				+ hqlOrderby;
+
+		List<T> list = (List<T>) hibernateTemplate
+				.execute(new HibernateCallback<T>() {
+
+					@Override
+					public T doInHibernate(Session session)
+							throws HibernateException {
+						Query query = session.createQuery(hql);
+						setQueryParameters(query, objects);
+						pageInfo.setTotalResult(query.getResultList().size());
+						query.setFirstResult(pageInfo.getBeginResult());
+						query.setMaxResults(pageInfo.getPageSize());
+						return (T) query.getResultList();
+					}
+				});
+
+		return list;
+	}
 
 	private String orderbyCondition(LinkedHashMap<String, String> orderby) {
 		String hqlOrderby = "";
@@ -130,4 +158,5 @@ public class CommonDAOImpl<T> implements CommonDAO<T> {
 			this.save(t);
 		}
 	}
+
 }

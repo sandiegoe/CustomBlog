@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.arex.blog.dto.MessageDTO;
 import com.arex.blog.model.Message;
+import com.arex.blog.utils.PageInfo;
 
 public interface MessageDAO extends CommonDAO<Message>{
 
@@ -20,5 +21,8 @@ public interface MessageDAO extends CommonDAO<Message>{
 	public void deleteAllMessage(String receiverId);
 
 	public void readAllmessage(String receiverId);
+
+	public List<MessageDTO> searchAllMessageByReceiverIdAndMessageStatus(
+			String userId, int messageStatus, PageInfo pageInfo);
 
 }

@@ -114,12 +114,37 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     	 <span class="readFlag">已读</span>
                     	 <hr><br/>
                      </c:forEach>
-                   
                 </div>
               
-              
-          
-                
+               <br />
+                <nav>
+                    <ul class="pagination">
+                        <li>
+                            <a href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                       	<c:if test="${!page.firstPage && page.pageNo!=2}">
+                       		<li><a href="${pageContext.request.contextPath}/user/Menu_home.action?pageNo=1&pageSize=5">首页</a></li>
+                       	</c:if>
+                       	<c:if test="${!page.firstPage}">
+	                        <li><a href="${pageContext.request.contextPath}/user/Menu_home.action?pageNo=${page.pageNo-1}&pageSize=5">${page.pageNo-1}</a></li>
+                        </c:if>
+                        <li><a href="javascript:void(0);" style="color:grey;">${page.pageNo}</a></li>
+                        <c:if test="${!page.lastPage}">
+                        	<li><a href="${pageContext.request.contextPath}/user/Menu_home.action?pageNo=${page.pageNo+1}&pageSize=5">${page.pageNo+1}</a></li>
+                        </c:if>
+                        <c:if test="${!page.lastPage && page.pageNo!=page.totalPages-1}">
+                        	<li><a href="${pageContext.request.contextPath}/user/Menu_home.action?pageNo=${page.totalPages}&pageSize=5">末页</a></li>
+                        </c:if>
+                        
+                        <li>
+                            <a href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
             <div class="col-md-1"></div>
             <div class="col-md-3" style="padding-top: 30px;">

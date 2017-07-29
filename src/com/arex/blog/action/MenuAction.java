@@ -4,9 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
-import org.eclipse.jdt.internal.compiler.ast.SuperReference;
-import org.omg.CORBA.PRIVATE_MEMBER;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -43,7 +42,8 @@ public class MenuAction extends CommonAction<MenuDTO> {
 
 	public String home() {
 
-		List<BlogDTO> blogDTOList = blogService.searchAllBlog();
+//		List<BlogDTO> blogDTOList = blogService.searchAllBlog();
+		List<BlogDTO> blogDTOList = blogService.searchAllBlog((HttpServletRequest)request);
 		request.setAttribute("blogDTOList", blogDTOList);
 
 		return "home";
@@ -86,7 +86,8 @@ public class MenuAction extends CommonAction<MenuDTO> {
 		boolean isLogin = LoginUtils.checkUserIsAlreadyLogin(session);
 		if (isLogin) {
 			//已经登录，显示个人博客列表
-			blogDTOList = blogService.searchAllBlogByUserId(((UserDTO)session.getAttribute("loginUser")).getUserId());
+//			blogDTOList = blogService.searchAllBlogByUserId(((UserDTO)session.getAttribute("loginUser")).getUserId());
+			blogDTOList = blogService.searchAllBlogByUserId((HttpServletRequest)request, ((UserDTO)session.getAttribute("loginUser")).getUserId());
 		} else {
 			//没有登录，显示所有博客列表
 			//blogDTOList = blogService.searchAllBlog();
@@ -114,13 +115,21 @@ public class MenuAction extends CommonAction<MenuDTO> {
 		//receiverId为当前登录用户userId的消息，messageStatus <> 1
 		//List<MessageDTO> messageDTOList = messageService.searchAllMessageByReceiverId(loginUser.getUserId());
 		//获取新消息
-		List<MessageDTO> messageDTOListWithNew = messageService.searchAllMessageByReceiverIdAndMessageStatus(loginUser.getUserId(), 1);
+		//启用分页查询新消息
+//		List<MessageDTO> messageDTOListWithNew = messageService.searchAllMessageByReceiverIdAndMessageStatus(loginUser.getUserId(), 1);
+		List<MessageDTO> messageDTOListWithNew = messageService.searchAllMessageByReceiverIdAndMessageStatus((HttpServletRequest)request, loginUser.getUserId(), 1);
 		//获取已读消息
-		List<MessageDTO> messageDTOListWithRead = messageService.searchAllMessageByReceiverIdAndMessageStatus(loginUser.getUserId(), 2);
+		//启用分页查询已读消息
+		if (messageDTOListWithNew.size() < Integer.parseInt((String)request.getAttribute("pageSize"))) {
+			request.setAttribute("pageSize", Integer.parseInt((String)request.getAttribute("pageSize"))-messageDTOListWithNew.size());
+			List<MessageDTO> messageDTOListWithRead = messageService.searchAllMessageByReceiverIdAndMessageStatus((HttpServletRequest)request, loginUser.getUserId(), 2);
+			request.setAttribute("messageDTOListWithRead", messageDTOListWithRead);
+		}
+//		List<MessageDTO> messageDTOListWithRead = messageService.searchAllMessageByReceiverIdAndMessageStatus(loginUser.getUserId(), 2);
 		//设置到request中去
 		request.setAttribute("messageDTOListWithNew", messageDTOListWithNew);
-		request.setAttribute("messageDTOListWithRead", messageDTOListWithRead);
-		request.setAttribute("messages", messageDTOListWithNew.size());
+		//设置messages为新消息的个数
+		request.setAttribute("messages", messageService.searchAllMessageByReceiverIdAndMessageStatus(loginUser.getUserId(), 1));
 		
 		return "message";
 	}

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.persistence.Query;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
 import com.arex.blog.dao.MessageDAO;
 import com.arex.blog.dto.MessageDTO;
 import com.arex.blog.model.Message;
+import com.arex.blog.utils.PageInfo;
 import com.sun.istack.internal.FinalArrayList;
 
 @Component(value="messageDAOImpl")
@@ -122,6 +124,30 @@ public class MessageDAOImpl extends CommonDAOImpl<Message> implements MessageDAO
 		
 		return messageDTOList;
 	}
+	
+	@Override
+	public List<MessageDTO> searchAllMessageByReceiverIdAndMessageStatus(
+			final String userId, final int messageStatus, final PageInfo pageInfo) {
+		List<Message> messageList = hibernateTemplate.execute(new HibernateCallback<List<Message>>() {
+
+			@Override
+			public List<Message> doInHibernate(Session session) throws HibernateException {
+				//读取receiverId为userId的，且没有删除，不是发送失败的消息(包括发送成功和已经阅读的消息)
+				Query query = session.createQuery("from Message message where message.receiverId=:receiverId and message.messageIsDelete=0 and message.messageStatus=:messageStatus order by message.messageDate desc")
+					.setParameter("receiverId", userId)
+					.setParameter("messageStatus", messageStatus);
+				pageInfo.setTotalResult(query.getResultList().size());
+				query.setFirstResult(pageInfo.getBeginResult());
+				query.setMaxResults(pageInfo.getPageSize());
+				List<Message> messageList = query.getResultList();
+				return messageList;
+			}
+		});
+		
+		List<MessageDTO> messageDTOList = this.convertMessagePO2VO(messageList);
+		
+		return messageDTOList;
+	}
 
 	@Override
 	public void deleteAllMessage(final String receiverId) {
@@ -150,6 +176,4 @@ public class MessageDAOImpl extends CommonDAOImpl<Message> implements MessageDAO
 			}
 		});
 	}
-
-	
 }

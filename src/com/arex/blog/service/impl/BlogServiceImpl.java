@@ -11,10 +11,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
 
-import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Component;
 
 import com.arex.blog.dao.BlogDAO;
@@ -22,9 +22,9 @@ import com.arex.blog.dao.UserDAO;
 import com.arex.blog.dto.BlogDTO;
 import com.arex.blog.dto.UserDTO;
 import com.arex.blog.model.Blog;
-import com.arex.blog.model.User;
 import com.arex.blog.service.BlogService;
 import com.arex.blog.service.UserService;
+import com.arex.blog.utils.PageInfo;
 import com.arex.blog.utils.PropertyUtils;
 
 @Component(value = "blogServiceImpl")
@@ -53,6 +53,29 @@ public class BlogServiceImpl implements BlogService {
 		List<Blog> blogList = blogDAO.searchCollectionByConditionNoPage(
 				hqlWhere, objects, orderby);
 		List<BlogDTO> blogDTOList = this.convertBlogPO2VO2(blogList);
+
+		return blogDTOList;
+	}
+	
+	@Override
+	public List<BlogDTO> searchAllBlogByUserId(HttpServletRequest request,
+			String userId) {
+		String hqlWhere = " where 1=1 and deleteSign = 0 ";
+		List<String> paramList = new ArrayList<String>();
+		if (userId != null && !"".equals(userId)) {
+			hqlWhere += " and o.userId=? ";
+			paramList.add(userId);
+		}
+		Object[] objects = paramList.toArray();
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("o.blogCreateDate", "desc");
+
+		PageInfo pageInfo = new PageInfo(request);
+		//修改为分页查询
+		List<Blog> blogList = blogDAO.searchCollectionByCondition(hqlWhere, objects, orderby, pageInfo);
+		List<BlogDTO> blogDTOList = this.convertBlogPO2VO2(blogList);
+		//保存分页信息
+		request.setAttribute("page", pageInfo.getPage());
 
 		return blogDTOList;
 	}
@@ -171,6 +194,25 @@ public class BlogServiceImpl implements BlogService {
 		List<Blog> blogList = blogDAO.searchCollectionByConditionNoPage(
 				hqlWhere, objects, orderby);
 		List<BlogDTO> blogDTOList = this.convertBlogPO2VO2(blogList);
+
+		return blogDTOList;
+	}
+	
+	@Override
+	public List<BlogDTO> searchAllBlog(HttpServletRequest request) {
+		String hqlWhere = " where 1=1 and deleteSign = 0 ";
+		List<String> paramList = new ArrayList<String>();
+
+		Object[] objects = null;
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("o.blogCreateDate", "desc");
+
+		PageInfo pageInfo = new PageInfo(request);
+		List<Blog> blogList = blogDAO.searchCollectionByCondition(
+				hqlWhere, objects, orderby, pageInfo);
+		List<BlogDTO> blogDTOList = this.convertBlogPO2VO2(blogList);
+		//保存分页信息
+		request.setAttribute("page", pageInfo.getPage());
 
 		return blogDTOList;
 	}
@@ -302,4 +344,5 @@ public class BlogServiceImpl implements BlogService {
 	public void restoreBlog(BlogDTO blogDTO) {
 		blogDAO.restoreBlogByBlogId(blogDTO.getBlogId());
 	}
+
 }

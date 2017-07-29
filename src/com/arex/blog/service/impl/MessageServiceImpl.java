@@ -1,10 +1,10 @@
 package com.arex.blog.service.impl;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Component;
 
@@ -14,6 +14,7 @@ import com.arex.blog.dto.UserDTO;
 import com.arex.blog.model.Message;
 import com.arex.blog.service.MessageService;
 import com.arex.blog.service.UserService;
+import com.arex.blog.utils.PageInfo;
 
 @Component(value="messageServiceImpl")
 public class MessageServiceImpl implements MessageService {
@@ -99,6 +100,7 @@ public class MessageServiceImpl implements MessageService {
 		return messageId;
 	}
 	
+	
 	public void updateMessageStatus(String messageId, int messageStatus) {
 		//判断messageId不为空
 		if (messageId!=null && !"".equals(messageId)) {
@@ -146,6 +148,19 @@ public class MessageServiceImpl implements MessageService {
 		List<MessageDTO> messageDTOList = messageDAO.searchAllMessageByReceiverIdAndMessageStatus(userId, messageStatus);
 		return messageDTOList;
 	}
+	
+	@Override
+	public List<MessageDTO> searchAllMessageByReceiverIdAndMessageStatus(
+			HttpServletRequest request, String userId, int messageStatus) {
+		PageInfo pageInfo = new PageInfo(request);
+		List<MessageDTO> messageDTOList = messageDAO.searchAllMessageByReceiverIdAndMessageStatus(userId, messageStatus, pageInfo);
+		if (messageStatus == 1) {
+			request.setAttribute("newPage", pageInfo.getPage());
+		} else if (messageStatus == 2) {
+			request.setAttribute("readPage", pageInfo.getPage());
+		}
+		return messageDTOList;
+	}
 
 	@Override
 	public void deleteAllMessage(String receiverId) {
@@ -163,4 +178,5 @@ public class MessageServiceImpl implements MessageService {
 	public void deleteMessageByMessageId(MessageDTO messageDTO) {
 		messageDAO.deleteById(messageDTO.getMessageId());
 	}
+
 }
