@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -104,16 +105,32 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <br/>
                <h4></h4> 
                 <div class="wrapper">
-					 <c:forEach items="${requestScope.commentDTOList}" var="commentDTO">	
-						<div class="ds-post-main">
-								<div class="ds-avatar">
-									<a title="设计达人" href="http://www.shejidaren.com" target="_blank"><img alt="设计达人" src="http://tp3.sinaimg.cn/1750584642/50/5612846168/1"></a>
-								</div>
-								<div class="ds-comment-body">
-									<a title="设计达人" href="http://www.shejidaren.com" target="_blank" class="user-name">${commentDTO.userName}</a>
-									<p>${commentDTO.commentContent}</p>
-								</div>
-						</div>
+                	
+                	<!-- 负责遍历每一条评论 -->
+					 <c:forEach items="${requestScope.commentDTOListWithLevel}" var="commentDTOList">	
+					 	
+					 	<!-- 展现每一条的评论 -->
+					 	<c:forEach items="${commentDTOList}" var="commentDTO" varStatus="status">
+							<div class="ds-post-main" style="padding-left:${status.index*50}px;">
+									<div class="ds-avatar">
+										<a title="设计达人" href="http://www.shejidaren.com" target="_blank"><img alt="设计达人" src="http://tp3.sinaimg.cn/1750584642/50/5612846168/1"></a>
+									</div>
+									<div class="ds-comment-body">
+										<a title="设计达人" href="http://www.shejidaren.com" target="_blank" class="user-name">${commentDTO.userName}</a>
+										<p>回复${commentDTO.parentName}<c:if test="${empty commentDTO.parentName}">${blogDTO.userName}</c:if> : 
+										${commentDTO.commentContent}</p>
+										<!-- 在最后一条消息上添加回复，删除等 -->
+										<c:if test="${status.index == (fn:length(commentDTOList)-1) && sessionScope.loginUser!=null}"> 
+											<a class="cmt_btn reply" href="#reply" title="回复" onclick="reply('${commentDTO.commentId}');">[回复]</a>
+											<!-- 判断消息发出者是否是当前登录用户 -->
+											<c:if test="${commentDTO.userId==sessionScope.loginUser.userId}">
+												<a class="cmt_btn reply" href="${pageContext.request.contextPath}/user/Comment_delete?commentId=${commentDTO.commentId}&blogId=${requestScope.blogDTO.blogId}" title="删除" onclick="confirm('确认删除!')">[删除]</a>
+											</c:if>
+										</c:if>
+									</div>
+							</div>
+						</c:forEach>
+						<hr/>
 			 		</c:forEach> 			                
                 </div>
                 
@@ -123,8 +140,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                	用户名 : ${sessionScope.loginUser.userName}<br/>
 	                	<input type="hidden" name="userId" value="${sessionScope.loginUser.userId}"/>
 	                	<input type="hidden" name="blogId" value="${requestScope.blogDTO.blogId}"/>
-	                	<input type="hidden" name="parentId" value="${requestScope.blogDTO.blogId}"/>
-	                	评论内容 : <textarea rows="7" cols="40" name="commentContent"></textarea><br/>
+	                	<input id="parentId" type="hidden" name="parentId" value=""/>
+	                	评论内容 : <textarea id="commentContent" rows="7" cols="40" name="commentContent"></textarea><br/>
 	                	<input type="submit" value="提交"/>
 	                </form>
                 </c:if>
@@ -173,5 +190,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!-- BOOTSTRAP SCRIPTS -->
     <script src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
 
+	<script type="text/javascript">
+		function reply(commentId) {
+			//alert("commentId : " + commentId);
+			var parentInput = document.getElementById("parentId");
+			//alert("parentInput : " + parentInput.value);
+			parentInput.value = commentId;
+			//alert(parentInput.value);
+			var commentContentInput = document.getElementById("commentContent");
+			//alert(commentContentInput.innerHTML);
+			commentContentInput.innerHTML = commentId + "\n";
+			//alert(document.getElementById("commentContent").innerHTML);
+		}
+	</script>
+	
 </body>
 </html>

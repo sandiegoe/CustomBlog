@@ -1,5 +1,6 @@
 package com.arex.blog.action;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -249,7 +250,7 @@ public class MenuAction extends CommonAction<MenuDTO> {
 		
 		//获取列表页面传递的blogId
 		String blogId = super.getModel().getBlogId();
-		String blogId2 = request.getParameter("blogId");
+//		String blogId2 = request.getParameter("blogId");
 		
 		//调用blogService查询指定blogId
 		//如果指定的blogId不存在，跳转到列表页面
@@ -264,16 +265,42 @@ public class MenuAction extends CommonAction<MenuDTO> {
 			return "toBlog";
 		}
 		
-		//取出所有评论
+		//取出指定blogId的所有评论
 		List<CommentDTO> commentDTOList = commentService.searchAllCommentByBlogId(blogId);
+		//生成具有层次的评论
+		List<List<CommentDTO>> commentDTOListWithLevel = new ArrayList<List<CommentDTO>>();
+		for (int i=0; commentDTOList!=null && i<commentDTOList.size(); ++i) {
+			CommentDTO commentDTO = commentDTOList.get(i);
+			List<CommentDTO> eachList = new ArrayList<CommentDTO>();
+			eachList.add(commentDTO);
+			//判断其parentId是否为空，如果不为空，则继续加
+			while (commentDTO!=null && commentDTO.getParentId()!=null && !"".equals(commentDTO.getParentId())) {
+				commentDTO = commentService.searchCommentByCommentId(commentDTO.getParentId());
+//				commentDTO = this.getCommentDTOByCommentId(commentDTOList, commentDTO.getParentId());
+				eachList.add(0, commentDTO);
+			}
+			commentDTOListWithLevel.add(eachList);
+		}
 		
 		//设置到request中"blogDTO" : blogDTO
 		request.setAttribute("blogDTO", blogDTO);
-		request.setAttribute("commentDTOList", commentDTOList);
+		request.setAttribute("commentDTOListWithLevel", commentDTOListWithLevel);
 		
 		return "blogDetailPage";
 	}
 	
+	@Deprecated
+	private CommentDTO getCommentDTOByCommentId(List<CommentDTO> commentList, String parentId) {
+		
+		for (CommentDTO commentDTO : commentList) {
+			if (commentDTO.getCommentId().equals(parentId)) {
+				return commentDTO;
+			}
+		}
+		
+		return null;
+	}
+
 	public String uploadPhotoPage() {
 		return "uploadPhotoPage";
 	}

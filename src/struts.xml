@@ -184,7 +184,10 @@
 				<param name="actionName">Menu_signInPage.action</param>
 				<param name="namespace">/user</param>
 			</result>
-			<allowed-methods>add</allowed-methods>
+			<result name="delete" type="chain">
+				Menu_blogDetailPage
+			</result>
+			<allowed-methods>add, delete</allowed-methods>
 		</action>
 	</package>
 

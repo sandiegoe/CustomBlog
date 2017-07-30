@@ -56,6 +56,8 @@ public class CommentServiceImpl implements CommentService {
 			hqlWhere += " and o.blogId=? ";
 			paramList.add(blogId);
 		}
+		//筛选出尚未删除的comment
+		hqlWhere += " and o.deleteSign=0 ";
 		Object[] objects = paramList.toArray();
 		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
 		orderby.put("o.commentDate", "asc");
@@ -84,10 +86,63 @@ public class CommentServiceImpl implements CommentService {
 			UserDTO searchUserDTO = userService.searchUserByUserId(comment.getUserId());
 			String userName = searchUserDTO==null ? "" : searchUserDTO.getUserName();
 			commentDTO.setUserName(userName);
+			//取出当前评论的父评论
+			Comment parentComment = commentDAO.searchById(comment.getParentId());
+			String parentName = "";
+			if (parentComment == null || parentComment.getUserId()==null || "".equals(parentComment.getUserId())) {
+				parentName = "";
+			} else {
+				UserDTO searchUserDTO2 = userService.searchUserByUserId(parentComment.getUserId());
+				parentName = searchUserDTO2==null ? "" : searchUserDTO2.getUserName();
+			}
+			commentDTO.setParentName(parentName);
 			commentDTOList.add(commentDTO);
 		}
 		
 		return commentDTOList;
+	}
+
+	@Override
+	public void halfDelete(CommentDTO commentDTO) {
+		Comment comment = commentDAO.searchById(commentDTO.getCommentId());
+		comment.setDeleteSign(1);
+		commentDAO.update(comment);
+	}
+
+	@Override
+	public CommentDTO searchCommentByCommentId(String commentId) {
+		Comment comment = commentDAO.searchById(commentId);
+		CommentDTO commentDTO = this.convertCommentPO2VO(comment);
+		return commentDTO;
+	}
+
+	private CommentDTO convertCommentPO2VO(Comment comment) {
+		CommentDTO commentDTO = null;
+		
+		if (comment != null) {
+			commentDTO = new CommentDTO();
+			commentDTO.setBlogId(comment.getBlogId());
+			commentDTO.setCommentContent(comment.getCommentContent());
+			commentDTO.setCommentDate(comment.getCommentDate());
+			commentDTO.setCommentId(comment.getCommentId());
+			commentDTO.setDeleteSign(comment.getDeleteSign());
+			commentDTO.setParentId(comment.getParentId());
+			commentDTO.setUserId(comment.getUserId());
+			UserDTO searchUserDTO = userService.searchUserByUserId(comment.getUserId());
+			String userName = searchUserDTO==null ? "" : searchUserDTO.getUserName();
+			commentDTO.setUserName(userName);
+			//取出当前评论的父评论
+			Comment parentComment = commentDAO.searchById(comment.getParentId());
+			String parentName = "";
+			if (parentComment == null || parentComment.getUserId()==null || "".equals(parentComment.getUserId())) {
+				parentName = "";
+			} else {
+				UserDTO searchUserDTO2 = userService.searchUserByUserId(parentComment.getUserId());
+				parentName = searchUserDTO2==null ? "" : searchUserDTO2.getUserName();
+			}
+			commentDTO.setParentName(parentName);
+		}
+		return commentDTO;
 	}
 
 	

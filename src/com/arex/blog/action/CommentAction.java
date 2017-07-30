@@ -33,10 +33,32 @@ public class CommentAction extends CommonAction<CommentDTO> {
 			return "addError";
 		}
 		
+		//设置评论的delteSign
+		commentDTO.setDeleteSign(0);
 		//保存一个评论
 		commentService.saveComment(commentDTO);
 		request.setAttribute("blogId", commentDTO.getBlogId());
 		
 		return "add";
+	}
+	
+	public String delete() {
+		
+		CommentDTO commentDTO = super.getModel();
+		
+		// 检查当前用户是否已经登录
+		if (!LoginUtils.checkUserIsAlreadyLogin(session)) {
+			request.setAttribute("messageInfo", "请登录.");
+			return "signInPage";
+		}
+		if (commentDTO==null || commentDTO.getCommentId()==null || "".equals(commentDTO.getCommentId())) {
+			request.setAttribute("messageInfo", "删除评论出错.");
+			return "addError";
+		}
+		
+		commentService.halfDelete(commentDTO);
+		
+		request.setAttribute("blogId", commentDTO.getBlogId());
+		return "delete";
 	}
 }
