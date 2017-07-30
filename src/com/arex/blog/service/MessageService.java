@@ -25,7 +25,7 @@ public interface MessageService {
 
 	public void deleteMessageByMessageId(MessageDTO messageDTO);
 
-	public List<MessageDTO> searchAllMessageByReceiverIdAndMessageStatus(
-			HttpServletRequest request, String userId, int i);
+	public List<MessageDTO> searchAllMessageByReceiverId(
+			HttpServletRequest request, String userId);
 
 }

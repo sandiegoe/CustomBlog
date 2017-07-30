@@ -69,7 +69,9 @@ public class MenuAction extends CommonAction<MenuDTO> {
 		}
 		
 		//查询当前用户所有图片
-		List<PhotoDTO> photoDTOList = photoService.searchAllPhotoByUserId(((UserDTO)session.getAttribute("loginUser")).getUserId());
+//		List<PhotoDTO> photoDTOList = photoService.searchAllPhotoByUserId(((UserDTO)session.getAttribute("loginUser")).getUserId());
+		//启用分页查询
+		List<PhotoDTO> photoDTOList = photoService.searchAllPhotoByUserId((HttpServletRequest)request, ((UserDTO)session.getAttribute("loginUser")).getUserId());
 		//设置到request中去
 		request.setAttribute("photoDTOList", photoDTOList);
 		
@@ -114,22 +116,29 @@ public class MenuAction extends CommonAction<MenuDTO> {
 		//获取当前登录用户的所有信息
 		//receiverId为当前登录用户userId的消息，messageStatus <> 1
 		//List<MessageDTO> messageDTOList = messageService.searchAllMessageByReceiverId(loginUser.getUserId());
-		//获取新消息
-		//启用分页查询新消息
-//		List<MessageDTO> messageDTOListWithNew = messageService.searchAllMessageByReceiverIdAndMessageStatus(loginUser.getUserId(), 1);
-		List<MessageDTO> messageDTOListWithNew = messageService.searchAllMessageByReceiverIdAndMessageStatus((HttpServletRequest)request, loginUser.getUserId(), 1);
-		//获取已读消息
-		//启用分页查询已读消息
-		if (messageDTOListWithNew.size() < Integer.parseInt((String)request.getAttribute("pageSize"))) {
-			request.setAttribute("pageSize", Integer.parseInt((String)request.getAttribute("pageSize"))-messageDTOListWithNew.size());
-			List<MessageDTO> messageDTOListWithRead = messageService.searchAllMessageByReceiverIdAndMessageStatus((HttpServletRequest)request, loginUser.getUserId(), 2);
-			request.setAttribute("messageDTOListWithRead", messageDTOListWithRead);
-		}
-//		List<MessageDTO> messageDTOListWithRead = messageService.searchAllMessageByReceiverIdAndMessageStatus(loginUser.getUserId(), 2);
-		//设置到request中去
-		request.setAttribute("messageDTOListWithNew", messageDTOListWithNew);
-		//设置messages为新消息的个数
-		request.setAttribute("messages", messageService.searchAllMessageByReceiverIdAndMessageStatus(loginUser.getUserId(), 1));
+//		//获取新消息
+//		//启用分页查询新消息
+////		List<MessageDTO> messageDTOListWithNew = messageService.searchAllMessageByReceiverIdAndMessageStatus(loginUser.getUserId(), 1);
+//		List<MessageDTO> messageDTOListWithNew = messageService.searchAllMessageByReceiverIdAndMessageStatus((HttpServletRequest)request, loginUser.getUserId(), 1);
+//		//获取已读消息
+//		//启用分页查询已读消息
+//		if (messageDTOListWithNew.size() < Integer.parseInt((String)request.getAttribute("pageSize"))) {
+//			request.setAttribute("pageSize", Integer.parseInt((String)request.getAttribute("pageSize"))-messageDTOListWithNew.size());
+//			List<MessageDTO> messageDTOListWithRead = messageService.searchAllMessageByReceiverIdAndMessageStatus((HttpServletRequest)request, loginUser.getUserId(), 2);
+//			request.setAttribute("messageDTOListWithRead", messageDTOListWithRead);
+//		}
+////		List<MessageDTO> messageDTOListWithRead = messageService.searchAllMessageByReceiverIdAndMessageStatus(loginUser.getUserId(), 2);
+//		//设置到request中去
+//		request.setAttribute("messageDTOListWithNew", messageDTOListWithNew);
+//		//设置messages为新消息的个数
+//		request.setAttribute("messages", messageService.searchAllMessageByReceiverIdAndMessageStatus(loginUser.getUserId(), 1));
+//		
+		
+		//查询所有成功的消息，按照发送时间的降序排列   ！= 0  order by 时间 desc
+		//启用分页查询
+		List<MessageDTO> messageDTOList = messageService.searchAllMessageByReceiverId((HttpServletRequest)request, loginUser.getUserId());
+		request.setAttribute("messageDTOList", messageDTOList);
+		request.setAttribute("messages", messageService.searchAllMessageByReceiverIdAndMessageStatus(loginUser.getUserId(), 1).size());
 		
 		return "message";
 	}

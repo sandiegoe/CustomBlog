@@ -22,7 +22,4 @@ public interface MessageDAO extends CommonDAO<Message>{
 
 	public void readAllmessage(String receiverId);
 
-	public List<MessageDTO> searchAllMessageByReceiverIdAndMessageStatus(
-			String userId, int messageStatus, PageInfo pageInfo);
-
 }

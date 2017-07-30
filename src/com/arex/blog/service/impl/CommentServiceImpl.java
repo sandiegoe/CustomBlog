@@ -51,7 +51,7 @@ public class CommentServiceImpl implements CommentService {
 	public List<CommentDTO> searchAllCommentByBlogId(String blogId) {
 		
 		String hqlWhere = " where 1=1 ";
-		List<String> paramList = new ArrayList<String>();
+		List<Object> paramList = new ArrayList<Object>();
 		if (blogId !=null) {
 			hqlWhere += " and o.blogId=? ";
 			paramList.add(blogId);
