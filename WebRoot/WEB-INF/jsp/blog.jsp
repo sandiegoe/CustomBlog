@@ -121,17 +121,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             </a>
                         </li>
                        	<c:if test="${!page.firstPage && page.pageNo!=2}">
-                       		<li><a href="${pageContext.request.contextPath}/user/Menu_home.action?pageNo=1&pageSize=5">首页</a></li>
+                       		<li><a href="${pageContext.request.contextPath}/user/Menu_blog.action?pageNo=1&pageSize=5">首页</a></li>
                        	</c:if>
                        	<c:if test="${!page.firstPage}">
-	                        <li><a href="${pageContext.request.contextPath}/user/Menu_home.action?pageNo=${page.pageNo-1}&pageSize=5">${page.pageNo-1}</a></li>
+	                        <li><a href="${pageContext.request.contextPath}/user/Menu_blog.action?pageNo=${page.pageNo-1}&pageSize=5">${page.pageNo-1}</a></li>
                         </c:if>
                         <li><a href="javascript:void(0);" style="color:grey;">${page.pageNo}</a></li>
                         <c:if test="${!page.lastPage}">
-                        	<li><a href="${pageContext.request.contextPath}/user/Menu_home.action?pageNo=${page.pageNo+1}&pageSize=5">${page.pageNo+1}</a></li>
+                        	<li><a href="${pageContext.request.contextPath}/user/Menu_blog.action?pageNo=${page.pageNo+1}&pageSize=5">${page.pageNo+1}</a></li>
                         </c:if>
                         <c:if test="${!page.lastPage && page.pageNo!=page.totalPages-1}">
-                        	<li><a href="${pageContext.request.contextPath}/user/Menu_home.action?pageNo=${page.totalPages}&pageSize=5">末页</a></li>
+                        	<li><a href="${pageContext.request.contextPath}/user/Menu_blog.action?pageNo=${page.totalPages}&pageSize=5">末页</a></li>
                         </c:if>
                         
                         <li>
