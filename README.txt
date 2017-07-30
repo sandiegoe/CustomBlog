@@ -22,3 +22,11 @@
 4. 执行database.sql脚本，创建数据库
 
 5. 对于js文件报错解决办法,项目右击,选择MyEclipse点击Exclude From Validation,然后再点击Run validation
+
+修改server.xml,在Host下添加
+<Context docBase="/home/arex/program/apache-tomcat-8.5.16/appdata" reloadable="true"  path="/upload"/>
+
+配置serverhost为服务器的公网IP
+defaultAvatarURL为指定默认的头像
+upload指定上传路径
+uploadPath指定访问上传文件的访问path  和 server.xml中保持一致

@@ -38,10 +38,19 @@ public class FileServiceImpl implements FileService {
 		//配置为服务器的地址,通过配置文件指定,通过上述方式获取的是内网IP地址,指定为公网IP地址
 		ResourceBundle bundle = ResourceBundle.getBundle("deploy",Locale.CHINA);
 		String serverHost = bundle.getString("serverhost");
+		String uploadAccess = bundle.getString("uploadPath");
+		uploadAccess += "/Blog/img/uploadImage/";
 		
-		fileDTO.setFileURL("http://" + serverHost + ":8080/Blog/img/uploadImage/" + fileName);
+		fileDTO.setFileURL("http://" + serverHost + ":8080" + uploadAccess + fileName);
 		fileDTO.setFileName(fileName);
-		String uploadPath = ServletActionContext.getServletContext().getRealPath("/img/uploadImage");
+		
+	/*	String uploadPath = ServletActionContext.getServletContext().getRealPath("/img/uploadImage");
+		System.out.println("img/uploadImage   " + uploadPath);
+		System.out.println(ServletActionContext.getServletContext().getRealPath("/"));*/
+		
+		//获取上传路径
+		String uploadPath = ResourceBundle.getBundle("deploy", Locale.CHINA).getString("upload");
+		uploadPath += "/img/uploadImage";
 		
 //		System.out.println(ServletActionContext.getRequest().getLocalAddr());
 //		System.out.println(ServletActionContext.getRequest().getRemoteHost());
