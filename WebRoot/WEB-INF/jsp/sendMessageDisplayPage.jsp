@@ -97,18 +97,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="col-md-8 ">
               
                <div class="blog-post">
-               		未读通知：<strong>${requestScope.messages}</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-               		 <a href="${pageContext.request.contextPath}/user/Message_readAllMessage.action" class="btn btn-default btn-lg ">已读 <i class="fa fa-angle-right"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-               		 <a href="${pageContext.request.contextPath}/user/Message_deleteAllMessage.action" class="btn btn-default btn-lg ">清空 <i class="fa fa-angle-right"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-               		 <a href="${pageContext.request.contextPath}/user/Menu_messageAddPage.action" class="btn btn-default btn-lg ">私信 <i class="fa fa-angle-right"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-               		 <a href="${pageContext.request.contextPath}/user/Menu_sendMessageDisplayPage.action" class="btn btn-default btn-lg ">发信箱 <i class="fa fa-angle-right"></i></a>
+               		发送的消息：<strong>${requestScope.messages}</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               		<a href="${pageContext.request.contextPath}/user/Menu_message.action" class="btn btn-default btn-lg ">收信箱 <i class="fa fa-angle-right"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               		 <a href="${pageContext.request.contextPath}/user/Menu_messageAddPage.action" class="btn btn-default btn-lg ">私信 <i class="fa fa-angle-right"></i></a>
                    	 <br/>
                    	 <br/>
                    	 
                    	 <c:forEach items="${requestScope.messageDTOList}" var="messageDTO" varStatus="status">
+                   	 	
+                   	 	<c:if test="${messageDTO.messageStatus==0}">
+                    	 	<a class="fail" href="${pageContext.request.contextPath}/user/Menu_messageDetail.action?messageId=${messageDTO.messageId}">${messageDTO.messageTitle}</a>
+                    	 	<span class="failFlag">失败</span>
+                    	 </c:if>
                    	 	<c:if test="${messageDTO.messageStatus==1}">
                     	 	<a href="${pageContext.request.contextPath}/user/Menu_messageDetail.action?messageId=${messageDTO.messageId}">${messageDTO.messageTitle}</a>
-                    	 	<span>新消息</span>
+                    	 	<span>成功</span>
                     	 </c:if>
                     	 <c:if test="${messageDTO.messageStatus==2}">
                     	 	<a class="read" href="${pageContext.request.contextPath}/user/Menu_messageDetail.action?messageId=${messageDTO.messageId}">${messageDTO.messageTitle}</a>
@@ -138,17 +141,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             </a>
                         </li>
                        	<c:if test="${!page.firstPage && page.pageNo!=2}">
-                       		<li><a href="${pageContext.request.contextPath}/user/Menu_message.action?pageNo=1&pageSize=5">首页</a></li>
+                       		<li><a href="${pageContext.request.contextPath}/user/Menu_sendMessageDisplayPage.action?pageNo=1&pageSize=5">首页</a></li>
                        	</c:if>
                        	<c:if test="${!page.firstPage}">
-	                        <li><a href="${pageContext.request.contextPath}/user/Menu_message.action?pageNo=${page.pageNo-1}&pageSize=5">${page.pageNo-1}</a></li>
+	                        <li><a href="${pageContext.request.contextPath}/user/Menu_sendMessageDisplayPage.action?pageNo=${page.pageNo-1}&pageSize=5">${page.pageNo-1}</a></li>
                         </c:if>
                         <li><a href="javascript:void(0);" style="color:grey;">${page.pageNo}</a></li>
                         <c:if test="${!page.lastPage}">
-                        	<li><a href="${pageContext.request.contextPath}/user/Menu_message.action?pageNo=${page.pageNo+1}&pageSize=5">${page.pageNo+1}</a></li>
+                        	<li><a href="${pageContext.request.contextPath}/user/Menu_sendMessageDisplayPage.action?pageNo=${page.pageNo+1}&pageSize=5">${page.pageNo+1}</a></li>
                         </c:if>
                         <c:if test="${!page.lastPage && page.pageNo!=page.totalPages-1}">
-                        	<li><a href="${pageContext.request.contextPath}/user/Menu_message.action?pageNo=${page.totalPages}&pageSize=5">末页</a></li>
+                        	<li><a href="${pageContext.request.contextPath}/user/Menu_sendMessageDisplayPage.action?pageNo=${page.totalPages}&pageSize=5">末页</a></li>
                         </c:if>
                         
                         <li>

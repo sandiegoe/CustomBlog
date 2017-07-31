@@ -144,6 +144,27 @@ public class MenuAction extends CommonAction<MenuDTO> {
 		return "message";
 	}
 	
+	public String sendMessageDisplayPage() {
+		
+		UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
+		
+		// 检查当前用户是否已经登录
+		if (!LoginUtils.checkUserIsAlreadyLogin(session)) {
+			request.setAttribute("messageInfo", "请登录.");
+			return "signInPage";
+		}
+		
+		//查询所有成功的消息，按照发送时间的降序排列   ！= 0  order by 时间 desc
+		//启用分页查询
+		List<MessageDTO> messageDTOList = messageService.searchAllMessageBySenderId((HttpServletRequest)request, loginUser.getUserId());
+		request.setAttribute("messageDTOList", messageDTOList);
+		request.setAttribute("messages", messageService.searchAllMessageBySenderIdIdAndMessageStatus(loginUser.getUserId(), 1).size()
+				+ messageService.searchAllMessageBySenderIdIdAndMessageStatus(loginUser.getUserId(), 2).size());
+				
+		
+		return "sendMessageDisplayPage";
+	}
+	
 	//私信页面
 	public String messageAddPage() {
 		// 检查当前用户是否已经登录

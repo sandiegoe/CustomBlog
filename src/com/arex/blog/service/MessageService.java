@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.arex.blog.dto.BlogDTO;
 import com.arex.blog.dto.MessageDTO;
 import com.arex.blog.dto.UserDTO;
 
@@ -27,5 +28,11 @@ public interface MessageService {
 
 	public List<MessageDTO> searchAllMessageByReceiverId(
 			HttpServletRequest request, String userId);
+
+	public List<MessageDTO> searchAllMessageBySenderId(
+			HttpServletRequest request, String userId);
+
+	public List<MessageDTO> searchAllMessageBySenderIdIdAndMessageStatus(
+			String senderId, int messageStatus);
 
 }

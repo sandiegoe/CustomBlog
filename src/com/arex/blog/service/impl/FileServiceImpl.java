@@ -50,7 +50,7 @@ public class FileServiceImpl implements FileService {
 		
 		//获取上传路径
 		String uploadPath = ResourceBundle.getBundle("deploy", Locale.CHINA).getString("upload");
-		uploadPath += "/img/uploadImage";
+		uploadPath += "/Blog/img/uploadImage";
 		
 //		System.out.println(ServletActionContext.getRequest().getLocalAddr());
 //		System.out.println(ServletActionContext.getRequest().getRemoteHost());

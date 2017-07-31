@@ -63,7 +63,7 @@ public class FileAction extends CommonAction<FileDTO> {
 		String fileName = UUID.randomUUID().toString() + expandName;
 		//获取上传路径
 		String uploadPath = ResourceBundle.getBundle("deploy", Locale.CHINA).getString("upload");
-		uploadPath += "/img/uploadImage";
+		uploadPath += "/Blog/img/uploadImage";
 		
 		File saveImageFile = new File(uploadPath, fileName);
 		FileInputStream fis = new FileInputStream(upload);
@@ -82,7 +82,7 @@ public class FileAction extends CommonAction<FileDTO> {
 		//配置为服务器的地址,通过配置文件指定,通过上述方式获取的是内网IP地址,指定为公网IP地址
 		ResourceBundle bundle = ResourceBundle.getBundle("deploy",Locale.CHINA);
 		String serverHost = bundle.getString("serverhost");
-		//获取上传路径
+		//获取图片访问路径
 		String uploadAccess = bundle.getString("uploadPath");
 		uploadAccess += "/Blog/img/uploadImage/";
 		writer.println("<script type=\"text/javascript\">");    

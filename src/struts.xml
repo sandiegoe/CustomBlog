@@ -35,7 +35,8 @@
 			<result name="changeAatarPage">/WEB-INF/jsp/changeAatarPage.jsp</result>
 			<result name="messageAddPage">/WEB-INF/jsp/messageAddPage.jsp</result>
 			<result name="deleted">/WEB-INF/jsp/blogDeleted.jsp</result>
-			<allowed-methods>home, signInPage, registerPage, photo, blog, message, changePasswordPage, personalPage, blogAddPage, blogEditPage, blogDetailPage, uploadPhotoPage, changeAatarPage, messageAddPage, messageDetail,deleted</allowed-methods>
+			<result name="sendMessageDisplayPage">/WEB-INF/jsp/sendMessageDisplayPage.jsp</result>
+			<allowed-methods>home, signInPage, registerPage, photo, blog, message, changePasswordPage, personalPage, blogAddPage, blogEditPage, blogDetailPage, uploadPhotoPage, changeAatarPage, messageAddPage, messageDetail,deleted, sendMessageDisplayPage</allowed-methods>
 		</action>
 		
 		<action name="User_*" class="userAction" method="{1}">
