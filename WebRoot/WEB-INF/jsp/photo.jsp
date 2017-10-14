@@ -92,7 +92,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
     <!--END INFO SECTION-->
     <div class="container">
-		${requestScope.messageInfo}
         <div class="row">
 		 <div class="col-md-8 ">
 			<c:forEach items="${requestScope.photoDTOList}" var="photoDTO">
