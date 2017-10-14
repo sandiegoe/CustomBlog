@@ -39,9 +39,10 @@ public class FileServiceImpl implements FileService {
 		ResourceBundle bundle = ResourceBundle.getBundle("deploy",Locale.CHINA);
 		String serverHost = bundle.getString("serverhost");
 		String uploadAccess = bundle.getString("uploadPath");
+		String port = bundle.getString("port");
 		uploadAccess += "/Blog/img/uploadImage/";
 		
-		fileDTO.setFileURL("http://" + serverHost + ":8080" + uploadAccess + fileName);
+		fileDTO.setFileURL("http://" + serverHost + ":" + port + uploadAccess + fileName);
 		fileDTO.setFileName(fileName);
 		
 	/*	String uploadPath = ServletActionContext.getServletContext().getRealPath("/img/uploadImage");

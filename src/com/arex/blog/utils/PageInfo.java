@@ -2,6 +2,7 @@ package com.arex.blog.utils;
 
 import javax.servlet.http.HttpServletRequest;
 
+
 public class PageInfo {
 
 	private HttpServletRequest request;

@@ -2,11 +2,9 @@ package com.arex.blog.action;
 
 import javax.annotation.Resource;
 
-import org.eclipse.jdt.internal.compiler.ast.SuperReference;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.arex.blog.dao.BlogDAO;
 import com.arex.blog.dto.BlogDTO;
 import com.arex.blog.service.BlogService;
 import com.arex.blog.utils.LoginUtils;

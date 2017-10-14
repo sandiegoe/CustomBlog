@@ -96,7 +96,8 @@ public class UserServiceImpl implements UserService {
 		// 注册的时候头像设置为默认图片
 		ResourceBundle bundle = ResourceBundle.getBundle("deploy", Locale.CHINA);
 		String defaultAvatarURL = bundle.getString("defaultAvatarURL");
-		defaultAvatarURL = "http://" + bundle.getString("serverhost") + ":8080" + defaultAvatarURL;
+		String port = bundle.getString("port");
+		defaultAvatarURL = "http://" + bundle.getString("serverhost") + ":" + port + defaultAvatarURL;
 		user.setAvatarURL(defaultAvatarURL);
 		userDAO.save(user);
 	}

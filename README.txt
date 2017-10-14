@@ -25,6 +25,12 @@
 
 6. 修改server.xml,在Host下添加
 	<Context docBase="/home/arex/program/apache-tomcat-8.5.16/appdata" reloadable="true"  path="/upload"/>
+	<Context docBase="Blog" reloadable="true"  path=""/>
+   修改Engin标签的defaultHost属性为自己的域名,ex:
+   	<Engine name="Catalina" defaultHost="www.arexstorm.com">
+   修改Host标签的name属性和Engin标签的defaultHost的属性相同，ex
+     <Host name="www.arexstorm.com"  appBase="webapps" unpackWARs="true" autoDeploy="true">
+	创建手动创建appdata/Blog/img/uploadImage文件夹
 
 7. 配置deploy.properties
 	配置serverhost为服务器的公网IP
