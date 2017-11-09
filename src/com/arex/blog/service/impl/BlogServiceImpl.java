@@ -345,4 +345,29 @@ public class BlogServiceImpl implements BlogService {
 		blogDAO.restoreBlogByBlogId(blogDTO.getBlogId());
 	}
 
+	@Override
+	public int searchBlogCountsByCategoryId(String categoryId) {
+		List<BlogDTO> blogDTOList = this.searchBlogByCategoryId(categoryId);
+		return blogDTOList.size();
+	}
+
+	@Override
+	public List<BlogDTO> searchBlogByCategoryId(String categoryId) {
+		String hqlWhere = " where 1=1 and deleteSign = 0 ";
+		List<Object> paramList = new ArrayList<Object>();
+		if (categoryId!=null && !"".equals(categoryId)) {
+			hqlWhere += " and categoryId=? ";
+			paramList.add(categoryId);
+		}
+		Object[] objects = paramList.toArray();
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("o.blogCreateDate", "desc");
+
+		List<Blog> blogList = blogDAO.searchCollectionByConditionNoPage(
+				hqlWhere, objects, orderby);
+		List<BlogDTO> blogDTOList = this.convertBlogPO2VO2(blogList);
+
+		return blogDTOList;
+	}
+
 }

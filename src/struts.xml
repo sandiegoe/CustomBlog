@@ -36,7 +36,8 @@
 			<result name="messageAddPage">/WEB-INF/jsp/messageAddPage.jsp</result>
 			<result name="deleted">/WEB-INF/jsp/blogDeleted.jsp</result>
 			<result name="sendMessageDisplayPage">/WEB-INF/jsp/sendMessageDisplayPage.jsp</result>
-			<allowed-methods>home, signInPage, registerPage, photo, blog, message, changePasswordPage, personalPage, blogAddPage, blogEditPage, blogDetailPage, uploadPhotoPage, changeAatarPage, messageAddPage, messageDetail,deleted, sendMessageDisplayPage</allowed-methods>
+			<result name="categoryAddPage">/WEB-INF/jsp/categoryAddPage.jsp</result>
+			<allowed-methods>home, signInPage, registerPage, photo, blog, message, changePasswordPage, personalPage, blogAddPage, blogEditPage, blogDetailPage, uploadPhotoPage, changeAatarPage, messageAddPage, messageDetail,deleted, sendMessageDisplayPage,categoryAddPage</allowed-methods>
 		</action>
 		
 		<action name="User_*" class="userAction" method="{1}">
@@ -189,6 +190,14 @@
 				Menu_blogDetailPage
 			</result>
 			<allowed-methods>add, delete</allowed-methods>
+		</action>
+		
+		<action name="Category_*" class="categoryAction" method="{1}">
+		   <result name="add" type="redirectAction">
+		      <param name="actionName">Menu_home.action</param>
+		      <param name="namespace">/user</param>
+		   </result>
+		   <allowed-methods>add</allowed-methods>
 		</action>
 	</package>
 

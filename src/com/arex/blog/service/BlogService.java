@@ -20,4 +20,6 @@ public interface BlogService {
 	public void restoreBlog(BlogDTO blogDTO);
 	public List<BlogDTO> searchAllBlogByUserId(HttpServletRequest request, String userId);
 	public List<BlogDTO> searchAllBlog(HttpServletRequest request);
+	public int searchBlogCountsByCategoryId(String categoryId);
+	public List<BlogDTO> searchBlogByCategoryId(String categoryId);
 }

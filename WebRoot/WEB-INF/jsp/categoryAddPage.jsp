@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions"  prefix="fn"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -8,8 +9,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+	<link href="${pageContext.request.contextPath}/img/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon"/>
     <meta charset="utf-8" />
-    <link href="${pageContext.request.contextPath}/img/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="" />
     <meta name="author" content="" />
@@ -34,7 +35,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <div class="col-md-4 logo-div">
                         <div class="logo-inner text-center">
                             <div class="logo-name">
-                               <!-- 判断如果用户没有登录则不显示用户头像 -->
+                                <!-- 判断如果用户没有登录则不显示用户头像 -->
 			                	<c:if test="${not empty sessionScope.loginUser}">
 			                    	 <a href="${pageContext.request.contextPath}/user/Menu_personalPage.action">
                                     	<img alt="个人头像" src="${sessionScope.loginUser.avatarURL}" class="img-circle"/>
@@ -45,7 +46,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         </div>
 
                     </div>
-                    <div class="col-md-8 header-text-top " id="about">
+                  <div class="col-md-8 header-text-top " id="about">
                         <h1>追求极致.</h1>
 						为您提供始终如一最完美的体验是我们不变的追求.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </div>
@@ -76,10 +77,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </div>
                 <div class="col-md-2">
                     <div class="social-link">
-                        <a href="https://www.facebook.com" class="btn btn-default btn-xs"><i class="fa fa-facebook fa-2x"></i></a>
-                        <a href="https://cn.linkedin.com" class="btn btn-default btn-xs"><i class="fa fa-linkedin fa-2x"></i></a>
-                        <a href="https://www.google.com" class="btn btn-default btn-xs"><i class="fa fa-google-plus fa-2x"></i></a>
+                        <a href="#" class="btn btn-default btn-xs"><i class="fa fa-facebook fa-2x"></i></a>
+                        <a href="#" class="btn btn-default btn-xs"><i class="fa fa-linkedin fa-2x"></i></a>
+                        <a href="#" class="btn btn-default btn-xs"><i class="fa fa-google-plus fa-2x"></i></a>
                     </div>
+
                 </div>
 
             </div>
@@ -87,49 +89,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
     <!--END INFO SECTION-->
     <div class="container">
+
         <div class="row">
 
             <div class="col-md-8 ">
-            
-            	  <c:forEach items="${requestScope.blogDTOList}" var="blogDTO">
-	                <div class="blog-post">
-	                    <h2>${blogDTO.blogTitle}</h2>
-	                    <c:if test="${blogDTO.kindId==0}">原创</c:if><c:if test="${blogDTO.kindId==1}">转载</c:if>
-	                    <h4><a href="#">${blogDTO.userName}</a> &nbsp;发表于&nbsp; ${blogDTO.blogCreateDate} </h4>
-	                    <p>
-	                        ${blogDTO.blogContentText}
-	                    </p>
-	                    <a href="${pageContext.request.contextPath}/user/Menu_blogDetailPage.action?blogId=${blogDTO.blogId}" class="btn btn-default btn-lg ">Read More <i class="fa fa-angle-right"></i></a>
-	                </div>
-                </c:forEach> 
-
-                <br />
+              
+               <div class="blog-post">
+               		
+               		<form action="user/Category_add.action" method="post">
+               		   添加指定的类别：<input type="text" name="categoryContent" id="categoryContent"/><br/>
+               		   <input type="submit" value="提交">
+               		</form>
+               		 <a href="${pageContext.request.contextPath}/user/Message_readAllMessage.action" class="btn btn-default btn-lg ">已读 <i class="fa fa-angle-right"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               		 <a href="${pageContext.request.contextPath}/user/Message_deleteAllMessage.action" class="btn btn-default btn-lg ">清空 <i class="fa fa-angle-right"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               		 <a href="${pageContext.request.contextPath}/user/Menu_messageAddPage.action" class="btn btn-default btn-lg ">私信 <i class="fa fa-angle-right"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               		 <a href="${pageContext.request.contextPath}/user/Menu_sendMessageDisplayPage.action" class="btn btn-default btn-lg ">发信箱 <i class="fa fa-angle-right"></i></a>
+               
+                    
+                </div>
+              
+               <br />
                 <nav>
                     <ul class="pagination">
-                        <li>
-                            <a href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                       	<c:if test="${!page.firstPage && page.pageNo!=2}">
-                       		<li><a href="${pageContext.request.contextPath}/user/Menu_home.action?pageNo=1&pageSize=5">首页</a></li>
-                       	</c:if>
-                       	<c:if test="${!page.firstPage}">
-	                        <li><a href="${pageContext.request.contextPath}/user/Menu_home.action?pageNo=${page.pageNo-1}&pageSize=5">${page.pageNo-1}</a></li>
-                        </c:if>
-                        <li><a href="javascript:void(0);" style="color:grey;">${page.pageNo}</a></li>
-                        <c:if test="${!page.lastPage}">
-                        	<li><a href="${pageContext.request.contextPath}/user/Menu_home.action?pageNo=${page.pageNo+1}&pageSize=5">${page.pageNo+1}</a></li>
-                        </c:if>
-                        <c:if test="${!page.lastPage && page.pageNo!=page.totalPages-1}">
-                        	<li><a href="${pageContext.request.contextPath}/user/Menu_home.action?pageNo=${page.totalPages}&pageSize=5">末页</a></li>
-                        </c:if>
-                        
-                        <li>
-                            <a href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
+                       
                     </ul>
                 </nav>
             </div>
@@ -138,9 +120,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="row">
                 <ul class="list-group">
                     <li class="list-group-item"><strong>CATEGORIES</strong></li>
-                    <c:forEach items="${categoryDTOList}" var="categoryDTO">
-                        <li class="list-group-item">${categoryDTO.categoryContent} <span style="color: red">${categoryDTO.counts}</span></li>
-                    </c:forEach>
+                    <li class="list-group-item">Dapibus ac facilisis in</li>
+                    <li class="list-group-item">Morbi leo risus</li>
+                    <li class="list-group-item">Porta ac consectetur ac</li>
+                    <li class="list-group-item">Vestibulum at eros</li>
+                    <li class="list-group-item">Dapibus ac facilisis in</li>
+                    <li class="list-group-item">Morbi leo risus</li>
+                    <li class="list-group-item">Porta ac consectetur ac</li>
+                    <li class="list-group-item">Vestibulum at eros</li>
                 </ul>
 				</div>
 				<div class="row">
@@ -171,6 +158,5 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script src="${pageContext.request.contextPath}/js/jquery-1.11.1.js"></script>
     <!-- BOOTSTRAP SCRIPTS -->
     <script src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
-
 </body>
 </html>

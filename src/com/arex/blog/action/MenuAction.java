@@ -11,12 +11,14 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.arex.blog.dto.BlogDTO;
+import com.arex.blog.dto.CategoryDTO;
 import com.arex.blog.dto.CommentDTO;
 import com.arex.blog.dto.MenuDTO;
 import com.arex.blog.dto.MessageDTO;
 import com.arex.blog.dto.PhotoDTO;
 import com.arex.blog.dto.UserDTO;
 import com.arex.blog.service.BlogService;
+import com.arex.blog.service.CategoryService;
 import com.arex.blog.service.CommentService;
 import com.arex.blog.service.LoginService;
 import com.arex.blog.service.MessageService;
@@ -40,11 +42,16 @@ public class MenuAction extends CommonAction<MenuDTO> {
 	private MessageService messageService;
 	@Resource(name="commentServiceImpl")
 	private CommentService commentService;
+	@Resource(name = "categoryServiceImpl")
+	private CategoryService categoryService;
 
 	public String home() {
 
 //		List<BlogDTO> blogDTOList = blogService.searchAllBlog();
 		List<BlogDTO> blogDTOList = blogService.searchAllBlog((HttpServletRequest)request);
+		List<CategoryDTO> categoryDTOList = categoryService.searchAllCategory();
+		// 将categoryDTOList设置到application中
+		application.setAttribute("categoryDTOList", categoryDTOList);
 		request.setAttribute("blogDTOList", blogDTOList);
 
 		return "home";
@@ -337,5 +344,10 @@ public class MenuAction extends CommonAction<MenuDTO> {
 		request.setAttribute("blogDTODeletedList", blogDTODeletedList);
 
 		return "deleted";
+	}
+	
+	public String categoryAddPage() {
+		
+		return "categoryAddPage";
 	}
 }
