@@ -62,7 +62,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
 </head>
 <body>
-<br/>
     <div id="header">
         <div class="overlay">
             <div class="container">

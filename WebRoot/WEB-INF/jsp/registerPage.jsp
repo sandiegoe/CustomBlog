@@ -30,7 +30,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    	<link href="${pageContext.request.contextPath}/css/mystyle.css" rel="stylesheet"/>
 </head>
 <body style="background:#2F2F2F">
-<br/>
     <div id="header">
         <div class="overlay">
             <div class="container">
