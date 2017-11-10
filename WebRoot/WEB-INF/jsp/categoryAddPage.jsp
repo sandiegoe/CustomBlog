@@ -100,11 +100,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                		   添加指定的类别：<input type="text" name="categoryContent" id="categoryContent"/><br/>
                		   <input type="submit" value="提交">
                		</form>
-               		 <a href="${pageContext.request.contextPath}/user/Message_readAllMessage.action" class="btn btn-default btn-lg ">已读 <i class="fa fa-angle-right"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-               		 <a href="${pageContext.request.contextPath}/user/Message_deleteAllMessage.action" class="btn btn-default btn-lg ">清空 <i class="fa fa-angle-right"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-               		 <a href="${pageContext.request.contextPath}/user/Menu_messageAddPage.action" class="btn btn-default btn-lg ">私信 <i class="fa fa-angle-right"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-               		 <a href="${pageContext.request.contextPath}/user/Menu_sendMessageDisplayPage.action" class="btn btn-default btn-lg ">发信箱 <i class="fa fa-angle-right"></i></a>
-               
                     
                 </div>
               

@@ -41,11 +41,12 @@ public class BlogDAOImpl extends CommonDAOImpl<Blog> implements BlogDAO {
 		hibernateTemplate.execute(new HibernateCallback<Object>() {
 			@Override
 			public Object doInHibernate(Session session) throws HibernateException {
-				session.createQuery("update Blog blog set blog.blogContent=:blogContent, blog.blogContentText=:blogContentText, blog.blogTitle=:blogTitle where blog.blogId=:blogId")
+				session.createQuery("update Blog blog set blog.blogContent=:blogContent, blog.blogContentText=:blogContentText, blog.blogTitle=:blogTitle, blog.categoryId=:categoryId where blog.blogId=:blogId")
 					.setParameter("blogContent", blog.getBlogContent())
 					.setParameter("blogContentText", blog.getBlogContentText())
 					.setParameter("blogTitle", blog.getBlogTitle())
 					.setParameter("blogId", blog.getBlogId())
+					.setParameter("categoryId", blog.getCategoryId())
 					.executeUpdate();
 				return null;
 			}

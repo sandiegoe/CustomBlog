@@ -13,4 +13,10 @@ public interface CategoryDAO extends CommonDAO<Category>{
 	 */
 	List<Category> searchAllCategoryByUserId(String userId);
 
+	/**
+	 * 查找所有分类和Blog表关联
+	 * @return
+	 */
+	List<Category> searchAllCategory();
+
 }

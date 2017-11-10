@@ -20,7 +20,14 @@ public class CategoryDAOImpl extends CommonDAOImpl<Category> implements
 	@Override
 	public List<Category> searchAllCategoryByUserId(String userId) {
 		List<Category> categoryList = (List<Category>) hibernateTemplate.find("select distinct category from Blog blog left outer join Category category on "
-				+ "(blog.categoryId=category.categoryId) where blog.userId=? and blog.categoryId is not null", userId);
+				+ "(blog.categoryId=category.categoryId) where blog.userId=? and blog.categoryId is not null and blog.deleteSign!=1 ", userId);
+		return categoryList;
+	}
+
+	@Override
+	public List<Category> searchAllCategory() {
+		List<Category> categoryList = (List<Category>) hibernateTemplate.find("select distinct category from Blog blog left outer join Category category on "
+				+ "(blog.categoryId=category.categoryId) where blog.categoryId is not null and blog.deleteSign!=1 ");
 		return categoryList;
 	}
 

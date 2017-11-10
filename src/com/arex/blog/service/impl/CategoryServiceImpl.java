@@ -43,12 +43,17 @@ public class CategoryServiceImpl implements CategoryService {
 		Object[] objects = null;
 		LinkedHashMap<String, String> orderby = null;
 
-
 		List<Category> categoryList = categoryDAO.searchCollectionByConditionNoPage(
 				hqlWhere, objects, orderby);
 		List<CategoryDTO> categoryDTOList = this.convertCategoryPO2VOList(categoryList);
 
+		
+		//和Blog表关联查找
+		/*List<Category> categoryList = categoryDAO.searchAllCategory();
+		List<CategoryDTO> categoryDTOList = this.convertCategoryPO2VOList(categoryList);*/
+
 		return categoryDTOList;
+		
 	}
 
 	private List<CategoryDTO> convertCategoryPO2VOList(List<Category> categoryList) {

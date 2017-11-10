@@ -70,6 +70,14 @@ public class BlogAction extends CommonAction<BlogDTO> {
 		}
 		
 		blogService.updateBlog(blogDTO);
+		List<CategoryDTO> categoryDTOList = categoryService.searchAllCategory();
+		for (CategoryDTO categoryDTO : categoryDTOList) {
+			int counts = blogService.searchBlogCountsByCategoryId(categoryDTO.getCategoryId());
+			categoryDTO.setCounts(counts);
+		}
+
+		// 将categoryDTOList设置到application中
+		application.setAttribute("categoryDTOList", categoryDTOList);
 		
 		return "edit";
 	}
@@ -96,6 +104,14 @@ public class BlogAction extends CommonAction<BlogDTO> {
 		}
 		
 		blogService.deleteBlogByBlogId(blogDTO);
+		List<CategoryDTO> categoryDTOList = categoryService.searchAllCategory();
+		for (CategoryDTO categoryDTO : categoryDTOList) {
+			int counts = blogService.searchBlogCountsByCategoryId(categoryDTO.getCategoryId());
+			categoryDTO.setCounts(counts);
+		}
+
+		// 将categoryDTOList设置到application中
+		application.setAttribute("categoryDTOList", categoryDTOList);
 		
 		return "delete";
 	}
@@ -111,6 +127,14 @@ public String halfwayDelete() {
 		}
 		
 		blogService.halfwayDeleteBlog(blogDTO);
+		List<CategoryDTO> categoryDTOList = categoryService.searchAllCategory();
+		for (CategoryDTO categoryDTO : categoryDTOList) {
+			int counts = blogService.searchBlogCountsByCategoryId(categoryDTO.getCategoryId());
+			categoryDTO.setCounts(counts);
+		}
+
+		// 将categoryDTOList设置到application中
+		application.setAttribute("categoryDTOList", categoryDTOList);
 		
 		return "halfwayDelete";
 	}
@@ -127,6 +151,14 @@ public String restore(){
 	}
 	
 	blogService.restoreBlog(blogDTO);
+	List<CategoryDTO> categoryDTOList = categoryService.searchAllCategory();
+	for (CategoryDTO categoryDTO : categoryDTOList) {
+		int counts = blogService.searchBlogCountsByCategoryId(categoryDTO.getCategoryId());
+		categoryDTO.setCounts(counts);
+	}
+
+	// 将categoryDTOList设置到application中
+	application.setAttribute("categoryDTOList", categoryDTOList);
 	return "restore";
 }
 

@@ -302,6 +302,7 @@ public class BlogServiceImpl implements BlogService {
 			blog.setBlogTitle(bloDTO.getBlogTitle());
 			blog.setLastModifieDate(new Date());
 			blog.setBlogId(bloDTO.getBlogId());
+			blog.setCategoryId(bloDTO.getCategoryId());
 			// TODO 博客分类
 			blog.setKindId("1");
 		}
