@@ -1,22 +1,24 @@
 package com.arex.blog.action;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
-import org.eclipse.jdt.internal.compiler.ast.SuperReference;
-import org.omg.CORBA.PRIVATE_MEMBER;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.arex.blog.dto.BlogDTO;
+import com.arex.blog.dto.CategoryDTO;
 import com.arex.blog.dto.CommentDTO;
 import com.arex.blog.dto.MenuDTO;
 import com.arex.blog.dto.MessageDTO;
 import com.arex.blog.dto.PhotoDTO;
 import com.arex.blog.dto.UserDTO;
 import com.arex.blog.service.BlogService;
+import com.arex.blog.service.CategoryService;
 import com.arex.blog.service.CommentService;
 import com.arex.blog.service.LoginService;
 import com.arex.blog.service.MessageService;
@@ -40,10 +42,20 @@ public class MenuAction extends CommonAction<MenuDTO> {
 	private MessageService messageService;
 	@Resource(name="commentServiceImpl")
 	private CommentService commentService;
+	@Resource(name = "categoryServiceImpl")
+	private CategoryService categoryService;
 
 	public String home() {
 
-		List<BlogDTO> blogDTOList = blogService.searchAllBlog();
+//		List<BlogDTO> blogDTOList = blogService.searchAllBlog();
+		List<BlogDTO> blogDTOList = blogService.searchAllBlog((HttpServletRequest)request);
+		List<CategoryDTO> categoryDTOList = categoryService.searchAllCategory();
+		for (CategoryDTO categoryDTO : categoryDTOList) {
+			int counts = blogService.searchBlogCountsByCategoryId(categoryDTO.getCategoryId());
+			categoryDTO.setCounts(counts);
+		}
+		// 将categoryDTOList设置到application中
+		application.setAttribute("categoryDTOList", categoryDTOList);
 		request.setAttribute("blogDTOList", blogDTOList);
 
 		return "home";
@@ -69,7 +81,9 @@ public class MenuAction extends CommonAction<MenuDTO> {
 		}
 		
 		//查询当前用户所有图片
-		List<PhotoDTO> photoDTOList = photoService.searchAllPhotoByUserId(((UserDTO)session.getAttribute("loginUser")).getUserId());
+//		List<PhotoDTO> photoDTOList = photoService.searchAllPhotoByUserId(((UserDTO)session.getAttribute("loginUser")).getUserId());
+		//启用分页查询
+		List<PhotoDTO> photoDTOList = photoService.searchAllPhotoByUserId((HttpServletRequest)request, ((UserDTO)session.getAttribute("loginUser")).getUserId());
 		//设置到request中去
 		request.setAttribute("photoDTOList", photoDTOList);
 		
@@ -86,13 +100,23 @@ public class MenuAction extends CommonAction<MenuDTO> {
 		boolean isLogin = LoginUtils.checkUserIsAlreadyLogin(session);
 		if (isLogin) {
 			//已经登录，显示个人博客列表
-			blogDTOList = blogService.searchAllBlogByUserId(((UserDTO)session.getAttribute("loginUser")).getUserId());
+//			blogDTOList = blogService.searchAllBlogByUserId(((UserDTO)session.getAttribute("loginUser")).getUserId());
+			blogDTOList = blogService.searchAllBlogByUserId((HttpServletRequest)request, ((UserDTO)session.getAttribute("loginUser")).getUserId());
 		} else {
 			//没有登录，显示所有博客列表
 			//blogDTOList = blogService.searchAllBlog();
 			request.setAttribute("messageInfo", "未登录，请登录...");
 			return "signInPage";
 		}
+		
+		//设置当前登陆用户的分类列别
+		List<CategoryDTO> categoryDTOList = categoryService.searchAllCategoryByUserId(((UserDTO)session.getAttribute("loginUser")).getUserId());
+		for (CategoryDTO categoryDTO : categoryDTOList) {
+			int counts = blogService.searchBlogCountsByCategoryId(categoryDTO.getCategoryId());
+			categoryDTO.setCounts(counts);
+		}
+		// 将categoryDTOList设置到application中
+		application.setAttribute("myCategoryDTOList", categoryDTOList);
 		
 		//将blogDTOList设置到request中
 		request.setAttribute("blogDTOList", blogDTOList);
@@ -113,16 +137,52 @@ public class MenuAction extends CommonAction<MenuDTO> {
 		//获取当前登录用户的所有信息
 		//receiverId为当前登录用户userId的消息，messageStatus <> 1
 		//List<MessageDTO> messageDTOList = messageService.searchAllMessageByReceiverId(loginUser.getUserId());
-		//获取新消息
-		List<MessageDTO> messageDTOListWithNew = messageService.searchAllMessageByReceiverIdAndMessageStatus(loginUser.getUserId(), 1);
-		//获取已读消息
-		List<MessageDTO> messageDTOListWithRead = messageService.searchAllMessageByReceiverIdAndMessageStatus(loginUser.getUserId(), 2);
-		//设置到request中去
-		request.setAttribute("messageDTOListWithNew", messageDTOListWithNew);
-		request.setAttribute("messageDTOListWithRead", messageDTOListWithRead);
-		request.setAttribute("messages", messageDTOListWithNew.size());
+//		//获取新消息
+//		//启用分页查询新消息
+////		List<MessageDTO> messageDTOListWithNew = messageService.searchAllMessageByReceiverIdAndMessageStatus(loginUser.getUserId(), 1);
+//		List<MessageDTO> messageDTOListWithNew = messageService.searchAllMessageByReceiverIdAndMessageStatus((HttpServletRequest)request, loginUser.getUserId(), 1);
+//		//获取已读消息
+//		//启用分页查询已读消息
+//		if (messageDTOListWithNew.size() < Integer.parseInt((String)request.getAttribute("pageSize"))) {
+//			request.setAttribute("pageSize", Integer.parseInt((String)request.getAttribute("pageSize"))-messageDTOListWithNew.size());
+//			List<MessageDTO> messageDTOListWithRead = messageService.searchAllMessageByReceiverIdAndMessageStatus((HttpServletRequest)request, loginUser.getUserId(), 2);
+//			request.setAttribute("messageDTOListWithRead", messageDTOListWithRead);
+//		}
+////		List<MessageDTO> messageDTOListWithRead = messageService.searchAllMessageByReceiverIdAndMessageStatus(loginUser.getUserId(), 2);
+//		//设置到request中去
+//		request.setAttribute("messageDTOListWithNew", messageDTOListWithNew);
+//		//设置messages为新消息的个数
+//		request.setAttribute("messages", messageService.searchAllMessageByReceiverIdAndMessageStatus(loginUser.getUserId(), 1));
+//		
+		
+		//查询所有成功的消息，按照发送时间的降序排列   ！= 0  order by 时间 desc
+		//启用分页查询
+		List<MessageDTO> messageDTOList = messageService.searchAllMessageByReceiverId((HttpServletRequest)request, loginUser.getUserId());
+		request.setAttribute("messageDTOList", messageDTOList);
+		request.setAttribute("messages", messageService.searchAllMessageByReceiverIdAndMessageStatus(loginUser.getUserId(), 1).size());
 		
 		return "message";
+	}
+	
+	public String sendMessageDisplayPage() {
+		
+		UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
+		
+		// 检查当前用户是否已经登录
+		if (!LoginUtils.checkUserIsAlreadyLogin(session)) {
+			request.setAttribute("messageInfo", "请登录.");
+			return "signInPage";
+		}
+		
+		//查询所有成功的消息，按照发送时间的降序排列   ！= 0  order by 时间 desc
+		//启用分页查询
+		List<MessageDTO> messageDTOList = messageService.searchAllMessageBySenderId((HttpServletRequest)request, loginUser.getUserId());
+		request.setAttribute("messageDTOList", messageDTOList);
+		request.setAttribute("messages", messageService.searchAllMessageBySenderIdIdAndMessageStatus(loginUser.getUserId(), 1).size()
+				+ messageService.searchAllMessageBySenderIdIdAndMessageStatus(loginUser.getUserId(), 2).size());
+				
+		
+		return "sendMessageDisplayPage";
 	}
 	
 	//私信页面
@@ -231,7 +291,7 @@ public class MenuAction extends CommonAction<MenuDTO> {
 		
 		//获取列表页面传递的blogId
 		String blogId = super.getModel().getBlogId();
-		String blogId2 = request.getParameter("blogId");
+//		String blogId2 = request.getParameter("blogId");
 		
 		//调用blogService查询指定blogId
 		//如果指定的blogId不存在，跳转到列表页面
@@ -246,16 +306,42 @@ public class MenuAction extends CommonAction<MenuDTO> {
 			return "toBlog";
 		}
 		
-		//取出所有评论
+		//取出指定blogId的所有评论
 		List<CommentDTO> commentDTOList = commentService.searchAllCommentByBlogId(blogId);
+		//生成具有层次的评论
+		List<List<CommentDTO>> commentDTOListWithLevel = new ArrayList<List<CommentDTO>>();
+		for (int i=0; commentDTOList!=null && i<commentDTOList.size(); ++i) {
+			CommentDTO commentDTO = commentDTOList.get(i);
+			List<CommentDTO> eachList = new ArrayList<CommentDTO>();
+			eachList.add(commentDTO);
+			//判断其parentId是否为空，如果不为空，则继续加
+			while (commentDTO!=null && commentDTO.getParentId()!=null && !"".equals(commentDTO.getParentId())) {
+				commentDTO = commentService.searchCommentByCommentId(commentDTO.getParentId());
+//				commentDTO = this.getCommentDTOByCommentId(commentDTOList, commentDTO.getParentId());
+				eachList.add(0, commentDTO);
+			}
+			commentDTOListWithLevel.add(eachList);
+		}
 		
 		//设置到request中"blogDTO" : blogDTO
 		request.setAttribute("blogDTO", blogDTO);
-		request.setAttribute("commentDTOList", commentDTOList);
+		request.setAttribute("commentDTOListWithLevel", commentDTOListWithLevel);
 		
 		return "blogDetailPage";
 	}
 	
+	@Deprecated
+	private CommentDTO getCommentDTOByCommentId(List<CommentDTO> commentList, String parentId) {
+		
+		for (CommentDTO commentDTO : commentList) {
+			if (commentDTO.getCommentId().equals(parentId)) {
+				return commentDTO;
+			}
+		}
+		
+		return null;
+	}
+
 	public String uploadPhotoPage() {
 		return "uploadPhotoPage";
 	}
@@ -271,5 +357,10 @@ public class MenuAction extends CommonAction<MenuDTO> {
 		request.setAttribute("blogDTODeletedList", blogDTODeletedList);
 
 		return "deleted";
+	}
+	
+	public String categoryAddPage() {
+		
+		return "categoryAddPage";
 	}
 }

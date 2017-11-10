@@ -35,7 +35,9 @@
 			<result name="changeAatarPage">/WEB-INF/jsp/changeAatarPage.jsp</result>
 			<result name="messageAddPage">/WEB-INF/jsp/messageAddPage.jsp</result>
 			<result name="deleted">/WEB-INF/jsp/blogDeleted.jsp</result>
-			<allowed-methods>home, signInPage, registerPage, photo, blog, message, changePasswordPage, personalPage, blogAddPage, blogEditPage, blogDetailPage, uploadPhotoPage, changeAatarPage, messageAddPage, messageDetail,deleted</allowed-methods>
+			<result name="sendMessageDisplayPage">/WEB-INF/jsp/sendMessageDisplayPage.jsp</result>
+			<result name="categoryAddPage">/WEB-INF/jsp/categoryAddPage.jsp</result>
+			<allowed-methods>home, signInPage, registerPage, photo, blog, message, changePasswordPage, personalPage, blogAddPage, blogEditPage, blogDetailPage, uploadPhotoPage, changeAatarPage, messageAddPage, messageDetail,deleted, sendMessageDisplayPage,categoryAddPage</allowed-methods>
 		</action>
 		
 		<action name="User_*" class="userAction" method="{1}">
@@ -184,7 +186,19 @@
 				<param name="actionName">Menu_signInPage.action</param>
 				<param name="namespace">/user</param>
 			</result>
-			<allowed-methods>add</allowed-methods>
+			<result name="delete" type="chain">
+				Menu_blogDetailPage
+			</result>
+			<allowed-methods>add, delete</allowed-methods>
+		</action>
+		
+		<action name="Category_*" class="categoryAction" method="{1}">
+		   <result name="add" type="redirectAction">
+		      <param name="actionName">Menu_home.action</param>
+		      <param name="namespace">/user</param>
+		   </result>
+		   <result name="toBlog">/WEB-INF/jsp/blog.jsp</result>
+		   <allowed-methods>add,delete,searchBlog</allowed-methods>
 		</action>
 	</package>
 

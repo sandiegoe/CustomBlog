@@ -32,6 +32,17 @@
 	color: grey;
 }
 
+.blog-post .readFlag {
+	color: grey;
+}
+
+.blog-post .fail {
+	color:red;
+}
+
+.blog-post .failFlag {
+	color:red;
+}
 #about h1 {
 	font-size: 35px;
 	letter-spacing: 5;

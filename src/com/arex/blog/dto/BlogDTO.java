@@ -13,7 +13,7 @@ public class BlogDTO {
 	}
 
 	private String blogId;
-	private String kindId;
+	private String kindId; //博客的种类
 	private String blogTitle;
 	private String blogContent;
 	private String blogDescription;
@@ -23,6 +23,7 @@ public class BlogDTO {
 	private int blogCommentCounts;
 	private String userId;
 	private int deleteSign = 0;
+	private String categoryId;
 	
 	private String blogContentText;
 	
@@ -139,6 +140,14 @@ public class BlogDTO {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public String getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
 	}
 
 }

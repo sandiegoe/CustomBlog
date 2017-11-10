@@ -9,31 +9,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
+    <link href="${pageContext.request.contextPath}/img/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="" />
     <meta name="author" content="" />
     <!--[if IE]>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <![endif]-->
-    <title>Nice responsive template for blogger</title>
+   <title>Blog</title>
     <!-- BOOTSTRAP CORE STYLE -->
     <link href="${pageContext.request.contextPath}/css/bootstrap.css" rel="stylesheet" />
     <!-- FONT AWESOME ICON STYLE -->
     <link href="${pageContext.request.contextPath}/css/font-awesome.css" rel="stylesheet" />
     <!-- CUSTOM STYLE CSS -->
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" />
-<<<<<<< HEAD
-    
     <link href="${pageContext.request.contextPath}/css/register-style.css" rel="stylesheet" />
-=======
     <!-- 自定义样式部分 -->
    	<link href="${pageContext.request.contextPath}/css/mystyle.css" rel="stylesheet"/>
    	<!-- 自定义样式部分 -->
    	<link href="${pageContext.request.contextPath}/css/mystyle.css" rel="stylesheet"/>
->>>>>>> 3b5279146d7a5f007b0751d136b96230e9c2d309
 </head>
 <body style="background:#2F2F2F">
-<br/>
     <div id="header">
         <div class="overlay">
             <div class="container">
@@ -41,9 +37,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <div class="col-md-4 logo-div">
                         <div class="logo-inner text-center">
                             <div class="logo-name">
-                                <a href="${pageContext.request.contextPath}/user/Menu_personalPage.action">
-                                    <img alt="个人头像" src="${sessionScope.loginUser.avatarURL}" class="img-circle"/>
-                                </a>
+                               <!-- 判断如果用户没有登录则不显示用户头像 -->
+			                	<c:if test="${not empty sessionScope.loginUser}">
+			                    	 <a href="${pageContext.request.contextPath}/user/Menu_personalPage.action">
+                                    	<img alt="个人头像" src="${sessionScope.loginUser.avatarURL}" class="img-circle"/>
+                                	</a>
+			                    </c:if>
                             </div>
 
                         </div>
@@ -51,8 +50,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </div>
                     <div class="col-md-8 header-text-top " id="about">
                         <h1>追求极致.</h1>
-						为您提供始终如一最完美的体验是我们始终一致的追求.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--- 
-						designed by arex.<br />
+						为您提供始终如一最完美的体验是我们不变的追求.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </div>
                 </div>
             </div>

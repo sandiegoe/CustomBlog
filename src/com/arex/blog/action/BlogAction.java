@@ -1,14 +1,16 @@
 package com.arex.blog.action;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
-import org.eclipse.jdt.internal.compiler.ast.SuperReference;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.arex.blog.dao.BlogDAO;
 import com.arex.blog.dto.BlogDTO;
+import com.arex.blog.dto.CategoryDTO;
 import com.arex.blog.service.BlogService;
+import com.arex.blog.service.CategoryService;
 import com.arex.blog.utils.LoginUtils;
 
 @Component(value="blogAction")
@@ -17,19 +19,30 @@ public class BlogAction extends CommonAction<BlogDTO> {
 
 	@Resource(name="blogServiceImpl")
 	private BlogService blogService;
+	@Resource(name = "categoryServiceImpl")
+	private CategoryService categoryService;
 	
 	public String add() {
+		
+		BlogDTO blogDTO = super.getModel();
 		
 		//判断blogAddPage.jsp中从sessionshahi的userId是否为空
 		//如果为空则跳转到登录页面
 		//如果不为空，则将BlogDTO保存到数据库中
-System.out.println(super.getModel().getBlogTitle());
-		if (super.getModel()==null || super.getModel().getUserId()==null || "".equals(super.getModel().getUserId())) {
+		if (blogDTO==null || blogDTO.getUserId()==null || "".equals(blogDTO.getUserId())) {
 			request.setAttribute("messageInfo", "请重新登录");
 			return "signInPage";
 		}
 		
-		blogService.saveBlog(super.getModel());
+		blogService.saveBlog(blogDTO);
+		List<CategoryDTO> categoryDTOList = categoryService.searchAllCategory();
+		for (CategoryDTO categoryDTO : categoryDTOList) {
+			int counts = blogService.searchBlogCountsByCategoryId(categoryDTO.getCategoryId());
+			categoryDTO.setCounts(counts);
+		}
+
+		// 将categoryDTOList设置到application中
+		application.setAttribute("categoryDTOList", categoryDTOList);
 		
 		return "add";
 	}

@@ -7,6 +7,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.UUID;
 
 import org.apache.struts2.ServletActionContext;
@@ -31,10 +33,25 @@ public class FileServiceImpl implements FileService {
 		//保存图片
 		String fileName = UUID.randomUUID().toString() + expandName;
 		//设置fileURL
-		String serverHost = ServletActionContext.getRequest().getLocalAddr();
-		fileDTO.setFileURL("http://" + serverHost + ":8080/Blog/img/uploadImage/" + fileName);
+		//String serverHost = ServletActionContext.getRequest().getLocalAddr();
+		
+		//配置为服务器的地址,通过配置文件指定,通过上述方式获取的是内网IP地址,指定为公网IP地址
+		ResourceBundle bundle = ResourceBundle.getBundle("deploy",Locale.CHINA);
+		String serverHost = bundle.getString("serverhost");
+		String uploadAccess = bundle.getString("uploadPath");
+		String port = bundle.getString("port");
+		uploadAccess += "/Blog/img/uploadImage/";
+		
+		fileDTO.setFileURL("http://" + serverHost + ":" + port + uploadAccess + fileName);
 		fileDTO.setFileName(fileName);
-		String uploadPath = ServletActionContext.getServletContext().getRealPath("/img/uploadImage");
+		
+	/*	String uploadPath = ServletActionContext.getServletContext().getRealPath("/img/uploadImage");
+		System.out.println("img/uploadImage   " + uploadPath);
+		System.out.println(ServletActionContext.getServletContext().getRealPath("/"));*/
+		
+		//获取上传路径
+		String uploadPath = ResourceBundle.getBundle("deploy", Locale.CHINA).getString("upload");
+		uploadPath += "/Blog/img/uploadImage";
 		
 //		System.out.println(ServletActionContext.getRequest().getLocalAddr());
 //		System.out.println(ServletActionContext.getRequest().getRemoteHost());

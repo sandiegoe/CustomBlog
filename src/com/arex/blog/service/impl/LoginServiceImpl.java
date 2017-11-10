@@ -51,7 +51,7 @@ public class LoginServiceImpl implements LoginService {
 	public List<LoginDTO> searchLoginByUserId(String userId) {
 
 		String hqlWhere = " where 1=1 ";
-		List<String> paramList = new ArrayList<String>();
+		List<Object> paramList = new ArrayList<Object>();
 		if (userId != null && !"".equals(userId)) {
 			hqlWhere += " and o.userId = ? ";
 			paramList.add(userId);

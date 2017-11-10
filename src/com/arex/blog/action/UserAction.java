@@ -134,7 +134,7 @@ public class UserAction extends CommonAction<UserDTO> {
 		
 		//获取当前用户的密码
 		UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
-		if (userDTO == null) {
+		if (null == loginUser) {
 			request.setAttribute("messageInfo", "请登录....");
 			return "changePasswordError";
 		}
