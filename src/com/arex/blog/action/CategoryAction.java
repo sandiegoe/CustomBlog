@@ -3,10 +3,12 @@ package com.arex.blog.action;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.arex.blog.dto.BlogDTO;
 import com.arex.blog.dto.CategoryDTO;
 import com.arex.blog.service.BlogService;
 import com.arex.blog.service.CategoryService;
@@ -52,6 +54,18 @@ public class CategoryAction extends CommonAction<CategoryDTO> {
 		// 将categoryDTOList设置到application中
 		application.setAttribute("categoryDTOList", categoryDTOList);
 		return "";
+	}
+	
+	/**
+	 * 分页查找指定分类Id的所有博客
+	 * @return
+	 */
+	public String searchBlog() {
+		
+		List<BlogDTO> blogDTOList = blogService.searchBlogByCategoryId((HttpServletRequest)request, super.getModel().getCategoryId());
+		request.setAttribute("blogDTOList", blogDTOList);
+		
+		return "toBlog";
 	}
 
 }

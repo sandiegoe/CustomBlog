@@ -22,4 +22,5 @@ public interface BlogService {
 	public List<BlogDTO> searchAllBlog(HttpServletRequest request);
 	public int searchBlogCountsByCategoryId(String categoryId);
 	public List<BlogDTO> searchBlogByCategoryId(String categoryId);
+	public List<BlogDTO> searchBlogByCategoryId(HttpServletRequest request, String categoryId);
 }
