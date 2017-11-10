@@ -87,6 +87,7 @@ public class CategoryServiceImpl implements CategoryService {
 	private CategoryDTO convertCategoryPO2VO(Category category) {
 		CategoryDTO categoryDTO = null;
 		if (category != null) {
+			categoryDTO = new CategoryDTO();
 			categoryDTO.setCategoryId(category.getCategoryId());
 			categoryDTO.setCategoryContent(category.getCategoryContent());
 		}

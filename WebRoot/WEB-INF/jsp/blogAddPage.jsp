@@ -102,6 +102,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		<option value="1">转载</option>
     	</select>
     	<input type="text" name="blogTitle" value="${requestScope.blogDTO.blogTitle}" style="width:742px;"/><br/>
+    	<select name="category" id="category">
+    		<option value="0">请选择类型</option>
+    	    	<c:forEach items="${categoryDTOList}" var="categoryDTO">
+    	    	<li class="list-group-item">
+    	    	 	<option value="${categoryDTO.categoryId}">${categoryDTO.categoryContent}</option>
+    	    	</li>
+                </c:forEach>
+        </select>
   		文章内容:<textarea name="blogContent" id="blogContent" value="${requestScope.blogDTO.blogContent}" rows="50"></textarea>
   		<script type="text/javascript">
   			CKEDITOR.replace('blogContent', {"filebrowserUploadUrl" : "${pageContext.request.contextPath}/user/File_uploadPhoto.action", height:"500px", width:"800px"});
