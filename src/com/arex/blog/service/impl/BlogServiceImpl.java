@@ -150,6 +150,7 @@ public class BlogServiceImpl implements BlogService {
 			blog.setLastModifieDate(new Date());
 			blog.setUserId(blogDTO.getUserId());
 			blog.setBlogId(blogDTO.getBlogId());
+			blog.setCategoryId(blogDTO.getCategoryId());
 			// TODO 博客分类
 			//获取BlogDTO中设置的kindId,如果为null或者为空则设置为默认值1
 			PropertyUtils.setPropertyValue(blog, "kindId", blogDTO.getKindId(), "0");
@@ -391,6 +392,61 @@ public class BlogServiceImpl implements BlogService {
 		request.setAttribute("page", pageInfo.getPage());
 
 		return blogDTOList;
+	}
+
+	@Override
+	public List<BlogDTO> searchBlogByCategoryIdAndUserId(HttpServletRequest request, String categoryId, String userId) {
+		String hqlWhere = " where 1=1 and deleteSign = 0 ";
+		List<Object> paramList = new ArrayList<Object>();
+		if (categoryId != null && !"".equals(categoryId)) {
+			hqlWhere += " and o.categoryId=? ";
+			paramList.add(categoryId);
+		}
+		if (userId!=null && !"".equals(userId)) {
+			hqlWhere += " and userId=? ";
+			paramList.add(userId);
+		}
+		Object[] objects = paramList.toArray();
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("o.blogCreateDate", "desc");
+
+		PageInfo pageInfo = new PageInfo(request);
+		//修改为分页查询
+		List<Blog> blogList = blogDAO.searchCollectionByCondition(hqlWhere, objects, orderby, pageInfo);
+		List<BlogDTO> blogDTOList = this.convertBlogPO2VO2(blogList);
+		//保存分页信息
+		request.setAttribute("page", pageInfo.getPage());
+
+		return blogDTOList;
+	}
+
+	@Override
+	public List<BlogDTO> searchBlogByCategoryIdAndUserId(String categoryId, String userId) {
+		String hqlWhere = " where 1=1 and deleteSign = 0 ";
+		List<Object> paramList = new ArrayList<Object>();
+		if (categoryId!=null && !"".equals(categoryId)) {
+			hqlWhere += " and categoryId=? ";
+			paramList.add(categoryId);
+		}
+		if (userId!=null && !"".equals(userId)) {
+			hqlWhere += " and userId=? ";
+			paramList.add(userId);
+		}
+		Object[] objects = paramList.toArray();
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("o.blogCreateDate", "desc");
+
+		List<Blog> blogList = blogDAO.searchCollectionByConditionNoPage(
+				hqlWhere, objects, orderby);
+		List<BlogDTO> blogDTOList = this.convertBlogPO2VO2(blogList);
+
+		return blogDTOList;
+	}
+
+	@Override
+	public int searchBlogCountsByCategoryIdAndUserId(String categoryId,String userId) {
+		List<BlogDTO> blogDTOList = this.searchBlogByCategoryIdAndUserId(categoryId, userId);
+		return blogDTOList.size();
 	}
 
 }

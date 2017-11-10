@@ -109,6 +109,16 @@ public class MenuAction extends CommonAction<MenuDTO> {
 			return "signInPage";
 		}
 		
+		//设置当前登陆用户的分类列别
+		List<CategoryDTO> categoryDTOList = categoryService.searchAllCategoryByUserId(((UserDTO)session.getAttribute("loginUser")).getUserId());
+		for (CategoryDTO categoryDTO : categoryDTOList) {
+//			int counts = blogService.searchBlogCountsByCategoryId(categoryDTO.getCategoryId());
+			int counts = blogService.searchBlogCountsByCategoryIdAndUserId(categoryDTO.getCategoryId(), ((UserDTO)session.getAttribute("loginUser")).getUserId());
+			categoryDTO.setCounts(counts);
+		}
+		// 将categoryDTOList设置到application中
+		application.setAttribute("myCategoryDTOList", categoryDTOList);
+		
 		//将blogDTOList设置到request中
 		request.setAttribute("blogDTOList", blogDTOList);
 

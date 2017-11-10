@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.arex.blog.dto.BlogDTO;
 import com.arex.blog.dto.CategoryDTO;
+import com.arex.blog.dto.UserDTO;
 import com.arex.blog.service.BlogService;
 import com.arex.blog.service.CategoryService;
 
@@ -63,6 +64,14 @@ public class CategoryAction extends CommonAction<CategoryDTO> {
 	public String searchBlog() {
 		
 		List<BlogDTO> blogDTOList = blogService.searchBlogByCategoryId((HttpServletRequest)request, super.getModel().getCategoryId());
+		request.setAttribute("blogDTOList", blogDTOList);
+		
+		return "toHome";
+	}
+	
+	public String searchMyBlog() {
+		
+		List<BlogDTO> blogDTOList = blogService.searchBlogByCategoryIdAndUserId((HttpServletRequest)request, super.getModel().getCategoryId(),((UserDTO)session.getAttribute("loginUser")).getUserId());
 		request.setAttribute("blogDTOList", blogDTOList);
 		
 		return "toBlog";
