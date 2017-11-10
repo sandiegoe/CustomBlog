@@ -31,6 +31,7 @@ public class Blog {
 	private int blogCommentCounts;
 	private String userId;
 	private int deleteSign =0 ;
+
 	private String categoryId;
 
 	public int getDeleteSign() {

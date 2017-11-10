@@ -12,6 +12,7 @@ public class BlogDTO {
 		this.deleteSign = deleteSign;
 	}
 
+	private String categoryId;
 	private String blogId;
 	private String kindId; //博客的种类
 	private String blogTitle;
@@ -139,6 +140,14 @@ public class BlogDTO {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public String getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
 	}
 
 }
