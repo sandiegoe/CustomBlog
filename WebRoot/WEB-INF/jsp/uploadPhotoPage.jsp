@@ -108,7 +108,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <ul class="list-group">
                     <li class="list-group-item"><strong>CATEGORIES</strong></li>
                     <c:forEach items="${categoryDTOList}" var="categoryDTO">
-                        <li class="list-group-item"><a href="user/Category_searchBlog?categoryId=${categoryDTO.categoryId}" style="color:#555; text-decoration: none">${categoryDTO.categoryContent}</a> <span style="color: red">${categoryDTO.counts}</span></li>
+                        <li class="list-group-item"><a href="${pageContext.request.contextPath}/user/Category_searchBlog?categoryId=${categoryDTO.categoryId}" style="color:#555; text-decoration: none">${categoryDTO.categoryContent}</a> <span style="color: red">${categoryDTO.counts}</span></li>
                     </c:forEach>
                 </ul>
                 </div>

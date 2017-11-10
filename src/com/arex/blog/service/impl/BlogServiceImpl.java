@@ -150,6 +150,7 @@ public class BlogServiceImpl implements BlogService {
 			blog.setLastModifieDate(new Date());
 			blog.setUserId(blogDTO.getUserId());
 			blog.setBlogId(blogDTO.getBlogId());
+			blog.setCategoryId(blogDTO.getCategoryId());
 			// TODO 博客分类
 			//获取BlogDTO中设置的kindId,如果为null或者为空则设置为默认值1
 			PropertyUtils.setPropertyValue(blog, "kindId", blogDTO.getKindId(), "0");

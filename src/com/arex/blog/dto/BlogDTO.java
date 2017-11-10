@@ -12,7 +12,6 @@ public class BlogDTO {
 		this.deleteSign = deleteSign;
 	}
 
-	private String categoryId;
 	private String blogId;
 	private String kindId; //博客的种类
 	private String blogTitle;
@@ -24,6 +23,7 @@ public class BlogDTO {
 	private int blogCommentCounts;
 	private String userId;
 	private int deleteSign = 0;
+	private String categoryId;
 	
 	private String blogContentText;
 	
