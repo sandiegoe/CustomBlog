@@ -50,6 +50,10 @@ public class MenuAction extends CommonAction<MenuDTO> {
 //		List<BlogDTO> blogDTOList = blogService.searchAllBlog();
 		List<BlogDTO> blogDTOList = blogService.searchAllBlog((HttpServletRequest)request);
 		List<CategoryDTO> categoryDTOList = categoryService.searchAllCategory();
+		for (CategoryDTO categoryDTO : categoryDTOList) {
+			int counts = blogService.searchBlogCountsByCategoryId(categoryDTO.getCategoryId());
+			categoryDTO.setCounts(counts);
+		}
 		// 将categoryDTOList设置到application中
 		application.setAttribute("categoryDTOList", categoryDTOList);
 		request.setAttribute("blogDTOList", blogDTOList);

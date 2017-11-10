@@ -197,7 +197,8 @@
 		      <param name="actionName">Menu_home.action</param>
 		      <param name="namespace">/user</param>
 		   </result>
-		   <allowed-methods>add</allowed-methods>
+		   <result name="toBlog">/WEB-INF/jsp/blog.jsp</result>
+		   <allowed-methods>add,delete,searchBlog</allowed-methods>
 		</action>
 	</package>
 

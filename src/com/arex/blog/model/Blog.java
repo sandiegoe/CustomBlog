@@ -31,6 +31,7 @@ public class Blog {
 	private int blogCommentCounts;
 	private String userId;
 	private int deleteSign =0 ;
+	private String categoryId;
 
 	public int getDeleteSign() {
 		return deleteSign;
@@ -143,6 +144,14 @@ public class Blog {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public String getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
 	}
 
 }

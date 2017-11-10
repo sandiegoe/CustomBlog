@@ -370,4 +370,27 @@ public class BlogServiceImpl implements BlogService {
 		return blogDTOList;
 	}
 
+	@Override
+	public List<BlogDTO> searchBlogByCategoryId(HttpServletRequest request,
+			String categoryId) {
+		String hqlWhere = " where 1=1 and deleteSign = 0 ";
+		List<Object> paramList = new ArrayList<Object>();
+		if (categoryId != null && !"".equals(categoryId)) {
+			hqlWhere += " and o.categoryId=? ";
+			paramList.add(categoryId);
+		}
+		Object[] objects = paramList.toArray();
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("o.blogCreateDate", "desc");
+
+		PageInfo pageInfo = new PageInfo(request);
+		//修改为分页查询
+		List<Blog> blogList = blogDAO.searchCollectionByCondition(hqlWhere, objects, orderby, pageInfo);
+		List<BlogDTO> blogDTOList = this.convertBlogPO2VO2(blogList);
+		//保存分页信息
+		request.setAttribute("page", pageInfo.getPage());
+
+		return blogDTOList;
+	}
+
 }

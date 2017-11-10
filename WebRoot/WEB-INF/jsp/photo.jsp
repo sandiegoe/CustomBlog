@@ -135,16 +135,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="row">
                 <ul class="list-group">
                     <li class="list-group-item"><strong>CATEGORIES</strong></li>
-                    <li class="list-group-item">Dapibus ac facilisis in</li>
-                    <li class="list-group-item">Morbi leo risus</li>
-                    <li class="list-group-item">Porta ac consectetur ac</li>
-                    <li class="list-group-item">Vestibulum at eros</li>
-                    <li class="list-group-item">Dapibus ac facilisis in</li>
-                    <li class="list-group-item">Morbi leo risus</li>
-                    <li class="list-group-item">Porta ac consectetur ac</li>
-                    <li class="list-group-item">Vestibulum at eros</li>
+                    <c:forEach items="${categoryDTOList}" var="categoryDTO">
+                        <li class="list-group-item"><a href="user/Category_searchBlog?categoryId=${categoryDTO.categoryId}" style="color:#555; text-decoration: none">${categoryDTO.categoryContent}</a> <span style="color: red">${categoryDTO.counts}</span></li>
+                    </c:forEach>
                 </ul>
-				</div>
+                </div>
 				<div class="row">
 				<!-- <h3>Advertising</h3> -->
 				
