@@ -13,7 +13,7 @@ public class BlogDTO {
 	}
 
 	private String blogId;
-	private String kindId;
+	private String kindId; //博客的种类
 	private String blogTitle;
 	private String blogContent;
 	private String blogDescription;

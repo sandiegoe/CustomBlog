@@ -1,8 +1,10 @@
 package com.arex.blog.dao;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import com.arex.blog.model.Blog;
+import com.arex.blog.utils.PageInfo;
 
 public interface BlogDAO extends CommonDAO<Blog>{
 

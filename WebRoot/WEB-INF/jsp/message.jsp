@@ -10,6 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="refresh" content="5">
+	<link href="${pageContext.request.contextPath}/img/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon"/>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="" />
@@ -17,7 +18,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!--[if IE]>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <![endif]-->
-    <title>Nice responsive template for blogger</title>
+    <title>Blog</title>
     <!-- BOOTSTRAP CORE STYLE -->
     <link href="${pageContext.request.contextPath}/css/bootstrap.css" rel="stylesheet" />
     <!-- FONT AWESOME ICON STYLE -->
@@ -28,7 +29,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    	<link href="${pageContext.request.contextPath}/css/mystyle.css" rel="stylesheet"/>
 </head>
 <body>
-<br/>
     <div id="header">
         <div class="overlay">
             <div class="container">
@@ -36,18 +36,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <div class="col-md-4 logo-div">
                         <div class="logo-inner text-center">
                             <div class="logo-name">
-                                <a href="${pageContext.request.contextPath}/user/Menu_personalPage.action">
-                                    <img alt="个人头像" src="${sessionScope.loginUser.avatarURL}" class="img-circle"/>
-                                </a>
+                                <!-- 判断如果用户没有登录则不显示用户头像 -->
+			                	<c:if test="${not empty sessionScope.loginUser}">
+			                    	 <a href="${pageContext.request.contextPath}/user/Menu_personalPage.action">
+                                    	<img alt="个人头像" src="${sessionScope.loginUser.avatarURL}" class="img-circle"/>
+                                	</a>
+			                    </c:if>
                             </div>
 
                         </div>
 
                     </div>
-                   <div class="col-md-8 header-text-top " id="about">
+                  <div class="col-md-8 header-text-top " id="about">
                         <h1>追求极致.</h1>
-						为您提供始终如一最完美的体验是我们始终一致的追求.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--- 
-						designed by arex.<br />
+						为您提供始终如一最完美的体验是我们不变的追求.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </div>
                 </div>
             </div>
@@ -94,29 +96,67 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="col-md-8 ">
               
                <div class="blog-post">
-               		未读通知：<strong>${requestScope.messages}</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-               		 <a href="${pageContext.request.contextPath}/user/Message_readAllMessage.action" class="btn btn-default btn-lg ">全部标记为已读 <i class="fa fa-angle-right"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-               		 <a href="${pageContext.request.contextPath}/user/Message_deleteAllMessage.action" class="btn btn-default btn-lg ">清空所有通知 <i class="fa fa-angle-right"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-               		 <a href="${pageContext.request.contextPath}/user/Menu_messageAddPage.action" class="btn btn-default btn-lg ">私信 <i class="fa fa-angle-right"></i></a>
+               		未读通知：<strong>${requestScope.messages}</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               		 <a href="${pageContext.request.contextPath}/user/Message_readAllMessage.action" class="btn btn-default btn-lg ">已读 <i class="fa fa-angle-right"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               		 <a href="${pageContext.request.contextPath}/user/Message_deleteAllMessage.action" class="btn btn-default btn-lg ">清空 <i class="fa fa-angle-right"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               		 <a href="${pageContext.request.contextPath}/user/Menu_messageAddPage.action" class="btn btn-default btn-lg ">私信 <i class="fa fa-angle-right"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               		 <a href="${pageContext.request.contextPath}/user/Menu_sendMessageDisplayPage.action" class="btn btn-default btn-lg ">发信箱 <i class="fa fa-angle-right"></i></a>
                    	 <br/>
                    	 <br/>
                    	 
-                   	 <c:forEach items="${requestScope.messageDTOListWithNew}" var="messageDTO">
-                    	 <a href="${pageContext.request.contextPath}/user/Menu_messageDetail.action?messageId=${messageDTO.messageId}">${messageDTO.messageTitle}</a>
-                    	 <span span="new">新消息</span>
-                    	 <hr><br/>
+                   	 <c:forEach items="${requestScope.messageDTOList}" var="messageDTO" varStatus="status">
+                   	 	<c:if test="${messageDTO.messageStatus==1}">
+                    	 	<a href="${pageContext.request.contextPath}/user/Menu_messageDetail.action?messageId=${messageDTO.messageId}">${messageDTO.messageTitle}</a>
+                    	 	<span>新消息</span>
+                    	 </c:if>
+                    	 <c:if test="${messageDTO.messageStatus==2}">
+                    	 	<a class="read" href="${pageContext.request.contextPath}/user/Menu_messageDetail.action?messageId=${messageDTO.messageId}">${messageDTO.messageTitle}</a>
+                    	 	<span class="readFlag">已读</span>
+                    	 </c:if>
+                    	  <c:if test="${status.index != (page.pageSize-1)}">
+                    	 		 <hr><br/>
+                    	 </c:if>
                      </c:forEach>
-                     <c:forEach items="${requestScope.messageDTOListWithRead}" var="messageDTO">
-                    	 <a href="${pageContext.request.contextPath}/user/Menu_messageDetail.action?messageId=${messageDTO.messageId}">${messageDTO.messageTitle}</a>
-                    	 <span class="read">已读</span>
-                    	 <hr><br/>
-                     </c:forEach>
-                   
+                     <%--  <c:forEach items="${requestScope.messageDTOList}" var="messageDTO" varStatus="status">
+                   	 	<c:if test="${messageDTO.messageStatus==2}">
+                    	 	<a class="read" href="${pageContext.request.contextPath}/user/Menu_messageDetail.action?messageId=${messageDTO.messageId}">${messageDTO.messageTitle}</a>
+                    	 	<span class="readFlag">已读</span>
+                    	 	<c:if test="${status.index != (page.pageSize-1)}">
+                    	 		 <hr><br/>
+                    	 	</c:if>
+                    	 </c:if>
+                     </c:forEach> --%>
                 </div>
               
-              
-          
-                
+               <br />
+                <nav>
+                    <ul class="pagination">
+                        <li>
+                            <a href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                       	<c:if test="${!page.firstPage && page.pageNo!=2}">
+                       		<li><a href="${pageContext.request.contextPath}/user/Menu_message.action?pageNo=1&pageSize=5">首页</a></li>
+                       	</c:if>
+                       	<c:if test="${!page.firstPage}">
+	                        <li><a href="${pageContext.request.contextPath}/user/Menu_message.action?pageNo=${page.pageNo-1}&pageSize=5">${page.pageNo-1}</a></li>
+                        </c:if>
+                        <li><a href="javascript:void(0);" style="color:grey;">${page.pageNo}</a></li>
+                        <c:if test="${!page.lastPage}">
+                        	<li><a href="${pageContext.request.contextPath}/user/Menu_message.action?pageNo=${page.pageNo+1}&pageSize=5">${page.pageNo+1}</a></li>
+                        </c:if>
+                        <c:if test="${!page.lastPage && page.pageNo!=page.totalPages-1}">
+                        	<li><a href="${pageContext.request.contextPath}/user/Menu_message.action?pageNo=${page.totalPages}&pageSize=5">末页</a></li>
+                        </c:if>
+                        
+                        <li>
+                            <a href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
             <div class="col-md-1"></div>
             <div class="col-md-3" style="padding-top: 30px;">
@@ -134,7 +174,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </ul>
 				</div>
 				<div class="row">
-				<h3>Advertising</h3>
+				<h3></h3>
 				
 
 				</div>

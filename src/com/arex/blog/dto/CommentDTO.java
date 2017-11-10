@@ -13,6 +13,7 @@ public class CommentDTO {
 	private int deleteSign = 0;
 	
 	private String userName;
+	private String parentName;
 
 	public CommentDTO() {
 		super();
@@ -80,6 +81,14 @@ public class CommentDTO {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public String getParentName() {
+		return parentName;
+	}
+
+	public void setParentName(String parentName) {
+		this.parentName = parentName;
 	}
 
 }

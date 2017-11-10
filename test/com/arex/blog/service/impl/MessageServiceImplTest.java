@@ -25,4 +25,19 @@ public class MessageServiceImplTest {
 		List<MessageDTO> messageDTOList = messageService.searchAllMessageByReceiverId(receiverId);
 		System.out.println(messageDTOList);
 	}
+	
+	@Test
+	public void testSearchAllMessageByReceiverIdWithNew() {
+		String receiverId = "ff8081815d8e2ba4015d8e2c99970000";
+		List<MessageDTO> messageDTOList = messageService.searchAllMessageByReceiverId(receiverId);
+		System.out.println(messageDTOList);
+	}
+	
+	@Test
+	public void testSearchAllMessageByReceiverIdAndMessageStatus() {
+		String receiverId = "ff8081815d8e2ba4015d8e2c99970000";
+		int messageStatus = 1;
+		List<MessageDTO> messageDTOList = messageService.searchAllMessageByReceiverIdAndMessageStatus(receiverId, messageStatus);
+		System.out.println(messageDTOList);
+	}
 }

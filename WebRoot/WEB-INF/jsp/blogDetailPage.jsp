@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -9,13 +10,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
+    <link href="${pageContext.request.contextPath}/img/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="" />
     <meta name="author" content="" />
     <!--[if IE]>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <![endif]-->
-    <title>Nice responsive template for blogger</title>
+    <title>Blog</title>
     <!-- BOOTSTRAP CORE STYLE -->
     <link href="${pageContext.request.contextPath}/css/bootstrap.css" rel="stylesheet" />
     <!-- FONT AWESOME ICON STYLE -->
@@ -26,7 +28,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    	<link href="${pageContext.request.contextPath}/css/mystyle.css" rel="stylesheet"/>
 </head>
 <body>
-<br/>
     <div id="header">
         <div class="overlay">
             <div class="container">
@@ -34,9 +35,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <div class="col-md-4 logo-div">
                         <div class="logo-inner text-center">
                             <div class="logo-name">
-                               <a href="${pageContext.request.contextPath}/user/Menu_personalPage.action">
-                                    <img alt="个人头像" src="${sessionScope.loginUser.avatarURL}" class="img-circle"/>
-                                </a>
+                              <!-- 判断如果用户没有登录则不显示用户头像 -->
+			                	<c:if test="${not empty sessionScope.loginUser}">
+			                    	 <a href="${pageContext.request.contextPath}/user/Menu_personalPage.action">
+                                    	<img alt="个人头像" src="${sessionScope.loginUser.avatarURL}" class="img-circle"/>
+                                	</a>
+			                    </c:if>
                             </div>
 
                         </div>
@@ -44,8 +48,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </div>
                    <div class="col-md-8 header-text-top " id="about">
                         <h1>追求极致.</h1>
-						为您提供始终如一最完美的体验是我们始终一致的追求.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--- 
-						designed by arex.<br />
+						为您提供始终如一最完美的体验是我们不变的追求.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </div>
                 </div>
             </div>
@@ -93,7 +96,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="col-md-8 ">
                 <div class="blog-post">
                     <h2>${requestScope.blogDTO.blogTitle}</h2>
-                    <h4>Posted by <a href="#">${sessionScope.loginUser.userName}</a> on on ${blogDTO.blogCreateDate} </h4>
+                     <h4><a href="#">${blogDTO.userName}</a> &nbsp;发表于&nbsp; ${blogDTO.blogCreateDate} </h4>
                     <p>
 						${requestScope.blogDTO.blogContent}
                     </p>
@@ -101,16 +104,32 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <br/>
                <h4></h4> 
                 <div class="wrapper">
-					 <c:forEach items="${requestScope.commentDTOList}" var="commentDTO">	
-						<div class="ds-post-main">
-								<div class="ds-avatar">
-									<a title="设计达人" href="http://www.shejidaren.com" target="_blank"><img alt="设计达人" src="http://tp3.sinaimg.cn/1750584642/50/5612846168/1"></a>
-								</div>
-								<div class="ds-comment-body">
-									<a title="设计达人" href="http://www.shejidaren.com" target="_blank" class="user-name">${commentDTO.userName}</a>
-									<p>${commentDTO.commentContent}</p>
-								</div>
-						</div>
+                	
+                	<!-- 负责遍历每一条评论 -->
+					 <c:forEach items="${requestScope.commentDTOListWithLevel}" var="commentDTOList">	
+					 	
+					 	<!-- 展现每一条的评论 -->
+					 	<c:forEach items="${commentDTOList}" var="commentDTO" varStatus="status">
+							<div class="ds-post-main" style="padding-left:${status.index*50}px;">
+									<div class="ds-avatar">
+										<a title="设计达人" href="http://www.shejidaren.com" target="_blank"><img alt="设计达人" src="http://tp3.sinaimg.cn/1750584642/50/5612846168/1"></a>
+									</div>
+									<div class="ds-comment-body">
+										<a title="设计达人" href="http://www.shejidaren.com" target="_blank" class="user-name">${commentDTO.userName}</a>
+										<p>回复${commentDTO.parentName}<c:if test="${empty commentDTO.parentName}">${blogDTO.userName}</c:if> : 
+										${commentDTO.commentContent}</p>
+										<!-- 在最后一条消息上添加回复，删除等 -->
+										<c:if test="${status.index == (fn:length(commentDTOList)-1) && sessionScope.loginUser!=null}"> 
+											<a class="cmt_btn reply" href="#reply" title="回复" onclick="reply('${commentDTO.commentId}');">[回复]</a>
+											<!-- 判断消息发出者是否是当前登录用户 -->
+											<c:if test="${commentDTO.userId==sessionScope.loginUser.userId}">
+												<a class="cmt_btn reply" href="${pageContext.request.contextPath}/user/Comment_delete?commentId=${commentDTO.commentId}&blogId=${requestScope.blogDTO.blogId}" title="删除" onclick="confirm('确认删除!')">[删除]</a>
+											</c:if>
+										</c:if>
+									</div>
+							</div>
+						</c:forEach>
+						<hr/>
 			 		</c:forEach> 			                
                 </div>
                 
@@ -120,8 +139,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                	用户名 : ${sessionScope.loginUser.userName}<br/>
 	                	<input type="hidden" name="userId" value="${sessionScope.loginUser.userId}"/>
 	                	<input type="hidden" name="blogId" value="${requestScope.blogDTO.blogId}"/>
-	                	<input type="hidden" name="parentId" value="${requestScope.blogDTO.blogId}"/>
-	                	评论内容 : <textarea rows="7" cols="40" name="commentContent"></textarea><br/>
+	                	<input id="parentId" type="hidden" name="parentId" value=""/>
+	                	评论内容 : <textarea id="commentContent" rows="7" cols="40" name="commentContent"></textarea><br/>
 	                	<input type="submit" value="提交"/>
 	                </form>
                 </c:if>
@@ -142,7 +161,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </ul>
 				</div>
 				<div class="row">
-				<h3>Advertising</h3>
+				<h3></h3>
 				
 
 				</div>
@@ -170,5 +189,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!-- BOOTSTRAP SCRIPTS -->
     <script src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
 
+	<script type="text/javascript">
+		function reply(commentId) {
+			//alert("commentId : " + commentId);
+			var parentInput = document.getElementById("parentId");
+			//alert("parentInput : " + parentInput.value);
+			parentInput.value = commentId;
+			//alert(parentInput.value);
+			var commentContentInput = document.getElementById("commentContent");
+			//alert(commentContentInput.innerHTML);
+			commentContentInput.innerHTML = commentId + "\n";
+			//alert(document.getElementById("commentContent").innerHTML);
+		}
+	</script>
+	
 </body>
 </html>

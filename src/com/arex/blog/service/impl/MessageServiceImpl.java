@@ -1,19 +1,23 @@
 package com.arex.blog.service.impl;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Component;
 
 import com.arex.blog.dao.MessageDAO;
+import com.arex.blog.dto.BlogDTO;
 import com.arex.blog.dto.MessageDTO;
 import com.arex.blog.dto.UserDTO;
 import com.arex.blog.model.Message;
 import com.arex.blog.service.MessageService;
 import com.arex.blog.service.UserService;
+import com.arex.blog.utils.PageInfo;
 
 @Component(value="messageServiceImpl")
 public class MessageServiceImpl implements MessageService {
@@ -94,10 +98,12 @@ public class MessageServiceImpl implements MessageService {
 		return message;
 	}
 
+	@Deprecated
 	public String searchMessageIdRecentlyAdd(String senderId, String receiverId, String messageContent) {
 		String messageId = messageDAO.searchMessageIdRecentlyAdd(senderId, receiverId, messageContent);
 		return messageId;
 	}
+	
 	
 	public void updateMessageStatus(String messageId, int messageStatus) {
 		//判断messageId不为空
@@ -106,11 +112,110 @@ public class MessageServiceImpl implements MessageService {
 		}
 	}
 
+	/**
+	 * 获取所有成功发送打消息
+	 * @param receiverId
+	 * @return
+	 */
 	@Override
-	public List<MessageDTO> searchAllMessageByReceiverId(String userId) {
-		List<MessageDTO> messageDTOList = messageDAO.getAllMessageByReceiverId(userId);
+	public List<MessageDTO> searchAllMessageByReceiverId(String receiverId) {
+		String hqlWhere = " where 1=1 ";
+		List<Object> paramList = new ArrayList<Object>();
+		if (receiverId!=null && !"".equals(receiverId)) {
+			hqlWhere += " and o.receiverId = ? ";
+			paramList.add(receiverId);
+		}
+		hqlWhere += " and o.messageIsDelete = ? ";
+		paramList.add(0);
+		hqlWhere += " and o.messageStatus <> ? ";
+		paramList.add(0);
+		
+		Object[] objects = paramList.toArray();
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("o.messageDate", "desc");
+		List<Message> messageList = messageDAO.searchCollectionByConditionNoPage(hqlWhere, objects, orderby);
+		
+		List<MessageDTO> messageDTOList = this.convertMessageListPO2VO(messageList);
 		return messageDTOList;
 	}
+	
+	@Override
+	public List<MessageDTO> searchAllMessageByReceiverId(
+			HttpServletRequest request, String receiverId) {
+		
+		String hqlWhere = " where 1=1 ";
+		List<Object> paramList = new ArrayList<Object>();
+		if (receiverId!=null && !"".equals(receiverId)) {
+			hqlWhere += " and o.receiverId = ? ";
+			paramList.add(receiverId);
+		}
+		hqlWhere += " and o.messageIsDelete = ? ";
+		paramList.add(0);
+		hqlWhere += " and o.messageStatus <> ? ";
+		paramList.add(0);
+		
+		Object[] objects = paramList.toArray();
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("o.messageDate", "desc");
+		PageInfo pageInfo = new PageInfo(request);
+		List<Message> messageList = messageDAO.searchCollectionByCondition(hqlWhere, objects, orderby, pageInfo);
+		
+		List<MessageDTO> messageDTOList = this.convertMessageListPO2VO(messageList);
+		
+		request.setAttribute("page", pageInfo.getPage());
+		
+		return messageDTOList;
+	}
+	/**
+	 * 查询所有指定senderId发送未删除的消息，包括未成功，已发送和已阅读的消息
+	 * 按照发送时间降序排列
+	 */
+	@Override
+	public List<MessageDTO> searchAllMessageBySenderId(
+			HttpServletRequest request, String senderId) {
+		
+		String hqlWhere = " where 1=1 ";
+		List<Object> paramList = new ArrayList<Object>();
+		if (senderId!=null && !"".equals(senderId)) {
+			hqlWhere += " and o.senderId=? ";
+			paramList.add(senderId);
+		}
+		hqlWhere += " and o.messageIsDelete = ? ";
+		paramList.add(0);
+		
+		Object[] objects = paramList.toArray();
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("o.messageDate", "desc");
+		PageInfo pageInfo = new PageInfo(request);
+		List<Message> messageList = messageDAO.searchCollectionByCondition(hqlWhere, objects, orderby, pageInfo);
+		List<MessageDTO> messageDTOList = this.convertMessageListPO2VO(messageList);
+		
+		request.setAttribute("page", pageInfo.getPage());
+		
+		return messageDTOList;
+	}
+	
+	private List<MessageDTO> convertMessageListPO2VO(List<Message> messageList) {
+		List<MessageDTO> messageDTOList = new ArrayList<MessageDTO>();
+		MessageDTO messageDTO = null;
+		for (int i=0; messageList!=null && i<messageList.size(); ++i) {
+			messageDTO = new MessageDTO();
+			Message message = messageList.get(i);
+			messageDTO.setMessageContent(message.getMessageContent());
+			messageDTO.setMessageDate(message.getMessageDate());
+			messageDTO.setMessageId(message.getMessageId());
+			messageDTO.setMessageIsDelete(message.getMessageIsDelete());
+			messageDTO.setMessageStatus(message.getMessageStatus());
+			messageDTO.setMessageTitle(message.getMessageTitle());
+			messageDTO.setReceiverId(message.getReceiverId());
+			messageDTO.setSenderId(message.getSenderId());
+			messageDTO.setSenderIp(message.getSenderIp());
+//			messageDTO.setUserNames();  // message 中未定义userNames属性
+			messageDTOList.add(messageDTO);
+		}
+		return messageDTOList;
+	}
+
 
 	@Override
 	public MessageDTO searchMessageByMessageId(String messageId) {
@@ -118,7 +223,7 @@ public class MessageServiceImpl implements MessageService {
 		MessageDTO messageDTO = this.convertMessagePO2VO(message);
 		return messageDTO;
 	}
-
+	
 	private MessageDTO convertMessagePO2VO(Message message) {
 		MessageDTO messageDTO = null;
 		if (message != null) {
@@ -142,11 +247,54 @@ public class MessageServiceImpl implements MessageService {
 
 	@Override
 	public List<MessageDTO> searchAllMessageByReceiverIdAndMessageStatus(
-			String userId, int messageStatus) {
-		List<MessageDTO> messageDTOList = messageDAO.searchAllMessageByReceiverIdAndMessageStatus(userId, messageStatus);
+			String receiverId, int messageStatus) {
+		
+		String hqlWhere = " where 1=1 ";
+		List<Object> paramList = new ArrayList<Object>();
+		if (receiverId!=null && !"".equals(receiverId)) {
+			hqlWhere += " and o.receiverId = ? ";
+			paramList.add(receiverId);
+		}
+		hqlWhere += " and o.messageIsDelete = ? ";
+		paramList.add(0);
+		hqlWhere += " and o.messageStatus = ? ";
+		paramList.add(messageStatus);
+		
+		Object[] objects = paramList.toArray();
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("o.messageDate", "desc");
+		List<Message> messageList = messageDAO.searchCollectionByConditionNoPage(hqlWhere, objects, orderby);
+		
+		List<MessageDTO> messageDTOList = this.convertMessageListPO2VO(messageList);
 		return messageDTOList;
 	}
-
+	
+	/**
+	 * 查询指定senderId发送和指定messageStatus的消息
+	 */
+	@Override
+	public List<MessageDTO> searchAllMessageBySenderIdIdAndMessageStatus(
+			String senderId, int messageStatus) {
+		String hqlWhere = " where 1=1 ";
+		List<Object> paramList = new ArrayList<Object>();
+		if (senderId!=null && !"".equals(senderId)) {
+			hqlWhere += " and o.senderId = ? ";
+			paramList.add(senderId);
+		}
+		hqlWhere += " and o.messageIsDelete = ? ";
+		paramList.add(0);
+		hqlWhere += " and o.messageStatus = ? ";
+		paramList.add(messageStatus);
+		
+		Object[] objects = paramList.toArray();
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("o.messageDate", "desc");
+		List<Message> messageList = messageDAO.searchCollectionByConditionNoPage(hqlWhere, objects, orderby);
+		
+		List<MessageDTO> messageDTOList = this.convertMessageListPO2VO(messageList);
+		return messageDTOList;
+	}
+	
 	@Override
 	public void deleteAllMessage(String receiverId) {
 		messageDAO.deleteAllMessage(receiverId);

@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Component;
 
@@ -12,6 +13,7 @@ import com.arex.blog.dao.PhotoDAO;
 import com.arex.blog.dto.PhotoDTO;
 import com.arex.blog.model.Photo;
 import com.arex.blog.service.PhotoService;
+import com.arex.blog.utils.PageInfo;
 
 @Component(value="photoServiceImpl")
 public class PhotoServiceImpl implements PhotoService {
@@ -45,7 +47,7 @@ public class PhotoServiceImpl implements PhotoService {
 	public List<PhotoDTO> searchAllPhotoByUserId(String userId) {
 		
 		String hqlWhere = " where 1=1 ";
-		List<String> paramList = new ArrayList<String>();
+		List<Object> paramList = new ArrayList<Object>();
 		if (userId!=null && !"".equals(userId)) {
 			hqlWhere += " and o.userId = ? ";
 			paramList.add(userId);
@@ -56,6 +58,27 @@ public class PhotoServiceImpl implements PhotoService {
 		List<Photo> photoList = photoDAO.searchCollectionByConditionNoPage(hqlWhere, objects, orderby);
 		
 		List<PhotoDTO> photoDTOList = this.convertPhotoListPO2VO(photoList);
+		
+		return photoDTOList;
+	}
+	
+	@Override
+	public List<PhotoDTO> searchAllPhotoByUserId(HttpServletRequest request, String userId) {
+		
+		String hqlWhere = " where 1=1 ";
+		List<Object> paramList = new ArrayList<Object>();
+		if (userId!=null && !"".equals(userId)) {
+			hqlWhere += " and o.userId = ? ";
+			paramList.add(userId);
+		}
+		Object[] objects = paramList.toArray();
+		LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
+		orderby.put("o.photoDate", "desc");
+		PageInfo pageInfo = new PageInfo(request);
+		List<Photo> photoList = photoDAO.searchCollectionByCondition(hqlWhere, objects, orderby, pageInfo);
+		
+		List<PhotoDTO> photoDTOList = this.convertPhotoListPO2VO(photoList);
+		request.setAttribute("page", pageInfo.getPage());
 		
 		return photoDTOList;
 	}
@@ -84,5 +107,4 @@ public class PhotoServiceImpl implements PhotoService {
 	public void deletePhotoByPhotoId(String photoId) {
 		photoDAO.deleteById(photoId);
 	}
-
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.persistence.Query;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
 import com.arex.blog.dao.MessageDAO;
 import com.arex.blog.dto.MessageDTO;
 import com.arex.blog.model.Message;
+import com.arex.blog.utils.PageInfo;
 import com.sun.istack.internal.FinalArrayList;
 
 @Component(value="messageDAOImpl")
@@ -37,7 +39,12 @@ public class MessageDAOImpl extends CommonDAOImpl<Message> implements MessageDAO
 		});
 	}
 
+	@Deprecated
 	@Override
+	/**
+	 * 获取刚添加的记录
+	 * 可能出现脏读，在高并发情况下
+	 */
 	public String searchMessageIdRecentlyAdd(final String senderId, final String receiverId, final String messageContent) {
 		
 		String messageId = null;
@@ -61,6 +68,7 @@ public class MessageDAOImpl extends CommonDAOImpl<Message> implements MessageDAO
 		return messageId;
 	}
 
+	@Deprecated
 	@Override
 	public List<MessageDTO> getAllMessageByReceiverId(final String userId) {
 		
@@ -81,6 +89,7 @@ public class MessageDAOImpl extends CommonDAOImpl<Message> implements MessageDAO
 		return messageDTOList;
 	}
 
+	@Deprecated
 	private List<MessageDTO> convertMessagePO2VO(List<Message> messageList) {
 		List<MessageDTO> messageDTOList = new ArrayList<MessageDTO>();
 		MessageDTO messageDTO = null;
@@ -102,6 +111,7 @@ public class MessageDAOImpl extends CommonDAOImpl<Message> implements MessageDAO
 		return messageDTOList;
 	}
 
+	@Deprecated
 	@Override
 	public List<MessageDTO> searchAllMessageByReceiverIdAndMessageStatus(
 			final String userId, final int messageStatus) {
@@ -110,7 +120,7 @@ public class MessageDAOImpl extends CommonDAOImpl<Message> implements MessageDAO
 			@Override
 			public List<Message> doInHibernate(Session session) throws HibernateException {
 				//读取receiverId为userId的，且没有删除，不是发送失败的消息(包括发送成功和已经阅读的消息)
-				List<Message> messageList = session.createQuery("from Message message where message.receiverId=:receiverId and message.messageIsDelete=0 and message.messageStatus=:messageStatus")
+				List<Message> messageList = session.createQuery("from Message message where message.receiverId=:receiverId and message.messageIsDelete=0 and message.messageStatus=:messageStatus order by message.messageDate desc")
 					.setParameter("receiverId", userId)
 					.setParameter("messageStatus", messageStatus)
 					.getResultList();
@@ -150,6 +160,4 @@ public class MessageDAOImpl extends CommonDAOImpl<Message> implements MessageDAO
 			}
 		});
 	}
-
-	
 }

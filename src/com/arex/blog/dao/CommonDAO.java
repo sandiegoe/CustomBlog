@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import com.arex.blog.utils.PageInfo;
+
 public interface CommonDAO<T> {
 
 	public void save(T t);
@@ -23,6 +25,6 @@ public interface CommonDAO<T> {
 	
 	public void deleteByCollection(Collection<T> collection);
 	
-//	public List<T> searchCollectionByConditionWithPage(String hqlWhere,
-//			final Object[] objects, LinkedHashMap<String, String> orderby, PageInfo pageInfo);
+	public List<T> searchCollectionByCondition(String hqlWhere,
+			final Object[] objects, LinkedHashMap<String, String> orderby, PageInfo pageInfo);
 }
