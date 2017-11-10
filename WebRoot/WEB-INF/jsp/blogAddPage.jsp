@@ -103,7 +103,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	</select>
     	<input type="text" name="blogTitle" value="${requestScope.blogDTO.blogTitle}" style="width:742px;"/><br/>
     	<select name=categoryId id="categoryId">
-    		<option value="0">请选择类型</option>
     	    	<c:forEach items="${categoryDTOList}" var="categoryDTO">
     	    	<li class="list-group-item">
     	    	 	<option value="${categoryDTO.categoryId}">${categoryDTO.categoryContent}</option>
