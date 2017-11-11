@@ -141,4 +141,12 @@ public class CategoryServiceImpl implements CategoryService {
 		return categoryDTOList;
 	}
 
+	@Override
+	public List<CategoryDTO> searchAllDeletedCategoryByUserId(String userId) {
+		List<Category> categoryList = categoryDAO.searchAllDeletedCategoryByUserId(userId);
+		List<CategoryDTO> categoryDTOList = this.convertCategoryPO2VOList(categoryList);
+
+		return categoryDTOList;
+	}
+
 }

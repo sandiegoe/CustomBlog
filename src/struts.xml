@@ -199,7 +199,8 @@
 		   </result>
 		   <result name="toHome">/WEB-INF/jsp/index.jsp</result>
 		   <result name="toBlog">/WEB-INF/jsp/blog.jsp</result>
-		   <allowed-methods>add,delete,searchBlog,searchMyBlog</allowed-methods>
+		   <result name="toDeleted">/WEB-INF/jsp/blogDeleted.jsp</result>
+		   <allowed-methods>add,delete,searchBlog,searchMyBlog,searchDeletedBlog</allowed-methods>
 		</action>
 	</package>
 

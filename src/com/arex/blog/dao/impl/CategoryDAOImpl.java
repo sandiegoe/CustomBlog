@@ -31,6 +31,13 @@ public class CategoryDAOImpl extends CommonDAOImpl<Category> implements
 		return categoryList;
 	}
 
+	@Override
+	public List<Category> searchAllDeletedCategoryByUserId(String userId) {
+		List<Category> categoryList = (List<Category>) hibernateTemplate.find("select distinct category from Blog blog left outer join Category category on "
+				+ "(blog.categoryId=category.categoryId) where blog.userId=? and blog.categoryId is not null and blog.deleteSign=1 ", userId);
+		return categoryList;
+	}
+
 	
 
 }

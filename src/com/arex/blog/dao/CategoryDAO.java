@@ -19,4 +19,11 @@ public interface CategoryDAO extends CommonDAO<Category>{
 	 */
 	List<Category> searchAllCategory();
 
+	/**
+	 * 查询指定用户所有已经删除的分类
+	 * @param userId
+	 * @return
+	 */
+	List<Category> searchAllDeletedCategoryByUserId(String userId);
+
 }

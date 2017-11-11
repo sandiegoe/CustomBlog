@@ -77,4 +77,10 @@ public class CategoryAction extends CommonAction<CategoryDTO> {
 		return "toBlog";
 	}
 
+	public String searchDeletedBlog() {
+		List<BlogDTO> blogDTOList = blogService.searchDeletedBlogByCategoryIdAndUserId((HttpServletRequest)request, super.getModel().getCategoryId(),((UserDTO)session.getAttribute("loginUser")).getUserId());
+		request.setAttribute("blogDTOList", blogDTOList);
+		
+		return "toDeleted";
+	}
 }

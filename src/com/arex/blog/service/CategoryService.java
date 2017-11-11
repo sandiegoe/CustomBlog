@@ -13,4 +13,5 @@ public interface CategoryService {
 	public void updateCategory(CategoryDTO categoryDTO);
 	public void deleteCategory(String categoryId);
 	public List<CategoryDTO> searchAllCategoryByUserId(String userId);
+	public List<CategoryDTO> searchAllDeletedCategoryByUserId(String userId);
 }

@@ -99,7 +99,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             
             
             
-            <c:forEach items="${requestScope.blogDTODeletedList}" var="blogDTO">
+            <c:forEach items="${requestScope.blogDTOList}" var="blogDTO">
            
             	
                 <div class="blog-post">
@@ -139,8 +139,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="row">
                 <ul class="list-group">
                     <li class="list-group-item"><strong>CATEGORIES</strong></li>
-                    <c:forEach items="${categoryDTOList}" var="categoryDTO">
-                        <li class="list-group-item"><a href="${pageContext.request.contextPath}/user/Category_searchBlog?categoryId=${categoryDTO.categoryId}" style="color:#555; text-decoration: none">${categoryDTO.categoryContent}</a> <span style="color: red">${categoryDTO.counts}</span></li>
+                    <c:forEach items="${deletedCategoryDTOList}" var="categoryDTO">
+                        <li class="list-group-item"><a href="${pageContext.request.contextPath}/user/Category_searchDeletedBlog?categoryId=${categoryDTO.categoryId}" style="color:#555; text-decoration: none">${categoryDTO.categoryContent}</a> <span style="color: red">${categoryDTO.counts}</span></li>
                     </c:forEach>
                 </ul>
                 </div>

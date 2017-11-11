@@ -26,4 +26,8 @@ public interface BlogService {
 	public List<BlogDTO> searchBlogByCategoryIdAndUserId(HttpServletRequest request, String categoryId, String userId);
 	public List<BlogDTO> searchBlogByCategoryIdAndUserId(String categoryId, String userId);
 	public int searchBlogCountsByCategoryIdAndUserId(String categoryId, String userId);
+	public List<BlogDTO> searchDeletedBlogByCategoryIdAndUserId(HttpServletRequest request, String categoryId, String userId);
+	public List<BlogDTO> searchDeletedBlogByCategoryIdAndUserId(String categoryId, String userId);
+	public int searchDeletedBlogCountsByCategoryIdAndUserId(String categoryId,
+			String userId);
 }
