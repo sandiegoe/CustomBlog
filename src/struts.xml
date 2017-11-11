@@ -111,7 +111,11 @@
 				<param name="actionName">Menu_deleted.action</param>
 				<param name="namespace">/user</param>
 			</result>
-			<allowed-methods>add, edit, delete,halfwayDelete,restore</allowed-methods>
+			<result name="changeBlogCategory" type="stream">
+			     <param name="contentType">text/html</param>
+			     <param name="inputName">inputStream</param>
+			</result>
+			<allowed-methods>add, edit, delete,halfwayDelete,restore,changeBlogCategory</allowed-methods>
 		</action>
 
 		<action name="File_*" class="fileAction" method="{1}">
@@ -204,5 +208,11 @@
 		</action>
 	</package>
 
+    <package name="admin" namespace="/admin" extends="struts-default">
+        <action name="Admin_*" class="adminAction" method="{1}">
+            <result name="categoryManagerPage">/WEB-INF/jsp/admin/categoryManagerPage.jsp</result>
+            <allowed-methods>categoryManagerPage</allowed-methods>
+        </action>
+    </package>
 	
 </struts>

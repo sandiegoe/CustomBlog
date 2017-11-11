@@ -415,7 +415,7 @@ public class MenuAction extends CommonAction<MenuDTO> {
 
 		return "deleted";
 	}
-
+	
 	public String categoryAddPage() {
 
 		return "categoryAddPage";
