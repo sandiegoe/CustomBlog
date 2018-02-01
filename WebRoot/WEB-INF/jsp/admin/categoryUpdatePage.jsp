@@ -96,37 +96,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               
                <div class="blog-post">
                		
-               		<form action="user/Category_add.action" method="post">
-               		   
+               		<form action="${pageContext.request.contextPath}/admin/Admin_categoryUpdate.action" method="post">
+               		   <input type="hidden" name="categoryId" value="${categoryDTO.categoryId}"/>
+               		   <input type="hidden" name="counts" value="${categoryDTO.counts}"/>
                		    <table class="table">
                		       <tr>
-               		           <td>标题</td>
-               		           <td>博客Id</td>
-               		           <td>作者</td>
-               		           <td>分类</td>
+               		           <td>categoryContent</td>
+               		           <td><input type="text" name="categoryContent" value="${categoryDTO.categoryContent}"/></td>
                		       </tr>
-               		       <c:forEach items="${blogDTOList}" var="blogDTO">
-	               		       <tr>
-	               		          <td>${blogDTO.blogTitle}</td>
-	               		          <td><%-- ${blogDTO.blogId} --%></td>
-	               		          <td>${blogDTO.userName}</td>
-	               		          <td>
-	               		              <select onchange="changeBlogCategoryId(this);">
-                                          <c:forEach items="${categoryDTOList}" var="categoryDTO" varStatus="status">
-                                              <c:if test="${empty blogDTO.categoryId and status.index==0}">
-                                                  <option>请选择</option>
-                                              </c:if>
-                                              <c:if test="${categoryDTO.categoryId==blogDTO.categoryId}">
-                                                  <option selected="selected" blogId="${blogDTO.blogId}" value="${categoryDTO.categoryId}">${categoryDTO.categoryContent}</option>
-                                              </c:if>
-                                              <c:if test="${categoryDTO.categoryId!=blogDTO.categoryId}">
-                                                  <option blogId="${blogDTO.blogId}" value="${categoryDTO.categoryId}">${categoryDTO.categoryContent}</option>
-                                              </c:if>
-                                          </c:forEach>
-                                      </select>
-	               		          </td>
-	               		       </tr>
-               		     </c:forEach>
+               		       <tr>
+               		           <td colspan="2"><input type="submit" value="提交"/></td>
+               		       </tr>
                		    </table>
                		   
                		</form>

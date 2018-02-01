@@ -211,7 +211,11 @@
     <package name="admin" namespace="/admin" extends="struts-default">
         <action name="Admin_*" class="adminAction" method="{1}">
             <result name="categoryManagerPage">/WEB-INF/jsp/admin/categoryManagerPage.jsp</result>
-            <allowed-methods>categoryManagerPage</allowed-methods>
+            <result name="home">/WEB-INF/jsp/admin/home.jsp</result>
+            <result name="categoryPage">/WEB-INF/jsp/admin/categoryPage.jsp</result>
+            <result name="categoryAddPage">/WEB-INF/jsp/admin/categoryAddPage.jsp</result>
+            <result name="categoryUpdatePage">/WEB-INF/jsp/admin/categoryUpdatePage.jsp</result>
+            <allowed-methods>categoryManagerPage, home,categoryAddPage,categoryPage,categoryUpdate,categoryDel,categoryUpdatePage,categoryAdd</allowed-methods>
         </action>
     </package>
 	

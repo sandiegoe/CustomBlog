@@ -86,7 +86,7 @@ public class UserAction extends CommonAction<UserDTO> {
 			logonPasswordCookie.setMaxAge(7*24*60*60*1000);
 		} else {
 			//remember没有勾选，有效期为0
-			userNameCookie.setMaxAge(00);
+			userNameCookie.setMaxAge(0);
 			logonPasswordCookie.setMaxAge(0);
 		}
 		//保存cookie

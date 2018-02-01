@@ -90,6 +90,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!--END INFO SECTION-->
     <div class="container">
         
+         <a href="${pageContex.request.contextPath}/admin/Admin_categoryAddPage.action" class="btn btn-default btn-xs">添加</a>
+        <a href="${pageContex.request.contextPath}/admin/Admin_categoryManagerPage.action" class="btn btn-default btn-xs">博客类别管理</a>
         <div class="row">
 
             <div class="col-md-8 ">
@@ -99,35 +101,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                		<form action="user/Category_add.action" method="post">
                		   
                		    <table class="table">
-               		       <tr>
-               		           <td>标题</td>
-               		           <td>博客Id</td>
-               		           <td>作者</td>
-               		           <td>分类</td>
-               		       </tr>
-               		       <c:forEach items="${blogDTOList}" var="blogDTO">
-	               		       <tr>
-	               		          <td>${blogDTO.blogTitle}</td>
-	               		          <td><%-- ${blogDTO.blogId} --%></td>
-	               		          <td>${blogDTO.userName}</td>
-	               		          <td>
-	               		              <select onchange="changeBlogCategoryId(this);">
-                                          <c:forEach items="${categoryDTOList}" var="categoryDTO" varStatus="status">
-                                              <c:if test="${empty blogDTO.categoryId and status.index==0}">
-                                                  <option>请选择</option>
-                                              </c:if>
-                                              <c:if test="${categoryDTO.categoryId==blogDTO.categoryId}">
-                                                  <option selected="selected" blogId="${blogDTO.blogId}" value="${categoryDTO.categoryId}">${categoryDTO.categoryContent}</option>
-                                              </c:if>
-                                              <c:if test="${categoryDTO.categoryId!=blogDTO.categoryId}">
-                                                  <option blogId="${blogDTO.blogId}" value="${categoryDTO.categoryId}">${categoryDTO.categoryContent}</option>
-                                              </c:if>
-                                          </c:forEach>
-                                      </select>
-	               		          </td>
-	               		       </tr>
-               		     </c:forEach>
-               		    </table>
+                           <tr>
+                               <td>categoryId</td>
+                               <td>categoryContent</td>
+                               <td>counts</td>
+                               <td>操作</td>
+                           </tr>
+                           <c:forEach items="${categoryDTOList}" var="categoryDTO">
+                               <tr>
+                                  <td>${categoryDTO.categoryId}</td>
+                                  <td>${categoryDTO.categoryContent}</td>
+                                  <td>${categoryDTO.counts}</td>
+                                  <td>
+                                    <a href="${pageContex.request.contextPath}/admin/Admin_categoryDel.action?categoryId=${categoryDTO.categoryId}" class="btn btn-default btn-xs">删除</a>
+                                    <a href="${pageContex.request.contextPath}/admin/Admin_categoryUpdatePage.action?categoryId=${categoryDTO.categoryId}" class="btn btn-default btn-xs">修改</a>
+                                  </td>
+                               </tr>
+                         </c:forEach>
+                        </table>
                		   
                		</form>
                     

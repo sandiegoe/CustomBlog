@@ -30,6 +30,7 @@ public class CategoryServiceImpl implements CategoryService {
 		if (categoryDTO != null) {
 			category = new Category();
 			category.setCategoryContent(categoryDTO.getCategoryContent());
+			category.setCategoryId(categoryDTO.getCategoryId());
 		}
 		
 		return category;

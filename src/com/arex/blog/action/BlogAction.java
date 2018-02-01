@@ -198,6 +198,13 @@ public class BlogAction extends CommonAction<BlogDTO> {
 			blogDTO.setCategoryId(categoryId);
 			blogService.updateBlog(blogDTO);
 			result += "博客分类更新成功！";
+			List<CategoryDTO> categoryDTOList = categoryService.searchAllCategory();
+			for (CategoryDTO categoryDTO : categoryDTOList) {
+				int counts = blogService.searchBlogCountsByCategoryId(categoryDTO.getCategoryId());
+				categoryDTO.setCounts(counts);
+			}
+			// 将categoryDTOList设置到application中
+			application.setAttribute("categoryDTOList", categoryDTOList);
 		}
 		inputStream = new ByteArrayInputStream(result.getBytes("utf-8"));
 		return "changeBlogCategory";
